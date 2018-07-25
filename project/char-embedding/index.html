@@ -1067,7 +1067,7 @@ margin-left: -4%;
 model = KeyedVectors.load_word2vec_format(&quot;data/convolutional_AE_300.bin&quot;, binary=True)
 </code></pre>
 
-<p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。</p>
+<p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなく<a href="https://ja.wikipedia.org/wiki/%D0%90">キリル文字の「a」</a>です。</p>
 
 <pre><code class="language-py">In []: model.most_similar(&quot;a&quot;)
 Out[]:
@@ -1131,14 +1131,14 @@ Out[]:
 
 <h3 id="訓練">訓練</h3>
 
-<p>文字の図形的な埋め込み表現を得るために、文字を画像としてデータ化した上でConvolutional AutoEncodersを利用しました。AutoEncoderは入力と出力が同じ値になるようなニューラルネットで、構造として入力層/出力層よりも次元数の少ない中間層を持つことで、低次元での表現を学習することができます。</p>
+<p>文字の図形的な埋め込み表現を得るために、文字を画像としてデータ化した上でConvolutional AutoEncoderを利用しました。AutoEncoderは入力と出力が同じ値になるようなニューラルネットで、構造として入力層/出力層よりも次元数の少ない中間層を持つことで、低次元での表現を学習することができます。</p>
 
 <p>学習データの作成においては<a href="https://arxiv.org/abs/1708.04755">[Su and Lee , 2017]</a>を参考に、利用したフォントが図形として描写可能なすべての文字に対して、背景が黒色で文字が白色の60x60の画像を作成しました。学習の際には、画像をグレースケールに変換後に正規化しました。</p>
 
-<p>Convolutional AutoEncodersの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
+<p>Convolutional AutoEncoderの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
 
 <p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/convAE_model.png" src="https://yag-ays.github.io/img/low/convAE_model.png" alt="convAE_model" /></figure>
-  <em>Fig. Convolutional AutoEncodersの概念図</em></p>
+  <em>Fig. Convolutional AutoEncoderの概念図</em></p>
 
 <h3 id="評価">評価</h3>
 
