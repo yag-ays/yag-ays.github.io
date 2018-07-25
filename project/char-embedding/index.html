@@ -1027,7 +1027,7 @@ margin-left: -4%;
 
 <p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/char_emebdding_01.png" src="https://yag-ays.github.io/img/low/char_emebdding_01.png" alt="char_emebdding_01" /></p></figure>
 
-<p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を検索/推定することができます。</p>
+<p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。</p>
 
 <hr />
 
@@ -1135,7 +1135,7 @@ Out[]:
 
 <p>学習データの作成においては<a href="https://arxiv.org/abs/1708.04755">[Su and Lee , 2017]</a>を参考に、利用したフォントが図形として描写可能なすべての文字に対して、背景が黒色で文字が白色の60x60の画像を作成しました。学習の際には、画像をグレースケールに変換後に正規化しました。</p>
 
-<p>Convolutional AutoEncodersの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
+<p>Convolutional AutoEncodersの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
 
 <p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/convAE_model.png" src="https://yag-ays.github.io/img/low/convAE_model.png" alt="convAE_model" /></figure>
   <em>Fig. Convolutional AutoEncodersの概念図</em></p>
