@@ -6,10 +6,30 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 26 Jul 2018 04:28:29 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 30 Jul 2018 21:07:52 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Wikipedia CirrusSearchのダンプデータを利用する</title>
+      <link>https://yag-ays.github.io/project/cirrus/</link>
+      <pubDate>Mon, 30 Jul 2018 21:07:52 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/cirrus/</guid>
+      <description>Wikipediaのデータを容易に利用できるCirrusSearchのダンプデータについて紹介します。これを利用することにより、Wikipediaの巨大なXMLデータをパースしたり、Wikipedia Extractorなど既存のツールで前処理することなく、直にWikipediaの各種データにアクセスすることができます。
+tl;dr 細かいことは置いておいて、素直にWikipediaの日本語エントリーに書かれているテキストを取得したい場合、
+ ここのCirrusSearchの任意の日付のダンプデータjawiki-YYYYMMDD-cirrussearch-content.json.gzを落としてくる 中に入っているjsonデータをパースして、偶数行の&amp;quot;text&amp;quot;を取得するコードを書く  とすることで、簡単にWikipediaのテキストデータを取得することができます。
+CirrusSearchダンプデータの概要 CirrusSearchは、ElasticSearchをバックエンドに構成された検索システムです。このシステムに利用されているデータがダンプデータとして公開されており、そのファイルを利用することで、整形されたテキストを始めとして、外部リンクのリストやカテゴリのリスト等のメタデータが容易に利用できます。また、言語ごとにダンプファイルが分かれているため、日本語のWikipediaのデータだけを対象にすることが可能です。
+CirrusSearchのダンプデータは以下から取得します。
+Index of /other/cirrussearch/
+Wikipediaに関するダンプデータは以下の2つです。
+   ファイル 内容     jawiki-YYYYMMDD-cirrussearch-content.json.gz Wikipediaの本文（namespaceが0）   jawiki-YYYYMMDD-cirrussearch-general.json.gz Wikipediaのその他情報（namespaceが0以外）    その他の接頭辞の対応関係は以下の通りです。
+ jawiki: ウィキペディア jawikibooks: ウィキブックス jawikinews: ウィキニュース jawikiquote: ウィキクォート jawikisource: ウィキソース jawikiversity: ウィキバーシティ  CirrusSearchのデータ CirrusSearchのダンプデータは、1行が1つのjsonとなっており、2行で1つのエントリーを表しています。
+奇数行 奇数行にはエントリーに固有のidが記載されています。この_idから該当のエントリーにアクセスするには、https://ja.wikipedia.org/?curid=3240437のようにcuridのパラーメータを指定します。
+{ &amp;quot;index&amp;quot;: { &amp;quot;_type&amp;quot;: &amp;quot;page&amp;quot;, &amp;quot;_id&amp;quot;: &amp;quot;3240437&amp;quot; } }  偶数行 偶数行にはエントリーの情報が記載されています。下記の例では、複数の要素が入った配列や長い文字列は...で省略しています。
+{ &amp;quot;template&amp;quot;: [ &amp;quot;Template:各年の文学ヘッダ&amp;quot;, .</description>
+    </item>
     
     <item>
       <title>Home</title>
