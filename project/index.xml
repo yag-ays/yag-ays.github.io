@@ -6,10 +6,30 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 30 Jul 2018 21:07:52 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 06 Aug 2018 08:43:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>漢字を構成する部首/偏旁のデータセット</title>
+      <link>https://yag-ays.github.io/project/kanjivg-radical/</link>
+      <pubDate>Mon, 06 Aug 2018 08:43:23 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/kanjivg-radical/</guid>
+      <description>kanjivg-radicalは、漢字を構成する部首や偏旁を容易に扱えるように対応付けしたデータセットです。
+「脳」という漢字は、「月」「⺍」「凶」のように幾つかのまとまりごとに細分化できます。このように意味ある要素に分解しデータセットにすることで、漢字を文字的に分解して扱ったり、逆に特定の部首/偏旁を持つ漢字を一括して検索することができます。
+このデータセットは、KanjiVGで公開されているsvgデータを抽出および加工して作成されています。そのため、本データセットに含まれる部首/偏旁のアノテーションはすべてKanjiVGに準拠します。
+ダウンロード 以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。data/配下にある各種jsonファイルが、データセットの本体です。
+yagays/kanjivg-radical
+データセットの詳細 kanjivg-radicalには4種類のデータが含まれています。
+ 漢字と部首/偏旁の変換データ 漢字と要素の変換データ 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字  以下では、部首/偏旁はradical、要素はelement、左右はleft_right、上下はtop_buttomと表現しています。
+1. 漢字と部首/偏旁の変換データ 漢字と部首/偏旁を対応付けしたデータセットです。漢字から部首/偏旁と、部首/偏旁から漢字の2種類のデータがあります。
+ kanji2radical.json : 漢字から部首/偏旁への変換 radical2kanji.json : 部首/偏旁から漢字への変換  # kanji2radical.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;月&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;凶&amp;quot; ]  # radical2kanji.jsonのサンプル &amp;quot;月&amp;quot;: [ &amp;quot;肝&amp;quot;, &amp;quot;育&amp;quot;, &amp;quot;胆&amp;quot;, &amp;quot;朦&amp;quot;, &amp;quot;脱&amp;quot;, ...  2. 漢字と要素の変換データ 漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。
+ kanji2element.json : 漢字から要素への変換 element2kanji.json : 要素から漢字への変換  ここで使用している「要素」いう言葉は、部首/偏旁を構成する更に細かい単位での漢字のことを指しています。言語学的に定義された単語ではなく、KanjiVGで利用されていたelementの対訳として用いています。
+このデータでは構成している要素をすべて列挙しているので、結果の中には重複が含まれます。以下の例だと脳には「凶」という要素が含まれていますが、同時に「乂」という要素も含まれているため、どちらもkanji2elementの結果として出力されます。
+# kanji2element.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;乂&amp;quot;, &amp;quot;凶&amp;quot;, &amp;quot;丿&amp;quot;, &amp;quot;凵&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;月&amp;quot; ]  # element2kanji.</description>
+    </item>
     
     <item>
       <title>Wikipedia CirrusSearchのダンプデータを利用する</title>
@@ -43,7 +63,7 @@ convolutional_AE_300.tar.bz2 (解凍前:88MB, 解凍後:180MB)
 以下の2つのファイルが入っています。フォーマットが異なるだけで、どちらも同じベクトルデータです。
  convolutional_AE_300.bin convolutional_AE_300.txt  その他サンプルコードなどのすべてのファイルは、以下のレポジトリにあります。
 yagays/glyph-aware-character-embedding
-詳細  ベクトル次元：300 文字の種類数：44,637 学習データに用いたフォント：Google Noto Fonts NotoSansCJKjp-Regular  利用方法 gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には加法性がありません。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。
+詳細  ベクトル次元：300 文字の種類数：44,637 学習データに用いたフォント：Google Noto Fonts NotoSansCJKjp-Regular  使い方 gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には加法性がありません。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。
 from gensim.models import KeyedVectors model = KeyedVectors.load_word2vec_format(&amp;quot;data/convolutional_AE_300.bin&amp;quot;, binary=True)  most_similar()を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなくキリル文字の「a」です。
 In []: model.most_similar(&amp;quot;a&amp;quot;) Out[]: [(&#39;а&#39;, 1.0000001192092896), (&#39;ả&#39;, 0.961397111415863), (&#39;ä&#39;, 0.9610118269920349), (&#39;ā&#39;, 0.9582812190055847), (&#39;á&#39;, 0.957198441028595), (&#39;à&#39;, 0.9558833241462708), (&#39;å&#39;, 0.938391923904419), (&#39;ầ&#39;, 0.9370290040969849), (&#39;ǎ&#39;, 0.9368112087249756), (&#39;ấ&#39;, 0.9365179538726807)]  Google Noto Fonts NotoSansCJKjp-Regularに含まれるすべての文字に対して操作が可能です。
 In []: model.most_similar(&amp;quot;油&amp;quot;) Out[]: [(&#39;汕&#39;, 0.9025427103042603), (&#39;泊&#39;, 0.</description>

@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/char-embedding/" />
-<meta property="og:title" content="文字の図形的な埋め込み表現 Glyph-aware Character Embedding" />
-<meta property="twitter:title" content="文字の図形的な埋め込み表現 Glyph-aware Character Embedding">
+<meta property="og:url" content="https://yag-ays.github.io/project/kanjivg-radical/" />
+<meta property="og:title" content="漢字を構成する部首/偏旁のデータセット" />
+<meta property="twitter:title" content="漢字を構成する部首/偏旁のデータセット">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Out-of-the-box - 文字の図形的な埋め込み表現 Glyph-aware Character Embedding 
+     Out-of-the-box - 漢字を構成する部首/偏旁のデータセット 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/char-embedding/">
+<link rel="canonical" href="https://yag-ays.github.io/project/kanjivg-radical/">
 
 
 <style media="screen">
@@ -1016,7 +1016,7 @@ margin-left: -4%;
         <div class="content">
             <div class="page-heading">
 
-    文字の図形的な埋め込み表現 Glyph-aware Character Embedding
+    漢字を構成する部首/偏旁のデータセット
 
 </div>
 
@@ -1025,167 +1025,222 @@ margin-left: -4%;
     
     
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/char_emebdding_01.png" src="https://yag-ays.github.io/img/low/char_emebdding_01.png" alt="char_emebdding_01" /></p></figure>
+<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/kanji_01.png" src="https://yag-ays.github.io/img/low/kanji_01.png" alt="kanji_01" /></p></figure>
 
-<p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。</p>
+<p>kanjivg-radicalは、漢字を構成する<a href="https://ja.wikipedia.org/wiki/%E9%83%A8%E9%A6%96">部首</a>や<a href="https://ja.wikipedia.org/wiki/%E5%81%8F%E6%97%81">偏旁</a>を容易に扱えるように対応付けしたデータセットです。</p>
+
+<p>「脳」という漢字は、「月」「⺍」「凶」のように幾つかのまとまりごとに細分化できます。このように意味ある要素に分解しデータセットにすることで、漢字を文字的に分解して扱ったり、逆に特定の部首/偏旁を持つ漢字を一括して検索することができます。</p>
+
+<p>このデータセットは、<a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているsvgデータを抽出および加工して作成されています。そのため、本データセットに含まれる部首/偏旁のアノテーションはすべてKanjiVGに準拠します。</p>
 
 <hr />
 
 <h2 id="ダウンロード">ダウンロード</h2>
 
-<p>下記のGitHubレポジトリからダウンロード可能です。以下のURLを開いて「Download」をクリックしてください。</p>
+<p>以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。<code>data/</code>配下にある各種jsonファイルが、データセットの本体です。</p>
 
-<p><a href="https://github.com/yagays/glyph-aware-character-embedding/blob/master/convolutional_AE_300.tar.bz2">convolutional_AE_300.tar.bz2</a> (解凍前:88MB, 解凍後:180MB)</p>
+<p><a href="https://github.com/yagays/kanjivg-radical">yagays/kanjivg-radical</a></p>
 
-<p>以下の2つのファイルが入っています。フォーマットが異なるだけで、どちらも同じベクトルデータです。</p>
+<hr />
+
+<h2 id="データセットの詳細">データセットの詳細</h2>
+
+<p>kanjivg-radicalには4種類のデータが含まれています。</p>
+
+<ol>
+<li>漢字と部首/偏旁の変換データ</li>
+<li>漢字と要素の変換データ</li>
+<li>漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</li>
+<li>漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</li>
+</ol>
+
+<p>以下では、部首/偏旁は<code>radical</code>、要素は<code>element</code>、左右は<code>left_right</code>、上下は<code>top_buttom</code>と表現しています。</p>
+
+<h3 id="1-漢字と部首-偏旁の変換データ">1. 漢字と部首/偏旁の変換データ</h3>
+
+<p>漢字と部首/偏旁を対応付けしたデータセットです。漢字から部首/偏旁と、部首/偏旁から漢字の2種類のデータがあります。</p>
 
 <ul>
-<li><code>convolutional_AE_300.bin</code></li>
-<li><code>convolutional_AE_300.txt</code></li>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical.json"><code>kanji2radical.json</code></a> : 漢字から部首/偏旁への変換</li>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji.json"><code>radical2kanji.json</code></a> : 部首/偏旁から漢字への変換</li>
 </ul>
 
-<p>その他サンプルコードなどのすべてのファイルは、以下のレポジトリにあります。</p>
+<pre><code># kanji2radical.jsonのサンプル
+&quot;脳&quot;: [
+    &quot;月&quot;,
+    &quot;⺍&quot;,
+    &quot;凶&quot;
+]
+</code></pre>
 
-<p><a href="https://github.com/yagays/glyph-aware-character-embedding">yagays/glyph-aware-character-embedding</a></p>
+<pre><code># radical2kanji.jsonのサンプル
+&quot;月&quot;: [
+    &quot;肝&quot;,
+    &quot;育&quot;,
+    &quot;胆&quot;,
+    &quot;朦&quot;,
+    &quot;脱&quot;,
+...
+</code></pre>
 
-<h3 id="詳細">詳細</h3>
+<h3 id="2-漢字と要素の変換データ">2. 漢字と要素の変換データ</h3>
+
+<p>漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。</p>
 
 <ul>
-<li>ベクトル次元：<code>300</code></li>
-<li>文字の種類数：<code>44,637</code></li>
-<li>学習データに用いたフォント：<a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code></li>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2element.json"><code>kanji2element.json</code></a> : 漢字から要素への変換</li>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/element2kanji.json"><code>element2kanji.json</code></a> : 要素から漢字への変換</li>
 </ul>
+
+<p>ここで使用している「要素」いう言葉は、部首/偏旁を構成する更に細かい単位での漢字のことを指しています。言語学的に定義された単語ではなく、KanjiVGで利用されていた<code>element</code>の対訳として用いています。</p>
+
+<p>このデータでは構成している要素をすべて列挙しているので、結果の中には重複が含まれます。以下の例だと脳には「凶」という要素が含まれていますが、同時に「乂」という要素も含まれているため、どちらもkanji2elementの結果として出力されます。</p>
+
+<pre><code># kanji2element.jsonのサンプル
+&quot;脳&quot;: [
+    &quot;乂&quot;,
+    &quot;凶&quot;,
+    &quot;丿&quot;,
+    &quot;凵&quot;,
+    &quot;⺍&quot;,
+    &quot;月&quot;
+]
+</code></pre>
+
+<pre><code># element2kanji.json
+&quot;月&quot;: [
+    &quot;溯&quot;,
+    &quot;齟&quot;,
+    &quot;蔡&quot;,
+    &quot;羂&quot;,
+    &quot;肝&quot;,
+    &quot;育&quot;,
+</code></pre>
+
+<h3 id="3-漢字と部首-偏旁の変換データのうち-左右に分割できる漢字">3. 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</h3>
+
+<p>1.のデータセットのうち、漢字の構成が左と右の2つに分割できるものだけを集めたデータです。3つ以上に分割される漢字や、左右のどちらかが複数に分割される漢字は含まれていません。</p>
+
+<ul>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_left_right.json"><code>kanji2radical_left_right.json</code></a></li>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_left_right.json"><code>radical2kanji_left_right.json</code></a></li>
+</ul>
+
+<pre><code># kanji2radical_left_right.jsonのサンプル
+{'乢': ['山', '乙'],
+ '嶋': ['山', '鳥'],
+ '恥': ['耳', '心'],
+ '擦': ['扌', '察'],
+...
+</code></pre>
+
+<h3 id="4-漢字と部首-偏旁の変換データのうち-上下に分割できる漢字">4. 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</h3>
+
+<p>1.のデータセットのうち、漢字の構成が上と下の2つに分割できるものだけを集めたデータです。3つ以上に分割される漢字や、上下のどちらかが複数に分割される漢字は含まれていません。</p>
+
+<ul>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_top_buttom.json"><code>kanji2radical_top_buttom.json</code></a></li>
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_top_buttom.json"><code>radical2kanji_top_buttom.json</code></a></li>
+</ul>
+
+<pre><code># kanji2radical_top_buttom.jsonのサンプル
+{'云': ['二', '厶'],
+ '賃': ['任', '貝'],
+ '輩': ['非', '車'],
+ '雪': ['雨', '⺕'],
+ ...
+</code></pre>
+
+<h2 id="統計">統計</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="right">登録漢字数</th>
+<th align="right">登録部首/偏旁/要素数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">kanji2radical</td>
+<td align="right">6,279</td>
+<td align="right">1,300</td>
+</tr>
+
+<tr>
+<td align="left">kanji2element</td>
+<td align="right">6,279</td>
+<td align="right">1,306</td>
+</tr>
+
+<tr>
+<td align="left">kanji2radical_left_right</td>
+<td align="right">3,190</td>
+<td align="right">1,013</td>
+</tr>
+
+<tr>
+<td align="left">kanji2radical_top_buttom</td>
+<td align="right">1,088</td>
+<td align="right">643</td>
+</tr>
+</tbody>
+</table>
 
 <hr />
 
 <h2 id="使い方">使い方</h2>
 
-<p>gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には<strong>加法性がありません</strong>。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。</p>
+<p>配布しているjsonファイルを、ハッシュ関数や辞書形式など任意のプログラミング言語で読み込んで使用します。</p>
 
-<pre><code class="language-py">from gensim.models import KeyedVectors
+<p>ここでは、Pythonでの利用方法を例示します。</p>
 
-model = KeyedVectors.load_word2vec_format(&quot;data/convolutional_AE_300.bin&quot;, binary=True)
+<pre><code class="language-py">import json
+
+def load_json(filename):
+    with open(filename) as f:
+        d = json.load(f)
+    return d
+
+kanji2radical = load_json(&quot;kanji2radical.json&quot;)
+radical2kanji = load_json(&quot;radical2kanji.json&quot;)    
 </code></pre>
 
-<p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなく<a href="https://ja.wikipedia.org/wiki/%D0%90">キリル文字の「a」</a>です。</p>
+<pre><code class="language-py">kanji2radical[&quot;脳&quot;] # kanji to radicals
 
-<pre><code class="language-py">In []: model.most_similar(&quot;a&quot;)
-Out[]:
-[('а', 1.0000001192092896),
- ('ả', 0.961397111415863),
- ('ä', 0.9610118269920349),
- ('ā', 0.9582812190055847),
- ('á', 0.957198441028595),
- ('à', 0.9558833241462708),
- ('å', 0.938391923904419),
- ('ầ', 0.9370290040969849),
- ('ǎ', 0.9368112087249756),
- ('ấ', 0.9365179538726807)]
+radical2kanji[&quot;月&quot;] # radical to kanjis
 </code></pre>
 
-<p><a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code>に含まれるすべての文字に対して操作が可能です。</p>
+<p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照下さい。</p>
 
-<pre><code class="language-py">In []: model.most_similar(&quot;油&quot;)
-Out[]:
-[('汕', 0.9025427103042603),
- ('泊', 0.8892871737480164),
- ('伷', 0.884428083896637),
- ('浊', 0.8678311109542847),
- ('沖', 0.8532482385635376),
- ('沽', 0.8451510667800903),
- ('沺', 0.8355003595352173),
- ('沾', 0.8313066959381104),
- ('涃', 0.8284391164779663),
- ('泩', 0.8275920152664185)]
-</code></pre>
+<h2 id="作成方法">作成方法</h2>
 
-<p>ユニコードには同じような外見で異なるコードポイントが割り当てられているものが存在します。それらを区別する際には、<code>ord()</code>で数値への変換を行うか、<code>unicodedata.name()</code>で文字の名前を表示するのが有効です。</p>
+<p><a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているすべての漢字に対して、svg内に含まれる<code>g</code>タグの<code>kvg:element</code>属性を抽出しています。抽出方法により、データセットに以下の違いがあります。</p>
 
-<pre><code class="language-py">In []: for char, score in model.most_similar(&quot;は&quot;, topn=15):
-    ...:     print(&quot;\t&quot;.join([char, str(score), hex(ord(char)), unicodedata.name(char, &quot;UNKNOWN&quot;)]))
+<ul>
+<li><code>kanji2radical.json</code>などの漢字と部首/偏旁の変換データは、対象となる漢字の直下に含まれる<code>kvg:element</code>属性のみを抽出</li>
+<li><code>kanji2element.json</code>などの漢字と要素の変換データは、すべての<code>kvg:element</code>属性を再帰的に抽出</li>
+</ul>
 
-け      0.8354311585426331      0x3051  HIRAGANA LETTER KE
-ほ      0.8342610597610474      0x307b  HIRAGANA LETTER HO
-げ      0.7546985745429993      0x3052  HIRAGANA LETTER GE
-ば      0.7366447448730469      0x3070  HIRAGANA LETTER BA
-ぱ      0.7308192253112793      0x3071  HIRAGANA LETTER PA
-に      0.7154880166053772      0x306b  HIRAGANA LETTER NI
-⒑      0.7061284780502319      0x2491  NUMBER TEN FULL STOP
-냐      0.6923456192016602      0xb0d0  HANGUL SYLLABLE NYA
-댜      0.682737410068512       0xb31c  HANGUL SYLLABLE DYA
-⒙      0.6763017773628235      0x2499  NUMBER EIGHTEEN FULL STOP
-砂      0.6754936575889587      0x7802  CJK UNIFIED IDEOGRAPH-7802
-⒔      0.6732239723205566      0x2494  NUMBER THIRTEEN FULL STOP
-탅      0.6726106405258179      0xd0c5  HANGUL SYLLABLE TANJ
-㢟      0.6707605719566345      0x389f  CJK UNIFIED IDEOGRAPH-389F
-叵      0.6700443029403687      0x53f5  CJK UNIFIED IDEOGRAPH-53F5
-</code></pre>
+<p>対象としたバージョンは最新版である2016/04/26リリースであり、variantを含まない<code>kanjivg-20160426-main.zip</code>を利用しています。</p>
 
-<p>Kerasなどに利用できる埋め込み層の作成方法は、下記サンプルコードを参照下さい。</p>
+<p>ちなみに、このデータセットには含まれていませんが、KanjiVGには他にも一画ごとのストロークの形状を<code>kvg:type</code>として分類し記録しています。そういったより詳細な漢字の図形的情報が必要な場合は、本家のデータセットを参照ください。</p>
 
-<p><a href="https://github.com/yagays/glyph-aware-character-embedding/tree/master/example">glyph-aware-character-embedding/example at master · yagays/glyph-aware-character-embedding</a></p>
-
-<hr />
-
-<h2 id="手法">手法</h2>
-
-<h3 id="訓練">訓練</h3>
-
-<p>文字の図形的な埋め込み表現を得るために、文字を画像としてデータ化した上でConvolutional AutoEncoderを利用しました。AutoEncoderは入力と出力が同じ値になるようなニューラルネットで、構造として入力層/出力層よりも次元数の少ない中間層を持つことで、低次元での表現を学習することができます。</p>
-
-<p>学習データの作成においては<a href="https://arxiv.org/abs/1708.04755">[Su and Lee , 2017]</a>を参考に、利用したフォントが図形として描写可能なすべての文字に対して、背景が黒色で文字が白色の60x60の画像を作成しました。学習の際には、画像をグレースケールに変換後に正規化しました。</p>
-
-<p>Convolutional AutoEncoderの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
-
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/convAE_model.png" src="https://yag-ays.github.io/img/low/convAE_model.png" alt="convAE_model" /></figure>
-  <em>Fig. Convolutional AutoEncoderの概念図</em></p>
-
-<h3 id="評価">評価</h3>
-
-<p>テストデータの文字をConvolutional AutoEncoderで復元した結果は、以下のようになりました。中国語や韓国語、図形的な丸囲いの文字など、おおよそ文字を再構成できていることがわかります。</p>
-
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/model_output.png" src="https://yag-ays.github.io/img/low/model_output.png" alt="model_output" /></figure>
-  <em>Fig. 上段：convAEに入力された画像 下段：convAEで出力された画像</em></p>
-
-<hr />
+<p><a href="http://kanjivg.tagaini.net/format.html">Format - KanjiVG</a></p>
 
 <h2 id="ライセンス">ライセンス</h2>
 
-<p><strong>CC-BY</strong></p>
-
 <p>このリソースは<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a>の下に提供されています。</p>
 
-<h2 id="クレジット">クレジット</h2>
-
-<ul>
-<li><a href="https://www.google.com/get/noto/">Google Noto Fonts</a>: <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">SIL Open Font License, Version 1.1</a></li>
-</ul>
-
-<hr />
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
 
 <h2 id="参考">参考</h2>
 
-<h3 id="論文">論文</h3>
-
 <ul>
-<li><a href="https://ieeexplore.ieee.org/document/7841067/">Document classification through image-based character embedding and wildcard training - IEEE Conference Publication</a>
-
-<ul>
-<li>pdf: <a href="http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf">http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf</a></li>
-</ul></li>
-<li><a href="https://arxiv.org/abs/1708.04755">[1708.04755] Learning Chinese Word Representations From Glyphs Of Characters</a></li>
-<li><a href="https://arxiv.org/abs/1709.00028">[1709.00028] Glyph-aware Embedding of Chinese Characters</a></li>
-<li><a href="https://link.springer.com/chapter/10.1007/978-3-319-70096-0_39">Deep Clustering with Convolutional Autoencoders | SpringerLink</a></li>
-<li><a href="https://arxiv.org/abs/1704.04859">[1704.04859] Learning Character-level Compositionality with Visual Features</a></li>
-</ul>
-
-<h3 id="ウェブ">ウェブ</h3>
-
-<ul>
-<li><a href="https://elix-tech.github.io/ja/2016/07/17/autoencoder.html">Kerasで学ぶAutoencoder</a></li>
-<li><a href="http://dl-kento.hatenablog.com/entry/2018/02/22/200811">PytorchによるAutoEncoder Familyの実装 - 前に逃げる</a></li>
-<li><a href="http://hironsan.hatenablog.com/entry/learning-character-embeddings">Pythonで日本語の文字分散表現を学習する - 自然言語処理の深遠</a></li>
-<li><a href="https://minimaxir.com/2017/04/char-embeddings/">Pretrained Character Embeddings for Deep Learning and Automatic Text Generation</a></li>
+<li><a href="https://github.com/KanjiVG/kanjivg">KanjiVG/kanjivg: Kanji description and vectorial data in correct stroke order</a></li>
+<li><a href="https://www.moongift.jp/2017/11/kanjivg-%E6%BC%A2%E5%AD%97%E5%B9%B3%E4%BB%AE%E5%90%8D%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A%E3%82%A2%E3%83%AB%E3%83%95%E3%82%A1%E3%83%99%E3%83%83%E3%83%88%E6%95%B0%E5%AD%97%E3%81%AE%E6%9B%B8/">KanjiVG - 漢字/平仮名/カタカナ/アルファベット/数字の書き順付きSVG集 MOONGIFT</a></li>
 </ul>
 
 
