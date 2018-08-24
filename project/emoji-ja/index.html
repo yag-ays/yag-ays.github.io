@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/char-embedding/" />
-<meta property="og:title" content="文字の図形的な埋め込み表現 Glyph-aware Character Embedding" />
-<meta property="twitter:title" content="文字の図形的な埋め込み表現 Glyph-aware Character Embedding">
+<meta property="og:url" content="https://yag-ays.github.io/project/emoji-ja/" />
+<meta property="og:title" content="📙Unicode絵文字の日本語読み/キーワード/分類辞書📙" />
+<meta property="twitter:title" content="📙Unicode絵文字の日本語読み/キーワード/分類辞書📙">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Out-of-the-box - 文字の図形的な埋め込み表現 Glyph-aware Character Embedding 
+     Out-of-the-box - 📙Unicode絵文字の日本語読み/キーワード/分類辞書📙 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/char-embedding/">
+<link rel="canonical" href="https://yag-ays.github.io/project/emoji-ja/">
 
 
 <style media="screen">
@@ -1016,7 +1016,7 @@ margin-left: -4%;
         <div class="content">
             <div class="page-heading">
 
-    文字の図形的な埋め込み表現 Glyph-aware Character Embedding
+    📙Unicode絵文字の日本語読み/キーワード/分類辞書📙
 
 </div>
 
@@ -1025,173 +1025,192 @@ margin-left: -4%;
     
     
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/char_emebdding_01.png" src="https://yag-ays.github.io/img/low/char_emebdding_01.png" alt="char_emebdding_01" /></p></figure>
+<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/emoji_ja.png" src="https://yag-ays.github.io/img/low/emoji_ja.png" alt="emoji_ja" /></p></figure>
 
-<p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。</p>
+<p><code>emoji_ja</code>は、Unicodeに登録されている絵文字に対して、日本語の読みやキーワード、分類を付与したデータセットです。Unicodeで定められている名称やアノテーションを元に構築しています。</p>
+
+<p>TwitterやInstagramなどのSNSを通じた絵文字の普及により、<a href="https://arxiv.org/abs/1609.08359">emoji2vec</a>や<a href="https://deepmoji.mit.edu/">deepmoji</a>などの絵文字を使った自然言語処理の研究が行われるようになりました。絵文字を含む分析においては、絵文字の持つ豊富な情報や多彩な利用方法により、従来の形態素分析などのテキスト処理では対応できない場合があります。例えば、「今日は楽しかった😀」という文章では感情表現として絵文字が使われていますが、「今日は🍣を食べて🍺を飲んだ」ではそれぞれの対象を表す単語として用いられることもあります。<a href="(https://www.slideshare.net/overlast/mecab-ipadicneologdpydatatokyo05pub-48560060)">[佐藤,2015]</a>では絵文字の品詞を名詞/サ変名詞/動詞/副詞/記号/感動詞の6種類に分類しており、形態素解析に用いる<a href="https://github.com/neologd/mecab-ipadic-neologd">NEologd</a>辞書にも絵文字が登録されています。</p>
+
+<p>このように、絵文字を機械的な処理や研究対象として扱うには、絵文字の読み方であったり意味を表す単語、または意味的な種類で分類したカテゴリが必要になります。こうした辞書は、英語においては<a href="https://github.com/muan/emojilib">emojilib</a>がありますが、絵文字は文化的に意味が異なる場合があるため、それらの対訳をそのまま利用できないことがあります。</p>
+
+<p>そのため、日本語で容易に使えるリソースとして<code>emoji_ja</code>を作成しました。</p>
 
 <hr />
 
-<h2 id="ダウンロード">ダウンロード</h2>
+<h2 id="ダウンロード">💻 ダウンロード</h2>
 
-<p>下記のGitHubレポジトリからダウンロード可能です。以下のURLを開いて「Download」をクリックしてください。</p>
+<p>以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。<code>data/</code>配下にある各種jsonファイルが、データセットの本体です。</p>
 
-<p><a href="https://github.com/yagays/glyph-aware-character-embedding/blob/master/convolutional_AE_300.tar.bz2">convolutional_AE_300.tar.bz2</a> (解凍前:88MB, 解凍後:180MB)</p>
+<p><a href="https://github.com/yagays/emoji-ja">yagays/emoji-ja: 📙UNICODE絵文字の日本語読み/キーワード/分類辞書📙</a></p>
 
-<p>以下の2つのファイルが入っています。フォーマットが異なるだけで、どちらも同じベクトルデータです。</p>
+<hr />
+
+<h2 id="データセット">📁 データセット</h2>
+
+<p>emoji-jaには下記の3種類のデータが含まれています。</p>
 
 <ul>
-<li><code>convolutional_AE_300.bin</code></li>
-<li><code>convolutional_AE_300.txt</code></li>
+<li><a href="https://github.com/yagays/emoji-ja/blob/master/data/emoji_ja.json"><code>emoji_ja.json</code></a>: 絵文字に対応するキーワードやメタ情報</li>
+<li><a href="https://github.com/yagays/emoji-ja/blob/master/data/group2emoji_ja.json"><code>group2emoji_ja.json</code></a>: 絵文字のグループ/サブグループに対応した絵文字のリスト</li>
+<li><a href="https://github.com/yagays/emoji-ja/blob/master/data/keyword2emoji_ja.json"><code>keyword2emoji_ja.json</code></a>: 絵文字のキーワードに対応した絵文字のリスト</li>
 </ul>
 
-<p>その他サンプルコードなどのすべてのファイルは、以下のレポジトリにあります。</p>
+<h3 id="1-emoji-ja-json-データ">1️⃣ <code>emoji_ja.json</code>データ</h3>
 
-<p><a href="https://github.com/yagays/glyph-aware-character-embedding">yagays/glyph-aware-character-embedding</a></p>
+<p><code>emoji_ja.json</code>には、絵文字に対応する以下のメタデータが含まれています。</p>
 
-<h3 id="詳細">詳細</h3>
+<table>
+<thead>
+<tr>
+<th align="left">カラム</th>
+<th align="left">概要</th>
+<th align="left">取得元</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>keywords</code></td>
+<td align="left">絵文字に関連したキーワード</td>
+<td align="left"><a href="https://unicode.org/cldr/charts/latest/annotations/cjk.html">CJK Annotations</a> <br>(CLDR Version 33)</td>
+</tr>
+
+<tr>
+<td align="left"><code>short_name</code></td>
+<td align="left">絵文字を表す短い名前</td>
+<td align="left"><a href="https://unicode.org/cldr/charts/latest/annotations/cjk.html">CJK Annotations</a> <br>(CLDR Version 33)</td>
+</tr>
+
+<tr>
+<td align="left"><code>group</code></td>
+<td align="left">絵文字を意味的に分類したときのグループ</td>
+<td align="left"><a href="http://www.unicode.org/emoji/charts-11.0/emoji-list.html">Emoji List, v11.0</a>を元に翻訳</td>
+</tr>
+
+<tr>
+<td align="left"><code>subgroup</code></td>
+<td align="left">絵文字を意味的に分類したときのサブグループ</td>
+<td align="left"><a href="http://www.unicode.org/emoji/charts-11.0/emoji-list.html">Emoji List, v11.0</a>を元に翻訳</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code>{
+    &quot;♟&quot;: {
+        &quot;keywords&quot;: [
+            &quot;チェス&quot;,
+            &quot;チェスの駒&quot;,
+            &quot;捨て駒&quot;,
+            &quot;駒&quot;
+        ],
+        &quot;short_name&quot;: &quot;チェスの駒&quot;,
+        &quot;group&quot;: &quot;活動&quot;,
+        &quot;subgroup&quot;: &quot;ゲーム&quot;
+    },
+    &quot;♾&quot;: {
+        &quot;keywords&quot;: [
+            &quot;万物&quot;,
+            &quot;永遠&quot;,
+            &quot;無限&quot;,
+            &quot;無限大&quot;
+        ],
+        &quot;short_name&quot;: &quot;無限大&quot;,
+        &quot;group&quot;: &quot;記号&quot;,
+        &quot;subgroup&quot;: &quot;その他 シンボル&quot;
+    },
+...    
+</code></pre>
+
+<h3 id="2-group2emoji-ja-json-データ">2️⃣ <code>group2emoji_ja.json</code>データ</h3>
+
+<p><code>group2emoji_ja.json</code>には、<code>group</code>と<code>subgroup</code>が含まれており、それらのグループ/サブグループに対応する絵文字がリスト形式で列挙されています。これらの分類は<a href="http://www.unicode.org/emoji/charts-11.0/emoji-list.html">Emoji List, v11.0</a>に準拠します。</p>
+
+<pre><code>{
+    &quot;group&quot;: {
+        &quot;スマイリーと人々&quot;: [
+            &quot;😀&quot;,
+            &quot;😁&quot;,
+            &quot;😂&quot;,
+...
+
+    &quot;subgroup&quot;: {
+        &quot;顔 ポジティブ&quot;: [
+            &quot;😀&quot;,
+            &quot;😁&quot;,
+            &quot;😂&quot;,            
+...
+</code></pre>
+
+<h3 id="3-keyword2emoji-ja-json-データ">3️⃣ <code>keyword2emoji_ja.json</code>データ</h3>
+
+<p><code>keyword2emoji_ja.json</code>には、キーワードに対応する絵文字のリストがリスト形式で列挙されています。<code>emoji_ja.json</code>から自動的に作成しているので、キーワードは<a href="https://unicode.org/cldr/charts/latest/annotations/cjk.html">CJK Annotations</a>に登録されている日本語アノテーションに準拠します。</p>
+
+<pre><code>{
+...
+    &quot;驚き&quot;: [
+        &quot;🤨&quot;,
+        &quot;😯&quot;,
+        &quot;😲&quot;,
+        &quot;🤯&quot;
+    ],
+    &quot;ポーカーフェイス&quot;: [
+        &quot;😐&quot;
+    ],
+    &quot;無表情&quot;: [
+        &quot;😐&quot;,
+        &quot;😑&quot;
+    ],
+...
+}
+</code></pre>
+
+<hr />
+
+<h2 id="翻訳について">💬 翻訳について</h2>
+
+<p>本データセットは基本的にUnicodeにて定められた名前やキーワードを改変せず利用していますが、以下の項目は本辞書の作者が対訳を作成しております。</p>
 
 <ul>
-<li>ベクトル次元：<code>300</code></li>
-<li>文字の種類数：<code>44,637</code></li>
-<li>学習データに用いたフォント：<a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code></li>
+<li>グループ/サブグループ</li>
+<li>国旗の名称</li>
 </ul>
 
-<hr />
+<p>これらの翻訳に際しては、独自に下記ガイドラインを基準として作成しています。誤りやニュアンスが異なる翻訳がある場合は<a href="https://github.com/yagays/emoji-ja">yagays/emoji-ja</a>のissueより登録下さい。</p>
 
-<h2 id="使い方">使い方</h2>
+<p><a href="https://github.com/yagays/emoji-ja/wiki/Translation-Guideline">Translation Guideline · yagays/emoji-ja Wiki</a></p>
 
-<p>gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には<strong>加法性がありません</strong>。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。</p>
-
-<pre><code class="language-py">from gensim.models import KeyedVectors
-
-model = KeyedVectors.load_word2vec_format(&quot;data/convolutional_AE_300.bin&quot;, binary=True)
-</code></pre>
-
-<p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなく<a href="https://ja.wikipedia.org/wiki/%D0%90">キリル文字の「a」</a>です。</p>
-
-<pre><code class="language-py">In []: model.most_similar(&quot;a&quot;)
-Out[]:
-[('а', 1.0000001192092896),
- ('ả', 0.961397111415863),
- ('ä', 0.9610118269920349),
- ('ā', 0.9582812190055847),
- ('á', 0.957198441028595),
- ('à', 0.9558833241462708),
- ('å', 0.938391923904419),
- ('ầ', 0.9370290040969849),
- ('ǎ', 0.9368112087249756),
- ('ấ', 0.9365179538726807)]
-</code></pre>
-
-<p><a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code>に含まれるすべての文字に対して操作が可能です。</p>
-
-<pre><code class="language-py">In []: model.most_similar(&quot;油&quot;)
-Out[]:
-[('汕', 0.9025427103042603),
- ('泊', 0.8892871737480164),
- ('伷', 0.884428083896637),
- ('浊', 0.8678311109542847),
- ('沖', 0.8532482385635376),
- ('沽', 0.8451510667800903),
- ('沺', 0.8355003595352173),
- ('沾', 0.8313066959381104),
- ('涃', 0.8284391164779663),
- ('泩', 0.8275920152664185)]
-</code></pre>
-
-<p>ユニコードには同じような外見で異なるコードポイントが割り当てられているものが存在します。それらを区別する際には、<code>ord()</code>で数値への変換を行うか、<code>unicodedata.name()</code>で文字の名前を表示するのが有効です。</p>
-
-<pre><code class="language-py">In []: for char, score in model.most_similar(&quot;は&quot;, topn=15):
-    ...:     print(&quot;\t&quot;.join([char, str(score), hex(ord(char)), unicodedata.name(char, &quot;UNKNOWN&quot;)]))
-
-け      0.8354311585426331      0x3051  HIRAGANA LETTER KE
-ほ      0.8342610597610474      0x307b  HIRAGANA LETTER HO
-げ      0.7546985745429993      0x3052  HIRAGANA LETTER GE
-ば      0.7366447448730469      0x3070  HIRAGANA LETTER BA
-ぱ      0.7308192253112793      0x3071  HIRAGANA LETTER PA
-に      0.7154880166053772      0x306b  HIRAGANA LETTER NI
-⒑      0.7061284780502319      0x2491  NUMBER TEN FULL STOP
-냐      0.6923456192016602      0xb0d0  HANGUL SYLLABLE NYA
-댜      0.682737410068512       0xb31c  HANGUL SYLLABLE DYA
-⒙      0.6763017773628235      0x2499  NUMBER EIGHTEEN FULL STOP
-砂      0.6754936575889587      0x7802  CJK UNIFIED IDEOGRAPH-7802
-⒔      0.6732239723205566      0x2494  NUMBER THIRTEEN FULL STOP
-탅      0.6726106405258179      0xd0c5  HANGUL SYLLABLE TANJ
-㢟      0.6707605719566345      0x389f  CJK UNIFIED IDEOGRAPH-389F
-叵      0.6700443029403687      0x53f5  CJK UNIFIED IDEOGRAPH-53F5
-</code></pre>
-
-<p>Kerasなどに利用できる埋め込み層の作成方法は、下記サンプルコードを参照下さい。</p>
-
-<p><a href="https://github.com/yagays/glyph-aware-character-embedding/tree/master/example">glyph-aware-character-embedding/example at master · yagays/glyph-aware-character-embedding</a></p>
+<p>また、これらの翻訳された文字列は、上記の理由またはUnicodeによる公式のCJK Annotationが付与された場合には更新されることがあります。</p>
 
 <hr />
 
-<h2 id="手法">手法</h2>
+<h2 id="ライセンス">⚖️ ライセンス</h2>
 
-<h3 id="訓練">訓練</h3>
-
-<p>文字の図形的な埋め込み表現を得るために、文字を画像としてデータ化した上でConvolutional AutoEncoderを利用しました。AutoEncoderは入力と出力が同じ値になるようなニューラルネットで、構造として入力層/出力層よりも次元数の少ない中間層を持つことで、低次元での表現を学習することができます。</p>
-
-<p>学習データの作成においては<a href="https://arxiv.org/abs/1708.04755">[Su and Lee , 2017]</a>を参考に、利用したフォントが図形として描写可能なすべての文字に対して、背景が黒色で文字が白色の60x60の画像を作成しました。学習の際には、画像をグレースケールに変換後に正規化しました。</p>
-
-<p>Convolutional AutoEncoderの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
-
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/convAE_model.png" src="https://yag-ays.github.io/img/low/convAE_model.png" alt="convAE_model" /></figure>
-  <em>Fig. Convolutional AutoEncoderの概念図</em></p>
-
-<h3 id="評価">評価</h3>
-
-<p>テストデータの文字をConvolutional AutoEncoderで復元した結果は、以下のようになりました。中国語や韓国語、図形的な丸囲いの文字など、おおよそ文字を再構成できていることがわかります。</p>
-
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/model_output.png" src="https://yag-ays.github.io/img/low/model_output.png" alt="model_output" /></figure>
-  <em>Fig. 上段：convAEに入力された画像 下段：convAEで出力された画像</em></p>
+<p><a href="https://github.com/yagays/emoji-ja/blob/master/LICENSE.md">MITライセンス （MIT）</a></p>
 
 <hr />
 
-<h2 id="ライセンス">ライセンス</h2>
+<h2 id="参考">📝 参考</h2>
 
-<p><strong>CC-BY</strong></p>
-
-<p>このリソースは<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a>の下に提供されています。</p>
-
-<h2 id="クレジット">クレジット</h2>
+<h3 id="コーパス">コーパス</h3>
 
 <ul>
-<li><a href="https://www.google.com/get/noto/">Google Noto Fonts</a>: <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">SIL Open Font License, Version 1.1</a></li>
-</ul>
-
-<hr />
-
-<h2 id="参考">参考</h2>
-
-<h3 id="論文">論文</h3>
+<li>佐藤,2015 : <a href="https://www.slideshare.net/overlast/mecab-ipadicneologdpydatatokyo05pub-48560060">🍻(Beer Mug)の読み方を考える(mecab-ipadic-NEologdのUnicode 絵文字対応)</a></li>
+<li><a href="https://qiita.com/risacan/items/7d80f7d53e3fb954a8fa">日絵翻訳😍 with emojilib - Qiita</a>
 
 <ul>
-<li><a href="https://ieeexplore.ieee.org/document/7841067/">Document classification through image-based character embedding and wildcard training - IEEE Conference Publication</a>
-
-<ul>
-<li>pdf: <a href="http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf">http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf</a></li>
+<li>英語の<code>emojilib</code>に登録されている絵文字と単語の辞書を用いて、日本語の文字列を機械翻訳することで対応付けた事例</li>
 </ul></li>
-<li><a href="https://arxiv.org/abs/1708.04755">[1708.04755] Learning Chinese Word Representations From Glyphs Of Characters</a></li>
-<li><a href="https://arxiv.org/abs/1709.00028">[1709.00028] Glyph-aware Embedding of Chinese Characters</a></li>
-<li><a href="https://link.springer.com/chapter/10.1007/978-3-319-70096-0_39">Deep Clustering with Convolutional Autoencoders | SpringerLink</a></li>
-<li><a href="https://arxiv.org/abs/1704.04859">[1704.04859] Learning Character-level Compositionality with Visual Features</a></li>
+<li><a href="https://github.com/muan/emojilib">muan/emojilib: Emoji keyword library.</a></li>
+<li><a href="https://emojipedia.org/">📙 Emojipedia — 😃 Home of Emoji Meanings 💁👌🎍😍</a></li>
+<li><a href="http://unicode.org/emoji/charts/full-emoji-list.html">Full Emoji List, v11.0</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Miscellaneous_Symbols_and_Pictographs#Emoji_modifiers">Miscellaneous Symbols and Pictographs - Wikipedia</a></li>
 </ul>
 
-<h3 id="ウェブ">ウェブ</h3>
+<h3 id="対訳">対訳</h3>
 
 <ul>
-<li><a href="https://elix-tech.github.io/ja/2016/07/17/autoencoder.html">Kerasで学ぶAutoencoder</a></li>
-<li><a href="http://dl-kento.hatenablog.com/entry/2018/02/22/200811">PytorchによるAutoEncoder Familyの実装 - 前に逃げる</a></li>
-<li><a href="http://hironsan.hatenablog.com/entry/learning-character-embeddings">Pythonで日本語の文字分散表現を学習する - 自然言語処理の深遠</a></li>
-<li><a href="https://minimaxir.com/2017/04/char-embeddings/">Pretrained Character Embeddings for Deep Learning and Automatic Text Generation</a></li>
-</ul>
-
-<h3 id="データセット">データセット</h3>
-
-<ul>
-<li><a href="http://www.jnlp.org/SNOW/D17">SNOW D17: 形の似ている漢字リスト - 長岡技術科学大学 自然言語処理研究室</a></li>
+<li><a href="http://sunpillar.jf.land.to/bekkan/data/character/utf-8-emoji.html">Unicodeの絵文字 [SUNPILLAR情報舘]</a></li>
+<li><a href="https://lets-emoji.com/">Let&rsquo;s EMOJI｜絵文字一覧と絵文字検索🎉</a></li>
 </ul>
 
 
