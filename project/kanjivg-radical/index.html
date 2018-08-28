@@ -957,10 +957,6 @@ margin-left: -4%;
 
 
 
-  <style type="text/css" media="screen">
-    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;position:absolute;-webkit-transform:translateZ(0);transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px);-webkit-filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);-webkit-filter:blur(20px);-webkit-animation:sharpen .5s both;animation:sharpen .5s both}@-webkit-keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}@keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}
-  </style>
-
 
 
 
@@ -1023,9 +1019,8 @@ margin-left: -4%;
             <div class="markdown">
                 
     
-    
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/kanji_header.png" src="https://yag-ays.github.io/img/low/kanji_header.png" alt="kanji_header" /></p></figure>
+<p><img src="https://yag-ays.github.io/img/kanji_header.png" alt="kanji_header" /></p>
 
 <p>kanjivg-radicalは、漢字を構成する<a href="https://ja.wikipedia.org/wiki/%E9%83%A8%E9%A6%96">部首</a>や<a href="https://ja.wikipedia.org/wiki/%E5%81%8F%E6%97%81">偏旁</a>を容易に扱えるように対応付けしたデータセットです。</p>
 
@@ -1335,8 +1330,6 @@ radical2kanji[&quot;月&quot;] # radical to kanjis
 
 
 
-  <script src="https://yag-ays.github.io/js/progressively.min.js" defer></script>
-
 
 
 
@@ -1360,8 +1353,6 @@ if (!doNotTrack) {
     
       hljs.initHighlighting();
     
-    
-      progressively.init({delay: 30, throttle: 50});
     
     
   };

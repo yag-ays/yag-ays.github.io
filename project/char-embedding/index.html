@@ -957,10 +957,6 @@ margin-left: -4%;
 
 
 
-  <style type="text/css" media="screen">
-    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;position:absolute;-webkit-transform:translateZ(0);transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px);-webkit-filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);-webkit-filter:blur(20px);-webkit-animation:sharpen .5s both;animation:sharpen .5s both}@-webkit-keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}@keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}
-  </style>
-
 
 
 
@@ -1023,9 +1019,8 @@ margin-left: -4%;
             <div class="markdown">
                 
     
-    
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/char_emebdding_01.png" src="https://yag-ays.github.io/img/low/char_emebdding_01.png" alt="char_emebdding_01" /></p></figure>
+<p><img src="https://yag-ays.github.io/img/char_emebdding_01.png" alt="char_emebdding_01" /></p>
 
 <p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。</p>
 
@@ -1137,14 +1132,14 @@ Out[]:
 
 <p>Convolutional AutoEncoderの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/convAE_model.png" src="https://yag-ays.github.io/img/low/convAE_model.png" alt="convAE_model" /></figure>
+<p><img src="https://yag-ays.github.io/img/convAE_model.png" alt="convAE_model" />
   <em>Fig. Convolutional AutoEncoderの概念図</em></p>
 
 <h3 id="評価">評価</h3>
 
 <p>テストデータの文字をConvolutional AutoEncoderで復元した結果は、以下のようになりました。中国語や韓国語、図形的な丸囲いの文字など、おおよそ文字を再構成できていることがわかります。</p>
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/model_output.png" src="https://yag-ays.github.io/img/low/model_output.png" alt="model_output" /></figure>
+<p><img src="https://yag-ays.github.io/img/model_output.png" alt="model_output" />
   <em>Fig. 上段：convAEに入力された画像 下段：convAEで出力された画像</em></p>
 
 <hr />
@@ -1271,8 +1266,6 @@ Out[]:
 
 
 
-  <script src="https://yag-ays.github.io/js/progressively.min.js" defer></script>
-
 
 
 
@@ -1296,8 +1289,6 @@ if (!doNotTrack) {
     
       hljs.initHighlighting();
     
-    
-      progressively.init({delay: 30, throttle: 50});
     
     
   };

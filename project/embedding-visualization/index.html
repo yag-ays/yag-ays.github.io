@@ -957,10 +957,6 @@ margin-left: -4%;
 
 
 
-  <style type="text/css" media="screen">
-    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;position:absolute;-webkit-transform:translateZ(0);transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px);-webkit-filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);-webkit-filter:blur(20px);-webkit-animation:sharpen .5s both;animation:sharpen .5s both}@-webkit-keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}@keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}
-  </style>
-
 
 
 
@@ -1022,7 +1018,6 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    
     
 
 <video autoplay loop width="680">
@@ -1099,7 +1094,7 @@ writer.add_embedding(torch.FloatTensor(weights), metadata=labels)
 
 <p>可視化の具体例として、<a href="http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/">日本語 Wikipedia エンティティベクトル</a>を可視化してみます。</p>
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/embedding-visualization_01.png" src="https://yag-ays.github.io/img/low/embedding-visualization_01.png" alt="embedding-visualization_01" /></p></figure>
+<p><img src="https://yag-ays.github.io/img/embedding-visualization_01.png" alt="embedding-visualization_01" /></p>
 
 <p>これはPCAでの可視化の事例です。3次元上の点をクリックすると、その単語の情報とともに、類似した点のラベル情報も同時に確認することができます。ここでは「路線」という点をクリックしており、それに対応する類似単語が中央の3次元グラフ上でも右側のリストでも表示されています。</p>
 
@@ -1109,7 +1104,7 @@ writer.add_embedding(torch.FloatTensor(weights), metadata=labels)
 
 <p>また、画像を含めた可視化も可能です。本サイトで公開している<a href="https://yag-ays.github.io/project/char-embedding/">文字の図形的な埋め込み表現</a>でも同様に可視化をしてみます。画面上で黒い四角の文字が表示されていますが、これはあらかじめ用意してあった画像を読み込んでいるためです。</p>
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/embedding-visualization_02.png" src="https://yag-ays.github.io/img/low/embedding-visualization_02.png" alt="embedding-visualization_02" /></p></figure>
+<p><img src="https://yag-ays.github.io/img/embedding-visualization_02.png" alt="embedding-visualization_02" /></p>
 
 <p>ここで使用しているTensorBoardの変換のためのコードは、以下から取得可能です。</p>
 
@@ -1201,8 +1196,6 @@ writer.add_embedding(torch.FloatTensor(weights), metadata=labels)
 
 
 
-  <script src="https://yag-ays.github.io/js/progressively.min.js" defer></script>
-
 
 
 
@@ -1226,8 +1219,6 @@ if (!doNotTrack) {
     
       hljs.initHighlighting();
     
-    
-      progressively.init({delay: 30, throttle: 50});
     
     
   };

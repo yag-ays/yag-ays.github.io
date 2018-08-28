@@ -957,10 +957,6 @@ margin-left: -4%;
 
 
 
-  <style type="text/css" media="screen">
-    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;position:absolute;-webkit-transform:translateZ(0);transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px);-webkit-filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);-webkit-filter:blur(20px);-webkit-animation:sharpen .5s both;animation:sharpen .5s both}@-webkit-keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}@keyframes sharpen{from{filter:blur(20px);-webkit-filter:blur(20px)}to{filter:blur(0);-webkit-filter:blur(0)}}
-  </style>
-
 
 
 
@@ -1023,9 +1019,8 @@ margin-left: -4%;
             <div class="markdown">
                 
     
-    
 
-<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/cirrus_header.png" src="https://yag-ays.github.io/img/low/cirrus_header.png" alt="https://www.pexels.com/photo/black-and-white-blank-challenge-connect-262488/" /></p></figure>
+<p><img src="https://yag-ays.github.io/img/cirrus_header.png" alt="https://www.pexels.com/photo/black-and-white-blank-challenge-connect-262488/" /></p>
 
 <p>Wikipediaのデータを容易に利用できる<a href="https://www.mediawiki.org/wiki/Help:CirrusSearch/ja">CirrusSearch</a>のダンプデータについて紹介します。これを利用することにより、Wikipediaの巨大なXMLデータをパースしたり、<a href="http://medialab.di.unipi.it/wiki/Wikipedia_Extractor">Wikipedia Extractor</a>など既存のツールで前処理することなく、直にWikipediaの各種データにアクセスすることができます。</p>
 
@@ -1278,8 +1273,6 @@ with gzip.open(&quot;jawiki-20180611-cirrussearch-content.json.gz&quot;) as f:
 
 
 
-  <script src="https://yag-ays.github.io/js/progressively.min.js" defer></script>
-
 
 
 
@@ -1303,8 +1296,6 @@ if (!doNotTrack) {
     
       hljs.initHighlighting();
     
-    
-      progressively.init({delay: 30, throttle: 50});
     
     
   };
