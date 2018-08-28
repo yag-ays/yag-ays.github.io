@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yag-ays.github.io/project/embedding-visualization/</loc>
+    <lastmod>2018-08-28T21:37:26+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yag-ays.github.io/project/emoji-ja/</loc>
     <lastmod>2018-08-23T07:41:44+09:00</lastmod>
   </url>
@@ -34,13 +39,13 @@
   
   <url>
     <loc>https://yag-ays.github.io/</loc>
-    <lastmod>2018-08-23T07:41:44+09:00</lastmod>
+    <lastmod>2018-08-28T21:37:26+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://yag-ays.github.io/project/</loc>
-    <lastmod>2018-08-23T07:41:44+09:00</lastmod>
+    <lastmod>2018-08-28T21:37:26+09:00</lastmod>
     <priority>0</priority>
   </url>
   

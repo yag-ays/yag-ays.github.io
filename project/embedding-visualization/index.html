@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/" />
-<meta property="og:title" content="Project" />
-<meta property="twitter:title" content="Project">
+<meta property="og:url" content="https://yag-ays.github.io/project/embedding-visualization/" />
+<meta property="og:title" content="学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)" />
+<meta property="twitter:title" content="学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Out-of-the-box - Project 
+     Out-of-the-box - 学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX) 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/">
+<link rel="canonical" href="https://yag-ays.github.io/project/embedding-visualization/">
 
 
 <style media="screen">
@@ -977,8 +977,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/project/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -986,7 +984,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1011,54 +1009,129 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Project</div>
-                <ul>
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 28, 2018</span>
-    <a href="https://yag-ays.github.io/project/embedding-visualization/"><span>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</span></a>
-</li>
+            <div class="page-heading">
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 23, 2018</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja/"><span>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</span></a>
-</li>
+    学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 6, 2018</span>
-    <a href="https://yag-ays.github.io/project/kanjivg-radical/"><span>漢字を構成する部首/偏旁のデータセット</span></a>
-</li>
+</div>
 
-                        
-                    
-                        <li class="groupby">Jul, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 30, 2018</span>
-    <a href="https://yag-ays.github.io/project/cirrus/"><span>Wikipedia CirrusSearchのダンプデータを利用する</span></a>
-</li>
+            <div class="markdown">
+                
+    
+    
 
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 25, 2018</span>
-    <a href="https://yag-ays.github.io/project/char-embedding/"><span>文字の図形的な埋め込み表現 Glyph-aware Character Embedding</span></a>
-</li>
+<video autoplay loop width="680">
+　　<source src="https://yag-ays.github.io/img/embedding-visualization_02.webm">
+</video>
 
-                        
-                    
-                </ul>
+<p>word2vecや系列モデル等で学習した分散表現の埋め込みベクトル（word embeddings）は、単語の意味をベクトル空間上で表現することが可能です。最も有名な例では「King - Man + Woman = Queen」のように意味としての加算や減算がベクトル計算で類推可能なこともあり、ベクトル空間の解釈として低次元へ写像する形で分散表現の可視化が行われています。</p>
+
+<p>可視化の際に用いられるツールとしては、<a href="https://www.tensorflow.org/">TensorFlow</a>のツールの一つである<a href="https://www.tensorflow.org/guide/summaries_and_tensorboard">TensorBoard</a>が、豊富な機能とインタラクティブな操作性を備えていて一番使い勝手が良いと思います。ただ、TensorFlowと組み合わせた可視化は容易なのですが、他のツールやパッケージで作成したコードをそのまま読み込めないなど、かゆいところに手が届かないと感じる部分もあります。</p>
+
+<p>そこで今回は、すでに学習された単語の分散表現を可視化するために、</p>
+
+<ol>
+<li><a href="https://radimrehurek.com/gensim/">gensim</a>を用いてベクトルを読み込み、</li>
+<li><a href="https://pytorch.org/">PyTorch</a>のTensor形式に変換したうえで、</li>
+<li><a href="https://github.com/lanpa/tensorboardX">tensorboardX</a>を用いてTensorBoardが読み込めるログ形式に出力する</li>
+</ol>
+
+<p>ことで、TensorBoard上で分散表現を可視化します。いろいろなステップがあって一見して遠回りに思えますが、コード自体は10行に満たないほどで完結します。個人的には、Tensorflowで学習済み分散表現を読み込むよりも、これらを組み合わせたやり方のほうが簡潔に書くことができて好きです。</p>
+
+<hr />
+
+<h2 id="方法">方法</h2>
+
+<h3 id="準備">準備</h3>
+
+<p>必要な外部パッケージは、<code>gensim</code>/<code>pytorch</code>/<code>tensorboardX</code>/<code>tensorflow</code>の4つです。インストールされていない場合は<code>pip</code>などであらかじめインストールしておきます。</p>
+
+<pre><code class="language-sh">$ pip isntall gensim torch tensorboardX tensorflow
+</code></pre>
+
+<h3 id="分散表現の読み込みからtensorboard形式のログ出力まで">分散表現の読み込みからtensorboard形式のログ出力まで</h3>
+
+<p>TensorBoardで可視化するまでに必要な本体のコードです。これだけ！</p>
+
+<pre><code class="language-py">import gensim
+import torch
+from tensorboardX import SummaryWriter
+
+vec_path = &quot;entity_vector.model.bin&quot;
+
+writer = SummaryWriter()
+model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True)
+weights = model.vectors
+labels = model.index2word
+
+# DEBUG: visualize vectors up to 1000
+weights = weights[:1000]
+labels = labels[:1000]
+
+writer.add_embedding(torch.FloatTensor(weights), metadata=labels)
+</code></pre>
+
+<p>コード内の<code>vec_path</code>は、任意の学習済みベクトルのファイルに置き換えてください。</p>
+
+<p>また、途中で差し込まれている<code>DEBUG</code>の部分では、TensorBoardの読み込みスピード等を考慮して対象単語数を1000に絞っています。本来ならばこのような操作は不要ですが、かといってすべてのベクトルをTensorBoardで読み込んだとしても、デフォルトではランダムに10万件しか表示されません。学習済み分散表現の単語数があまりにも多い場合は、自分の可視化したい単語等に限定するなど少し工夫が必要です。</p>
+
+<p><a href="https://github.com/tensorflow/tensorboard/issues/773">Embedding projector only loads first 100,000 vectors · Issue #773 · tensorflow/tensorboard</a></p>
+
+<h3 id="tensorboardで可視化">TensorBoardで可視化</h3>
+
+<p>上記スクリプトを実行すると、実行されたディレクトリに<code>runs/</code>が作成されます。TensorBoardの起動時に<code>runs</code>ディレクトリを指定することで、変換した単語の分散表現が可視化できます。</p>
+
+<pre><code>$ tensorboard --logdir=runs
+</code></pre>
+
+<p>上記コマンドを実行した状態で <a href="http://localhost:6006/">http://localhost:6006/</a> にアクセスすると、PROJECTORのページにてグラフが確認できます。</p>
+
+<hr />
+
+<h2 id="可視化の事例">可視化の事例</h2>
+
+<h3 id="日本語-wikipedia-エンティティベクトル">日本語 Wikipedia エンティティベクトル</h3>
+
+<p>可視化の具体例として、<a href="http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/">日本語 Wikipedia エンティティベクトル</a>を可視化してみます。</p>
+
+<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/embedding-visualization_01.png" src="https://yag-ays.github.io/img/low/embedding-visualization_01.png" alt="embedding-visualization_01" /></p></figure>
+
+<p>これはPCAでの可視化の事例です。3次元上の点をクリックすると、その単語の情報とともに、類似した点のラベル情報も同時に確認することができます。ここでは「路線」という点をクリックしており、それに対応する類似単語が中央の3次元グラフ上でも右側のリストでも表示されています。</p>
+
+<p>3次元グラフ上ではまとまりがあまり無いように見えますが、これはPCAで3次元に圧縮したものを可視化しているためです。TensorBoardに用意されているもう一つの次元圧縮の手法であるT-SNEを使うことで、より類似した単語が3次元空間上で近い位置に配置されるように可視化されます。</p>
+
+<h3 id="文字の図形的な埋め込み表現">文字の図形的な埋め込み表現</h3>
+
+<p>また、画像を含めた可視化も可能です。本サイトで公開している<a href="https://yag-ays.github.io/project/char-embedding/">文字の図形的な埋め込み表現</a>でも同様に可視化をしてみます。画面上で黒い四角の文字が表示されていますが、これはあらかじめ用意してあった画像を読み込んでいるためです。</p>
+
+<p><figure class="progressive"><img class="progressive__img progressive--not-loaded" data-progressive="https://yag-ays.github.io/img/embedding-visualization_02.png" src="https://yag-ays.github.io/img/low/embedding-visualization_02.png" alt="embedding-visualization_02" /></p></figure>
+
+<p>ここで使用しているTensorBoardの変換のためのコードは、以下から取得可能です。</p>
+
+<p><a href="https://github.com/yagays/glyph-aware-character-embedding/blob/master/src/make_tbx_visualize.py">glyph-aware-character-embedding/make_tbx_visualize.py at master · yagays/glyph-aware-character-embedding</a></p>
+
+<hr />
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://github.com/lanpa/tensorboardX">lanpa/tensorboardX: tensorboard for pytorch (and chainer, mxnet, numpy, ...)</a></li>
+<li><a href="https://qiita.com/ciela/items/ae1737bf6cb357cda900">PyTorch から tensorboardX で画像データの Embedding をとってみたら結構楽だなと感じたお話 - Qiita</a></li>
+</ul>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

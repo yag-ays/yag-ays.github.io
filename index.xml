@@ -6,10 +6,25 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 23 Aug 2018 07:41:44 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Aug 2018 21:37:26 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</title>
+      <link>https://yag-ays.github.io/project/embedding-visualization/</link>
+      <pubDate>Tue, 28 Aug 2018 21:37:26 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/embedding-visualization/</guid>
+      <description>word2vecや系列モデル等で学習した分散表現の埋め込みベクトル（word embeddings）は、単語の意味をベクトル空間上で表現することが可能です。最も有名な例では「King - Man + Woman = Queen」のように意味としての加算や減算がベクトル計算で類推可能なこともあり、ベクトル空間の解釈として低次元へ写像する形で分散表現の可視化が行われています。
+可視化の際に用いられるツールとしては、TensorFlowのツールの一つであるTensorBoardが、豊富な機能とインタラクティブな操作性を備えていて一番使い勝手が良いと思います。ただ、TensorFlowと組み合わせた可視化は容易なのですが、他のツールやパッケージで作成したコードをそのまま読み込めないなど、かゆいところに手が届かないと感じる部分もあります。
+そこで今回は、すでに学習された単語の分散表現を可視化するために、
+ gensimを用いてベクトルを読み込み、 PyTorchのTensor形式に変換したうえで、 tensorboardXを用いてTensorBoardが読み込めるログ形式に出力する  ことで、TensorBoard上で分散表現を可視化します。いろいろなステップがあって一見して遠回りに思えますが、コード自体は10行に満たないほどで完結します。個人的には、Tensorflowで学習済み分散表現を読み込むよりも、これらを組み合わせたやり方のほうが簡潔に書くことができて好きです。
+方法 準備 必要な外部パッケージは、gensim/pytorch/tensorboardX/tensorflowの4つです。インストールされていない場合はpipなどであらかじめインストールしておきます。
+$ pip isntall gensim torch tensorboardX tensorflow  分散表現の読み込みからtensorboard形式のログ出力まで TensorBoardで可視化するまでに必要な本体のコードです。これだけ！
+import gensim import torch from tensorboardX import SummaryWriter vec_path = &amp;quot;entity_vector.model.bin&amp;quot; writer = SummaryWriter() model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True) weights = model.vectors labels = model.index2word # DEBUG: visualize vectors up to 1000 weights = weights[:1000] labels = labels[:1000] writer.add_embedding(torch.FloatTensor(weights), metadata=labels)  コード内のvec_pathは、任意の学習済みベクトルのファイルに置き換えてください。</description>
+    </item>
     
     <item>
       <title>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</title>
