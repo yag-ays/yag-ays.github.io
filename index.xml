@@ -6,10 +6,31 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 12 Nov 2018 21:54:12 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 07 Dec 2018 08:56:02 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A La Carte Embeddingの実装</title>
+      <link>https://yag-ays.github.io/project/alacarte/</link>
+      <pubDate>Fri, 07 Dec 2018 08:56:02 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/alacarte/</guid>
+      <description>ACL2018にて発表された&amp;ldquo;A La Carte Embedding: Cheap but Effective Induction of Semantic Feature Vectors&amp;rdquo;を実装しました。未知語やngramなどの単語埋め込みを既知の学習済みベクトルから計算する手法です。
+この記事はSansan Advent Calendar 2018 の8日目の記事です。
+概要 &amp;ldquo;A La Carte Embedding&amp;rdquo;は、文脈における周囲の単語埋め込みを平均したものが学習済みの単語埋め込みと一致するように線形変換を学習することで、未知語に関しても単語埋め込みのベクトルを推定する手法です。これにより、通常の単語埋め込みでは学習が難しいような低頻度語であったり、複合名詞などの複数の単語からなる語においても、分散表現を得ることができます。
+本論文の著者らは、これまでにSIF Embeddingなど理論寄りな方面から単語埋め込みや文章のベクトル表現を研究しているプリンストン大学のSanjeev Aroraのグループです。
+ロジック A La Carte Embeddingに必要なのは、大規模コーパスと学習済みの単語ベクトルです。
+学習の流れとしては、
+ 単語埋め込みを計算したい低頻度語やngramなどの語彙を用意する 学習済みの単語埋め込みの語彙と1.で用意した語彙を対象に、学習コーパス内で文脈内に存在する単語埋め込みの和や出現数から文脈における埋め込みを得る これらのうち学習済みの単語埋め込みに関しては正解がわかっているので、2.で作成した文脈における埋め込みのがこの正解と一致するような線形変換を学習する 学習した線形変換を利用して、2.で計算した低頻度語やngramなどのベクトル表現に関しても線形変換を行って単語埋め込みを得る  という感じです。
+例えば(&amp;quot;単語&amp;quot;,&amp;quot;埋め込み&amp;quot;)というbigramのベクトル表現を得たいと思ったとしたら、コーパス内でこのbigramの周囲の単語埋め込みのベクトルを足し合わせてその出現頻度で割ることで、2.の文脈埋め込みが得られます。ここで言う文脈はword2vecと同じく、特定のウィンドウ幅に含まれる単語の集合のようなものです。それをコーパス内で先頭から順に計算していきます。これをすべての語彙で行います。あとは既知の単語埋め込みから学習させた線形変換を掛けることによって目的とするベクトル表現が得られます。
+ソースコード yagays/alacarte_embedding: Python implementation of A La Carte Embedding
+なお、本ソースコードで精度評価やオリジナル実装との比較は行っていません。バグや細部の実装の違いが含まれている場合がありますのでご注意ください。
+オリジナルの実装 著者らがオリジナルの実装を公開しています。こちらは(当然ながら)スペースで単語が分割できる英語などの言語を対象にしています。
+ NLPrinceton/ALaCarte  使い方 ALaCarteEmbeddingを作成し、コーパスに対して実行します。パラメータは以下の通りです。
+ word2vec: 学習済み単語埋め込み  gensimのWord2VecKeyedVectorsを前提としています  tokenize: トークナイザ min_count: 対象とする単語のコーパス内での頻度の最小値 ngram: 対象とするngram  alc = ALaCarteEmbedding(word2vec=w2v, tokenize=tokenize, min_count=10, ngram=[1, 2]) alc.</description>
+    </item>
     
     <item>
       <title>Word Embedding based Edit Distanceの実装</title>
