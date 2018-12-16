@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/" />
-<meta property="og:title" content="Project" />
-<meta property="twitter:title" content="Project">
+<meta property="og:url" content="https://yag-ays.github.io/project/wikipedia-pageview/" />
+<meta property="og:title" content="Wikipediaの記事ごとのページビューを取得する" />
+<meta property="twitter:title" content="Wikipediaの記事ごとのページビューを取得する">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Out-of-the-box - Project 
+     Out-of-the-box - Wikipediaの記事ごとのページビューを取得する 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/">
+<link rel="canonical" href="https://yag-ays.github.io/project/wikipedia-pageview/">
 
 
 <style media="screen">
@@ -973,8 +973,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/project/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -982,7 +980,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1007,78 +1005,125 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Project</div>
-                <ul>
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 16, 2018</span>
-    <a href="https://yag-ays.github.io/project/wikipedia-pageview/"><span>Wikipediaの記事ごとのページビューを取得する</span></a>
-</li>
+            <div class="page-heading">
 
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 7, 2018</span>
-    <a href="https://yag-ays.github.io/project/alacarte/"><span>A La Carte Embeddingの実装</span></a>
-</li>
+    Wikipediaの記事ごとのページビューを取得する
 
-                        
-                    
-                        <li class="groupby">Nov, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Nov 12, 2018</span>
-    <a href="https://yag-ays.github.io/project/wed/"><span>Word Embedding based Edit Distanceの実装</span></a>
-</li>
+</div>
 
-                        
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 28, 2018</span>
-    <a href="https://yag-ays.github.io/project/embedding-visualization/"><span>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</span></a>
-</li>
+            <div class="markdown">
+                
+    
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 23, 2018</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja/"><span>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</span></a>
-</li>
+<p><img src="https://yag-ays.github.io/img/wikipedia-pageview_header.png" alt="https://www.pexels.com/photo/marketing-iphone-smartphone-notebook-34069/" /></p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 6, 2018</span>
-    <a href="https://yag-ays.github.io/project/kanjivg-radical/"><span>漢字を構成する部首/偏旁のデータセット</span></a>
-</li>
+<p>自然言語処理においてWikipediaのテキストコーパスは広く利用されており、各記事のページビュー(閲覧数)の情報もトレンド分析やエンティティリンキング等で用いられています。この記事では、Wikipediaの記事ごとのページビューを取得する方法を紹介します。</p>
 
-                        
-                    
-                        <li class="groupby">Jul, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 30, 2018</span>
-    <a href="https://yag-ays.github.io/project/cirrus/"><span>Wikipedia CirrusSearchのダンプデータを利用する</span></a>
-</li>
+<h2 id="tl-dr">tl;dr</h2>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 25, 2018</span>
-    <a href="https://yag-ays.github.io/project/char-embedding/"><span>文字の図形的な埋め込み表現 Glyph-aware Character Embedding</span></a>
-</li>
+<ul>
+<li>ウェブから簡単に調べるなら → Pageviews Analysis</li>
+<li>少数の記事についてプログラムから利用したいなら → Pageview API</li>
+<li>大量の記事についてプログラムから利用したいなら → Wikimedia Analytics Datasets</li>
+</ul>
 
-                        
-                    
-                </ul>
+<h2 id="1-pageviews-analysisを利用する">1. Pageviews Analysisを利用する</h2>
+
+<p>手軽にページビューを確認するには「<a href="https://tools.wmflabs.org/pageviews/">Pageviews Analysis</a>」というウェブサイトがもっとも容易です。</p>
+
+<p>Pageviews Analysisではグラフによる時系列の可視化、複数記事の比較、編集履歴の回数、csvやjsonによるダウンロードなど、多様な機能を備えています。また現在どのようなページが多く閲覧されているかといった<a href="https://tools.wmflabs.org/topviews/">言語ごとの閲覧数ランキング</a>などの機能もあり、とりあえず何か調べるなら大抵のことはPageviews Analysisで完結すると思います。</p>
+
+<p><img src="https://yag-ays.github.io/img/wikipedia-pageview_01.png" alt="wikipedia-pageview_01" /></p>
+
+<p>ちなみに日本語の記事を検索する場合は「プロジェクト」を<code>ja.wikipedia.org</code>に指定するのを忘れずに。</p>
+
+<h2 id="2-pageview-apiを利用する">2. Pageview APIを利用する</h2>
+
+<p>Wikimediaにはページビューを取得する<a href="https://www.mediawiki.org/wiki/REST_API">REST API</a>が用意されています。指定できるパラメータや得られる情報ははPageviews Analysisと大差ありませんが、json形式で取得できるのでプログラムへの連携が簡単になります。幾つかリストアップした記事ごとに手軽にページビューを得たいという場合には最適な方法です。ただし100リクエスト/秒という制限があるので、日本語の記事全部のページビューを得たいといった用途には不向きです。</p>
+
+<p><a href="https://wikimedia.org/api/rest_v1/">Wikimedia REST APIドキュメント</a></p>
+
+<p>こちらもREST APIのドキュメントからパラメータを指定してリクエストを送り、ウェブ上で結果を確認する機能があります。同時に<code>curl</code>のコマンドやURLのエンドポイントも自動で生成してくれるので、サンプルで動かす際には便利です。</p>
+
+<p>例えばプロジェクト<code>ja.wikipedia.org</code>における<code>機械学習</code>という記事の<code>2018/12/01</code>から<code>2018/12/03</code>ページビューを得るときのコマンドは以下のようになりました。</p>
+
+<pre><code class="language-sh">$ curl -X GET --header 'Accept: application/json; charset=utf-8' 'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/%E8%87%AA%E7%84%B6%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86/daily/20181201/20181203'
+</code></pre>
+
+<p>返ってくる結果は以下のようになります。</p>
+
+<pre><code class="language-json">{
+  &quot;items&quot;: [
+    {
+      &quot;project&quot;: &quot;ja.wikipedia&quot;,
+      &quot;article&quot;: &quot;機械学習&quot;,
+      &quot;granularity&quot;: &quot;daily&quot;,
+      &quot;timestamp&quot;: &quot;2018120100&quot;,
+      &quot;access&quot;: &quot;all-access&quot;,
+      &quot;agent&quot;: &quot;all-agents&quot;,
+      &quot;views&quot;: 210
+    },
+[...]
+  ]
+}
+</code></pre>
+
+<p>なお、ドキュメントにも記載されていますが、複数のクエリを機械的にリクエストするときには<code>User-Agent</code>や<code>Api-User-Agent</code>をヘッダに含めてリクエスト送り元がわかるようにしましょう。Pythonの<code>requests</code>パッケージで実行する場合は以下のようにヘッダで情報を付与します。</p>
+
+<pre><code class="language-python">import requests
+
+url = &quot;https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/daily/20181201/20181203&quot;
+headers = {&quot;User-Agent&quot;: &quot;yanagi.ayase@gmail.com&quot;}
+
+r = requests.get(url, headers=headers)
+print(r.json())
+</code></pre>
+
+<p>ちなみに、Rにはこのエンドポイントを叩くパッケージがあるので、そちらを利用する方が簡単そうです。</p>
+
+<ul>
+<li><a href="https://github.com/petermeissner/wikipediatrend">petermeissner/wikipediatrend: A convenience R package for getting Wikipedia article access statistics (and more).</a></li>
+</ul>
+
+<h2 id="3-wikimedia-analytics-datasetsを利用する">3. Wikimedia Analytics Datasetsを利用する</h2>
+
+<p>最後はWikimediaが配布しているデータを直に見に行く方法です。こちらではすべてのwikipediaのページにおける2015年からの毎時間ごとのページビューのデータがgz圧縮されたファイルで公開されています。2018/12現在で毎時40~60MBほどのデータが吐き出されているので扱うのが少し大変ですが、全記事に対するページビューを計算したいという場合にはこの方法しかありません。</p>
+
+<p><a href="https://dumps.wikimedia.org/other/pageviews/readme.html">Analytics: Pageviews</a></p>
+
+<p>ファイル名は<code>pageviews-YYYYMMDD-hhnnss.gz</code>という命名規則になっており、スペース区切りで<code>domain_code page_title count_views total_response_size</code>という内容で保存されています。肝心のページビューは<code>count_views</code>です。</p>
+
+<pre><code>aa Special:Statistics 1 0
+aa Wikipedia 2 0
+aa Wikipedia:Community_Portal 2 0
+[...]
+ja 機械可読目録 1 0
+ja 機械学習 33 0
+ja 機械工学 3 0
+[...]
+</code></pre>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Wikipedia:Pageview_statistics">Wikipedia:Pageview statistics - Wikipedia</a></li>
+<li><a href="https://stackoverflow.com/questions/5323589/how-to-use-wikipedia-api-to-get-the-page-view-statistics-of-a-particular-page-in">How to use Wikipedia API to get the page view statistics of a particular page in wikipedia? - Stack Overflow</a></li>
+<li><a href="https://atyks.hateblo.jp/entry/2015/03/31/000100">Wikipediaのアクセス数を取得する - そうだ車輪と名づけよう 7th</a></li>
+</ul>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

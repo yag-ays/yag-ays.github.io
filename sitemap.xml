@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yag-ays.github.io/project/wikipedia-pageview/</loc>
+    <lastmod>2018-12-16T12:42:50+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yag-ays.github.io/project/alacarte/</loc>
     <lastmod>2018-12-07T08:56:02+09:00</lastmod>
   </url>
@@ -49,13 +54,13 @@
   
   <url>
     <loc>https://yag-ays.github.io/</loc>
-    <lastmod>2018-12-07T08:56:02+09:00</lastmod>
+    <lastmod>2018-12-16T12:42:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://yag-ays.github.io/project/</loc>
-    <lastmod>2018-12-07T08:56:02+09:00</lastmod>
+    <lastmod>2018-12-16T12:42:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
