@@ -1079,7 +1079,7 @@ margin-left: -4%;
 <pre><code class="language-python">import requests
 
 url = &quot;https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/daily/20181201/20181203&quot;
-headers = {&quot;User-Agent&quot;: &quot;yanagi.ayase@gmail.com&quot;}
+headers = {&quot;User-Agent&quot;: &quot;your-email@example.com&quot;}
 
 r = requests.get(url, headers=headers)
 print(r.json())
