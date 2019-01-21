@@ -1176,7 +1176,7 @@ import gzip
 with gzip.open(&quot;jawiki-20180611-cirrussearch-content.json.gz&quot;) as f:
     for line in f:
         json_line = json.loads(line)
-         if &quot;index&quot; not in json_line:
+        if &quot;index&quot; not in json_line:
             text = json_line[&quot;text&quot;]
 </code></pre>
 
