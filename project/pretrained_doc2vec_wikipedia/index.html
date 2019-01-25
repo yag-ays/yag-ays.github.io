@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="hogehoge">
+
+
+    <meta property="twitter:site" content="@yag_ays">
+
+<meta property="og:site_name" content="Out-of-the-box" />
+<meta property="og:locale" content="nn_NO" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/" />
+<meta property="og:title" content="日本語Wikipediaで学習したdoc2vevモデル" />
+<meta property="twitter:title" content="日本語Wikipediaで学習したdoc2vevモデル">
+
+    <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:image" content="https://yag-ays.github.io/img/banner.png">
+
+<meta property="og:description" content="">
+<meta property="twitter:description" content="">
+
+<title>
+
+
+     Out-of-the-box - 日本語Wikipediaで学習したdoc2vevモデル 
+
+</title>
+<link rel="canonical" href="https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/">
+
+
+<style media="screen">
+  @font-face {
+  font-family: 'Nexa Bold';
+  src: url('https://yag-ays.github.io/fonts/Nexa Bold.otf');
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, div.column {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+a,
+a:visited,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+html {
+  height: 100%;
+  font-size: 16px;
+}
+body {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100%;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #111111;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility !important;
+}
+.icon {
+  text-rendering: geometricPrecision !important;
+}
+section {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+div.column {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  width: 100%;
+}
+div.header .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.header .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.header .container .logo {
+  max-width: 100px;
+  margin-left: -2em;
+}
+div.header .name {
+  padding-top: 20px;
+  font-size: 28px;
+  font-family: 'Nexa Bold', 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  
+  text-transform: uppercase;
+  
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+}
+div.header nav {
+  margin-bottom: 16px;
+}
+div.header nav ul {
+  list-style: none;
+  text-align: center;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+}
+div.header nav ul li {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+div.header nav ul li:first-child {
+  margin-left: 0;
+}
+div.header nav ul li:last-child {
+  margin-right: 0;
+}
+div.header nav ul a {
+  color: #555555;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.header nav ul a:hover {
+  color: #111111;
+}
+div.footer .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 100%;
+  text-align: center;
+}
+div.footer .container a {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.footer .container a:first-child {
+  margin-left: 0;
+}
+div.footer .container a:last-child {
+  margin-right: 0;
+}
+div.footer .container a:hover {
+  opacity: 0.8;
+}
+div.footer .container a .icon {
+  width: 16px;
+  height: 16px;
+}
+div.footer .container .copyright {
+  flex-grow: 0.5;
+  text-align: start;
+}
+div.footer .container .icons {
+  flex-grow: 0.5;
+  text-align: end;
+}
+div.main .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+}
+div.main .content {
+  color: #111111;
+  font-size: 16px;
+}
+div.main .content .title-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+div.main .content .posts {
+  margin-bottom: 4em;
+}
+div.main .content .page-heading {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  text-transform: uppercase;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  margin-bottom: 16px;
+}
+div.main .content .front-matter .page-heading {
+  margin-bottom: 0;
+}
+div.main .content .front-matter .meta {
+  font-size: 14px;
+  color: #666666;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  margin-bottom: 32px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: none;
+}
+div.main .content .front-matter .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+div.main .content .front-matter .tags ul {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .content .front-matter .tags ul li {
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.main .content .front-matter .tags ul li:hover {
+  opacity: 0.7;
+}
+div.main .content .front-matter .tags ul li a {
+  color: #666666;
+}
+div.main .container.f04 {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.main .container.f04 .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .container.f04 .content .num {
+  margin: 30px 0px 30px 0;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 50px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 40px;
+}
+div.main .container .content .groupby {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+div.main .container .content .post-item {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  display: list-item;
+  list-style: disc inside;
+}
+div.main .container .content .post-item .meta {
+  font-size: 14px;
+  color: #666666;
+  display: none;
+  min-width: 100px;
+}
+div.main .container .content .see-more {
+  font-style: italic;
+  float: right;
+  font-size: 0.9em;
+  margin-top: 2em;
+  color: #313537;
+}
+div.main .container .content .see-more:hover {
+  color: #666;
+}
+section {
+  padding: 0 16px;
+}
+div.column {
+  padding: 0 16px;
+}
+div.header {
+  padding-top: 10px;
+}
+div.header-home {
+  padding-top: 36px;
+}
+div.main {
+  padding-top: 32px;
+}
+div.main .container .content .post-item .meta {
+    display: block;
+}
+div.main .container .content .post-item {
+    display: flex;
+    list-style: none;
+}
+a {
+  color: #428bca;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+a:hover {
+  color: #2a6496;
+}
+img {
+  max-width: 100%;
+}
+div.main .content {
+    width: 100%;
+}
+div.main .content .markdown {
+  font-size: 1.1em;
+  line-height: 1.75em;
+  color: #313537;
+  font-family: serif;
+  font-weight: 300;
+}
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 22px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  text-transform: none;
+  margin-top: 1.75rem;
+}
+div.main .content .markdown h1 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+div.main .content .markdown h3 {
+  font-size: 1em;
+  margin-bottom: 1rem;
+}
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: none;
+}
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-family: 'Menlo', monospace;
+  font-size: 0.98rem;
+  background-color: #f7f7f7;
+}
+div.main .content .markdown code {
+  /* enclosed by single backtick (`) */
+  padding: .15em .5em;
+  border-radius: 2px;
+}
+div.main .content .markdown pre {
+  /* Hugo specific: consider using the 'highlight' shortcode */
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  line-height: 1.5em;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+div.main .content .markdown pre code {
+  /* enclosed by 4 backticks (````) */
+  padding: 0;
+  font-size: 0.9rem;
+}
+div.main .content .markdown a code {
+  color: #428bca !important;
+}
+div.main .content .markdown a code:hover {
+  text-decoration: underline;
+}
+div.main .content .markdown p {
+  
+  text-align: justify;
+  
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+div.main .content .markdown ul,
+div.main .content .markdown ol,
+div.main .content .markdown dl {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown dt {
+  font-weight: bold;
+}
+div.main .content .markdown dd {
+  margin-bottom: .5rem;
+}
+div.main .content .markdown ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown li {
+  margin-left: 2em;
+}
+div.main .content .markdown em {
+  font-style: italic;
+}
+div.main .content .markdown strong {
+  font-weight: 700;
+}
+div.main .content .markdown hr {
+  position: relative;
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-top: 1px solid #999999;
+}
+div.main .content .markdown abbr {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666666;
+  text-transform: uppercase;
+}
+div.main .content .markdown abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #808080;
+}
+div.main .content .markdown blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #7a7a7a;
+  border-left: .25rem solid #e5e5e5;
+}
+div.main .content .markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1em;
+}
+div.main .content .markdown figure img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  position: static;
+  margin: auto;
+}
+div.main .content .markdown table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+div.main .content .markdown td,
+div.main .content .markdown th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+div.main .content .markdown tbody tr:nth-child(odd) td,
+div.main .content .markdown tbody tr:nth-child(odd) th {
+  background-color: #f7f7f7;
+}
+div.main .content .markdown .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}
+div.main .content .markdown .footnotes li {
+  list-style-type: unset;
+}
+div.main .content .markdown .footnote-ref {
+  font-size: 0.7em;
+}
+div.main .content .navigation {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 2em;
+}
+div.main .content .navigation div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-top: 1em;
+}
+div.main .content .navigation .icon {
+  width: 16px;
+  height: 16px;
+}
+div.main .content .navigation a {
+  width: 250px;
+  margin: 0 1em;
+  text-align: center;
+  font-style: italic;
+  color: #313537;
+}
+div.main .content .share, div.main .content .share div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+div.main .content .share {
+  background-color: rgba(152, 152, 152, 0.07);
+  padding: 1em 0;
+}
+div.main .content .share a {
+  margin: 0 6px;
+}
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Fonts */
+
+
+.wf-raleway-n4-active body, 
+.wf-raleway-n4-active div.header nav ul a,
+.wf-raleway-n7-active div.main .content .page-heading,
+.wf-raleway-n2-active div.main .container.f04 .content .num,
+.wf-raleway-n7-active div.main .content .markdown h1,
+.wf-raleway-n7-active div.main .content .markdown h2,
+.wf-raleway-n7-active div.main .content .markdown h3,
+.wf-raleway-n7-active div.main .content .markdown h4,
+.wf-raleway-n7-active div.main .content .markdown h5,
+.wf-raleway-n7-active div.main .content .markdown h6 {
+      font-family: 'Raleway';
+}
+
+.wf-merriweather-n3-active div.main .content .markdown {
+      font-family: 'Merriweather';
+}
+
+.wf-ubuntu-mono-n4-active div.main .content .markdown code,
+.wf-ubuntu-mono-n4-active div.main .content .markdown pre {
+      font-family: 'Ubuntu Mono';
+}
+
+
+</style>
+<style media="(min-width: 600px)">
+  body {
+-webkit-justify-content: center;
+-moz-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+}
+.non-narrow.zero-top-spacing {
+padding-top: 0 !important;
+}
+section {
+padding: 0 16px;
+margin-left: 100px;
+margin-right: 100px;
+max-width: 750px;
+}
+div.column {
+padding: 0 16px;
+max-width: 750px;
+}
+div.header {
+background-color: transparent;
+}
+div.header .container {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.header .container .logo {
+margin: 0;
+}
+div.header-home .container .logo {
+max-width: 180px;
+margin-left: 20px;
+}
+div.header-home .name-home {
+padding-top: 30px;
+font-size: 40px;
+}
+div.header-home nav ul a {
+font-size: 18px;
+}
+div.header .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.header .name {
+color: #333333;
+}
+div.header nav {
+font-size: 14px;
+margin-bottom: 0;
+}
+div.header nav ul {
+text-align: left;
+}
+div.header nav ul a {
+color: #666666;
+}
+div.header nav ul a:hover {
+color: #333333;
+}
+div.footer {
+background-color: transparent;
+}
+div.footer .container {
+flex-direction: row;
+}
+div.footer .container a {
+margin-left: 3px;
+margin-right: 3px;
+color: #666666;
+}
+div.footer .container a:hover {
+color: #333333;
+}
+div.footer .container a .icon {
+font-size: 18px;
+}
+div.footer .container a .icon.larger {
+font-size: 20px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+display: initial;
+}
+div.main .container.f04 {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.main .container.f04 .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.main .container.f04 .content .num {
+margin: 0 0 10px 0;
+font-size: 32px;
+}
+div.main .container.f04 .content .detail {
+margin-bottom: 30px;
+}
+.container {
+padding: 0 30px;
+}
+div.header {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.footer {
+padding-top: 30px;
+padding-bottom: 60px;
+}
+div.main {
+padding-top: 0;
+}
+div.main .container .content .post-item {
+display: flex;
+list-style: none;
+padding-left: 1.5em;
+}
+div.main .container .content .post-item .meta {
+display: block;
+}
+div.main.post {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.main .content .markdown blockquote {
+padding-right: 5rem;
+padding-left: 1.25rem;
+}
+div.main .content .navigation {
+-webkit-flex-direction: row;
+-moz-flex-direction: row;
+-ms-flex-direction: row;
+flex-direction: row;
+}
+div.main .content .navigation div {
+margin-top: 0em;
+}
+
+</style>
+<style media="(min-width: 769px)">
+  div.main .content .markdown figure {
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown img {
+max-width: 110%;
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown pre {
+width: 110%;
+margin-left: -4%;
+}
+
+</style>
+
+<noscript>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">
+</noscript>
+
+
+  <style type="text/css" media="screen">
+    .hljs{display:block;background:white;padding:0.5em;color:#333333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-string,.hljs-variable,.hljs-template-variable,.hljs-strong,.hljs-emphasis,.hljs-quote{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-literal,.hljs-symbol,.hljs-bullet,.hljs-attribute{color:#0086b3}.hljs-section,.hljs-name{color:#63a35c}.hljs-tag{color:#333333}.hljs-title,.hljs-attr,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}
+  </style>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="https://yag-ays.github.io/img/logo.png"
+
+>
+
+
+
+
+</head>
+
+
+<body>
+
+
+<div class="header column">
+
+    <div class="container">
+        
+        <div class="content">
+            <a href="https://yag-ays.github.io/"><div class="name"><h1>Out-of-the-box</h1></div></a>
+            <nav>
+                <ul>
+                    
+                    
+                        
+                            
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            
+                        
+                    
+                    
+                        
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="main column">
+    <div class="container">
+        <div class="content">
+            <div class="page-heading">
+
+    日本語Wikipediaで学習したdoc2vevモデル
+
+</div>
+
+
+            <div class="markdown">
+                
+    
+
+<p><img src="https://yag-ays.github.io/img/doc2vec_header.png" alt="https://www.pexels.com/photo/woman-in-black-long-sleeved-looking-for-books-in-library-926680/" /></p>
+
+<p>日本語Wikipediaを対象にdoc2vec学習させたモデルを作成したので、学習済みモデルとして公開します。</p>
+
+<h2 id="概要">概要</h2>
+
+<p>doc2vecは2014年に<a href="https://arxiv.org/abs/1405.4053">Quoc LeとTomas Mikolov</a>によって発表された文章の埋め込みの手法です。今更doc2vecかという感じではありますが、日本語のdoc2vecの学習済みモデルは探した限り容易に利用できるものがなかったこともあり、せっかくなので作成したモデルを配布します。</p>
+
+<p>word2vecのような単語の分散表現においては学習済みモデルとして配布されたものを利用することが多いですが、文章の埋め込みに関しては対象とするドキュメント集合やそのドメインに特化した学習モデルを作成することが多い印象です。なので、学習済みモデルファイルの配布自体にそれほど意味があるわけではなさそうですが、既存手法との比較に利用したり、とりあえず何かしらの手法で単語列から文章ベクトルにしたいといった場合には便利かと思います。まあ何も無いよりかはマシかなという雰囲気です。今回の作成の経緯として、別の手法を実装する際にdoc2vecが内部で使われていたということで副次的に必要になったからだったのですが、ふと利用したいときに気軽に利用できるというのは結構良いのではないかと思います。</p>
+
+<h2 id="モデル">モデル</h2>
+
+<p>ここでは2つの学習アルゴリズムでdoc2vecを学習しました。<code>dbow300d</code>はdistributed bag of words (PV-DBOW)を、<code>dmpv300d</code>はdistributed memory (PV-DM)を用いています。なお、モデルファイルはサイズが大きいため、Googleドライブに配置してあります。下記リンク先からダウンロードしてください。</p>
+
+<ul>
+<li><code>dbow300d</code>
+
+<ul>
+<li><a href="https://www.dropbox.com/s/j75s0eq4eeuyt5n/jawiki.doc2vec.dbow300d.tar.bz2?dl=0">https://www.dropbox.com/s/j75s0eq4eeuyt5n/jawiki.doc2vec.dbow300d.tar.bz2?dl=0</a></li>
+<li>圧縮ファイルのサイズ：5.48GB</li>
+</ul></li>
+<li><code>dmpv300d</code>
+
+<ul>
+<li><a href="https://www.dropbox.com/s/njez3f1pjv9i9xj/jawiki.doc2vec.dmpv300d.tar.bz2?dl=0">https://www.dropbox.com/s/njez3f1pjv9i9xj/jawiki.doc2vec.dmpv300d.tar.bz2?dl=0</a></li>
+<li>圧縮ファイルのサイズ：8.86GB</li>
+</ul></li>
+</ul>
+
+<h2 id="モデルの学習パラメータ">モデルの学習パラメータ</h2>
+
+<table>
+<thead>
+<tr>
+<th align="left">param</th>
+<th align="left">dbow300d</th>
+<th align="left">dmpv300d</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>dm</code></td>
+<td align="left">0</td>
+<td align="left">1</td>
+</tr>
+
+<tr>
+<td align="left"><code>vector_size</code></td>
+<td align="left">300</td>
+<td align="left">300</td>
+</tr>
+
+<tr>
+<td align="left"><code>window</code></td>
+<td align="left">15</td>
+<td align="left">10</td>
+</tr>
+
+<tr>
+<td align="left"><code>alpha</code></td>
+<td align="left">0.025</td>
+<td align="left">0.05</td>
+</tr>
+
+<tr>
+<td align="left"><code>min_count</code></td>
+<td align="left">5</td>
+<td align="left">2</td>
+</tr>
+
+<tr>
+<td align="left"><code>sample</code></td>
+<td align="left">1e-5</td>
+<td align="left">0</td>
+</tr>
+
+<tr>
+<td align="left"><code>epochs</code></td>
+<td align="left">20</td>
+<td align="left">20</td>
+</tr>
+
+<tr>
+<td align="left"><code>dbow_words</code></td>
+<td align="left">1</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+
+<p><code>dbow300d</code>のパラメータは、<a href="https://arxiv.org/abs/1607.05368">An Empirical Evaluation of doc2vec with Practical Insights into Document Embedding Generation</a>におけるEnglish Wikipeiaの学習時のパラメータを利用しました。<code>dmpv300d</code>のパラメータは、<a href="https://github.com/RaRe-Technologies/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb">Gensim Doc2Vec Tutorial on the IMDB Sentiment Dataset</a>の設定を参考にしました。</p>
+
+<h2 id="実験設定">実験設定</h2>
+
+<p>学習元のコーパスには、2019/01/14時点でのWikipediaの<a href="https://www.mediawiki.org/wiki/Help:CirrusSearch/ja">CirrusSearch</a>のダンプデータを用いました。形態素解析には<a href="http://taku910.github.io/mecab/">MeCab</a>を使用し、辞書には<a href="https://github.com/neologd/mecab-ipadic-neologd">NEologd</a>を用いています。また、doc2vecの計算には<a href="https://radimrehurek.com/gensim/">gensim</a>を使用しました。利用したパッケージや辞書のバージョンは以下の通りです。</p>
+
+<ul>
+<li>コーパス
+
+<ul>
+<li><a href="https://dumps.wikimedia.org/other/cirrussearch/20190114/"><code>jawiki-20190114-cirrussearch-content.json.gz</code></a></li>
+</ul></li>
+<li>形態素解析
+
+<ul>
+<li>MeCab: 0.996</li>
+<li>NEologd: Periodic data update on 2019-01-17(Thu)</li>
+</ul></li>
+<li>ライブラリ
+
+<ul>
+<li>Gensim: 3.7.0</li>
+<li>Numpy: 1.16</li>
+</ul></li>
+</ul>
+
+<p>もしモデルが読み込めない場合には、各種ライブラリを最新のバージョンにするなど試してください。</p>
+
+<h2 id="ソースコード">ソースコード</h2>
+
+<p>学習時のソースコードは、以下のリポジトリにあります。</p>
+
+<ul>
+<li><a href="https://github.com/yagays/pretrained_doc2vec_ja">yagays/pretrained_doc2vec_ja</a></li>
+</ul>
+
+<h2 id="使い方">使い方</h2>
+
+<h3 id="モデルファイルの読み込み">モデルファイルの読み込み</h3>
+
+<pre><code class="language-py">from gensim.models.doc2vec import Doc2Vec
+model = Doc2Vec.load(&quot;jawiki.doc2vec.dbow300d.model&quot;)
+</code></pre>
+
+<h3 id="類似するドキュメントを表示する">類似するドキュメントを表示する</h3>
+
+<pre><code class="language-py">In []: model.docvecs.most_similar(&quot;アリストテレス&quot;)
+Out[]:
+[('オルガノン', 0.5950535535812378),
+ ('善のイデア', 0.5811843872070312),
+ ('スペウシッポス', 0.5756123065948486),
+ ('プラトン', 0.5733123421669006),
+ ('ジークムント・フロイト', 0.5668295621871948),
+ ('カルキディウス', 0.5634585618972778),
+ ('アンモニオス・サッカス', 0.5591270923614502),
+ ('メリッソス、クセノパネス、ゴルギアスについて', 0.5568180084228516),
+ ('ピレボス', 0.5543898940086365),
+ ('睡眠と覚醒について', 0.5480767488479614)]
+</code></pre>
+
+<h3 id="未知の入力文に対して類似するドキュメントを表示する">未知の入力文に対して類似するドキュメントを表示する</h3>
+
+<p><code>model.infer_vector()</code>には形態素解析済みのリストを入力する必要があります。そのため、ここではMeCabを用いた<code>tokenize()</code>を定義しています。</p>
+
+<pre><code class="language-py">import MeCab
+
+def tokenize(text):
+    wakati = MeCab.Tagger(&quot;-O wakati&quot;)
+    wakati.parse(&quot;&quot;)
+    return wakati.parse(text).strip().split()
+</code></pre>
+
+<pre><code class="language-py">In []: text = &quot;&quot;&quot;バーレーンの首都マナマ(マナーマとも)で現在開催されている
+ユネスコ(国際連合教育科学文化機関)の第42回世界遺産委員会は日本の推薦していた
+「長崎と天草地方の潜伏キリシタン関連遺産」 (長崎県、熊本県)を30日、
+世界遺産に登録することを決定した。文化庁が同日発表した。
+日本国内の文化財の世界遺産登録は昨年に登録された福岡県の
+「『神宿る島』宗像・沖ノ島と関連遺産群」に次いで18件目。
+2013年の「富士山-信仰の対象と芸術の源泉」の文化遺産登録から6年連続となった。&quot;&quot;&quot;
+
+In []: model.docvecs.most_similar([model.infer_vector(tokenize(text))])
+Out[]:
+[('イタリアの世界遺産', 0.599028468132019),
+ ('海の道むなかた館', 0.5562682151794434),
+ ('タジキスタンの世界遺産', 0.5554744005203247),
+ ('ウクライナの世界遺産', 0.5542891621589661),
+ ('バーレーンの世界遺産', 0.552284836769104),
+ ('世界遺産センター (曖昧さ回避)', 0.540568470954895),
+ ('アラブ首長国連邦の世界遺産', 0.5372575521469116),
+ ('アイスランドの世界遺産', 0.5366297960281372),
+ ('マレーシアの世界遺産', 0.5362405776977539),
+ ('ラトビアの世界遺産', 0.5351229906082153)]
+</code></pre>
+
+<p>（出典：<a href="https://ja.wikinews.org/wiki/%E6%BD%9C%E4%BC%8F%E3%82%AD%E3%83%AA%E3%82%B7%E3%82%BF%E3%83%B3%E9%96%A2%E9%80%A3%E9%81%BA%E7%94%A3%E3%80%81%E4%B8%96%E7%95%8C%E9%81%BA%E7%94%A3%E7%99%BB%E9%8C%B2">潜伏キリシタン関連遺産、世界遺産登録 - ウィキニュース</a>）</p>
+
+<h3 id="類似する単語を表示する">類似する単語を表示する</h3>
+
+<p>なお、doc2vecでもword2vecと同様に、任意の単語に対して類似する単語を表示することもできますが、単語間の類似度を知りたいだけならword2vecの学習済みモデルである<a href="http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/">日本語 Wikipedia エンティティベクトル</a>を使った方が良いでしょう。</p>
+
+<pre><code class="language-py">In []: model.wv.most_similar(&quot;一揆&quot;, topn=3)
+Out[]:
+[('百姓一揆', 0.717296302318573),
+ ('国人衆', 0.7110892534255981),
+ ('国人一揆', 0.7016592025756836)]
+</code></pre>
+
+<h2 id="ライセンス">ライセンス</h2>
+
+<p>CC-BY-SA: <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a></p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://arxiv.org/abs/1607.05368">[1607.05368] An Empirical Evaluation of doc2vec with Practical Insights into Document Embedding Generation</a></li>
+<li><a href="https://github.com/RaRe-Technologies/gensim/blob/develop/docs/notebooks/doc2vec-IMDB.ipynb">gensim/doc2vec-IMDB.ipynb at develop · RaRe-Technologies/gensim</a></li>
+<li><a href="https://radimrehurek.com/gensim/models/doc2vec.html">gensim: models.doc2vec – Doc2vec paragraph embeddings</a></li>
+</ul>
+
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="footer column">
+    <div class="container">
+
+        
+
+        <div class="copyright">
+
+        
+            
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/">Copyright © 2018 yag_ays</a>
+            
+        
+
+        </div>
+        <div class="icons">
+
+        
+
+        
+
+        
+
+        
+            <a href="https://github.com/yagays" target="_blank">
+                <img class="icon" src="https://yag-ays.github.io/img/github.svg" alt="github" />
+            </a>
+        
+
+        
+            <a href="https://twitter.com/yag_ays" target="_blank">
+                <img class="icon" src="https://yag-ays.github.io/img/twitter.svg" alt="twitter" />
+            </a>
+        
+
+        
+            <a href="https://www.linkedin.com/in/yukiokuda" target="_blank">
+                <img class="icon" src="https://yag-ays.github.io/img/linkedin.svg" alt="linkedin" />
+            </a>
+        
+
+        
+
+        
+            <a href="https://yag-ays.github.io/index.xml">
+                <img class="icon" src="https://yag-ays.github.io/img/rss.svg" alt="rss" />
+            </a>
+        
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Raleway:400,600,700', 'Merriweather:300,300i,700,700i', 'Ubuntu+Mono:400,700']
+    }
+  });
+</script>
+
+
+
+  <script src="https://yag-ays.github.io/js/highlight.min.js" defer></script>
+  
+
+
+
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-17620484-8', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+<script>
+  window.onload = function() {
+    
+      hljs.initHighlighting();
+    
+    
+    
+  };
+</script>
+
+
+
+
+</body>
+</html>
+

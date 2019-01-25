@@ -6,10 +6,23 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 16 Dec 2018 12:42:50 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 22 Jan 2019 15:55:40 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>日本語Wikipediaで学習したdoc2vevモデル</title>
+      <link>https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/</link>
+      <pubDate>Tue, 22 Jan 2019 15:55:40 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/</guid>
+      <description>日本語Wikipediaを対象にdoc2vec学習させたモデルを作成したので、学習済みモデルとして公開します。
+概要 doc2vecは2014年にQuoc LeとTomas Mikolovによって発表された文章の埋め込みの手法です。今更doc2vecかという感じではありますが、日本語のdoc2vecの学習済みモデルは探した限り容易に利用できるものがなかったこともあり、せっかくなので作成したモデルを配布します。
+word2vecのような単語の分散表現においては学習済みモデルとして配布されたものを利用することが多いですが、文章の埋め込みに関しては対象とするドキュメント集合やそのドメインに特化した学習モデルを作成することが多い印象です。なので、学習済みモデルファイルの配布自体にそれほど意味があるわけではなさそうですが、既存手法との比較に利用したり、とりあえず何かしらの手法で単語列から文章ベクトルにしたいといった場合には便利かと思います。まあ何も無いよりかはマシかなという雰囲気です。今回の作成の経緯として、別の手法を実装する際にdoc2vecが内部で使われていたということで副次的に必要になったからだったのですが、ふと利用したいときに気軽に利用できるというのは結構良いのではないかと思います。
+モデル ここでは2つの学習アルゴリズムでdoc2vecを学習しました。dbow300dはdistributed bag of words (PV-DBOW)を、dmpv300dはdistributed memory (PV-DM)を用いています。なお、モデルファイルはサイズが大きいため、Googleドライブに配置してあります。下記リンク先からダウンロードしてください。
+ dbow300d  https://www.dropbox.com/s/j75s0eq4eeuyt5n/jawiki.doc2vec.dbow300d.tar.bz2?dl=0 圧縮ファイルのサイズ：5.48GB  dmpv300d  https://www.dropbox.com/s/njez3f1pjv9i9xj/jawiki.doc2vec.dmpv300d.tar.bz2?dl=0 圧縮ファイルのサイズ：8.86GB   モデルの学習パラメータ    param dbow300d dmpv300d     dm 0 1   vector_size 300 300   window 15 10   alpha 0.025 0.05   min_count 5 2   sample 1e-5 0   epochs 20 20   dbow_words 1 0    dbow300dのパラメータは、An Empirical Evaluation of doc2vec with Practical Insights into Document Embedding GenerationにおけるEnglish Wikipeiaの学習時のパラメータを利用しました。dmpv300dのパラメータは、Gensim Doc2Vec Tutorial on the IMDB Sentiment Datasetの設定を参考にしました。</description>
+    </item>
     
     <item>
       <title>Wikipediaの記事ごとのページビューを取得する</title>
