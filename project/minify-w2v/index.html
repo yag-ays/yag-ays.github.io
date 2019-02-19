@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/" />
-<meta property="og:title" content="Project" />
-<meta property="twitter:title" content="Project">
+<meta property="og:url" content="https://yag-ays.github.io/project/minify-w2v/" />
+<meta property="og:title" content="語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v" />
+<meta property="twitter:title" content="語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Out-of-the-box - Project 
+     Out-of-the-box - 語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/">
+<link rel="canonical" href="https://yag-ays.github.io/project/minify-w2v/">
 
 
 <style media="screen">
@@ -973,8 +973,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/project/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -982,7 +980,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1007,96 +1005,118 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Project</div>
-                <ul>
-                    
-                        <li class="groupby">Feb, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 19, 2019</span>
-    <a href="https://yag-ays.github.io/project/minify-w2v/"><span>語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v</span></a>
-</li>
+            <div class="page-heading">
 
-                        
-                    
-                        <li class="groupby">Jan, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 22, 2019</span>
-    <a href="https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/"><span>日本語Wikipediaで学習したdoc2vecモデル</span></a>
-</li>
+    語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v
 
-                        
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 16, 2018</span>
-    <a href="https://yag-ays.github.io/project/wikipedia-pageview/"><span>Wikipediaの記事ごとのページビューを取得する</span></a>
-</li>
+</div>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 7, 2018</span>
-    <a href="https://yag-ays.github.io/project/alacarte/"><span>A La Carte Embeddingの実装</span></a>
-</li>
 
-                        
-                    
-                        <li class="groupby">Nov, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Nov 12, 2018</span>
-    <a href="https://yag-ays.github.io/project/wed/"><span>Word Embedding based Edit Distanceの実装</span></a>
-</li>
+            <div class="markdown">
+                
+    
 
-                        
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 28, 2018</span>
-    <a href="https://yag-ays.github.io/project/embedding-visualization/"><span>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</span></a>
-</li>
+<p><img src="https://yag-ays.github.io/img/minify_w2v_header.png" alt="https://www.pexels.com/photo/person-holding-terrestrial-globe-scale-model-taken-1079033/" /></p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 23, 2018</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja/"><span>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</span></a>
-</li>
+<h2 id="概要">概要</h2>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 6, 2018</span>
-    <a href="https://yag-ays.github.io/project/kanjivg-radical/"><span>漢字を構成する部首/偏旁のデータセット</span></a>
-</li>
+<p>最近では単語埋め込みのベクトルをニューラルネットの埋め込み層に利用する手法が多く使われていますが、学習済みの単語埋め込みは多くの語彙を含んでおり、ファイルサイズが大きくロード時間もかかります。再現性のために学習に使う外部データを固定したり、APIのためにDockerコンテナに同梱する際には、こういったリソースはなるべくサイズを減らしたいという場合があります。そこで、必要な語彙に限定することで学習済み単語埋め込みのモデルサイズを小さくするコードを書きました。</p>
 
-                        
-                    
-                        <li class="groupby">Jul, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 30, 2018</span>
-    <a href="https://yag-ays.github.io/project/cirrus/"><span>Wikipedia CirrusSearchのダンプデータを利用する</span></a>
-</li>
+<p><a href="https://github.com/yagays/minify_w2v">yagays/minify_w2v: Minify word2vec model file</a></p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 25, 2018</span>
-    <a href="https://yag-ays.github.io/project/char-embedding/"><span>文字の図形的な埋め込み表現 Glyph-aware Character Embedding</span></a>
-</li>
+<h2 id="使い方">使い方</h2>
 
-                        
-                    
-                </ul>
+<p>動作は至ってシンプルで、読み込んだ学習済み単語ベクトルの中から指定された単語のベクトルのみを抜き出して出力するだけです。</p>
+
+<ol>
+<li>学習済みモデルを読み込む</li>
+<li>必要な語彙を指定する</li>
+<li>出力する</li>
+</ol>
+
+<p><code>load_word2vec</code>と<code>save_word2vec</code>にはそれぞれ<code>binary</code>オプションがあり、入力および出力をバイナリフォーマットかテキストフォーマットか選択できます。</p>
+
+<pre><code class="language-py">mw2v = MinifyW2V()
+mw2v.load_word2vec(&quot;/path/to/model.txt&quot;)
+mw2v.set_target_vocab(target_vocab=[&quot;cat&quot;, &quot;dog&quot;])
+mw2v.save_word2vec(&quot;/path/to/output.bin&quot;, binary=True)
+</code></pre>
+
+<h2 id="ベンチマーク">ベンチマーク</h2>
+
+<p>日本語 Wikipedia エンティティベクトルの単語ベクトルを元に、そこから語彙を10,000に減らしたときのファイルサイズや読み込み時間を比較した結果です。テキストファイルの場合はファイルフォーマットの構造上、語彙を減らせば線形でファイルサイズも小さくなりますし読み込み時間も小さくなります。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="right">Vocab. size</th>
+<th align="right">File size</th>
+<th align="right">Load time</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><a href="https://github.com/singletongue/WikiEntVec"><code>jawiki.word_vectors.200d.txt</code></a></td>
+<td align="right">727,471</td>
+<td align="right">1.6G</td>
+<td align="right">1min 27s</td>
+</tr>
+
+<tr>
+<td align="left"><a href="https://github.com/singletongue/WikiEntVec"><code>jawiki.word_vectors.200d.bin</code></a></td>
+<td align="right">727,471</td>
+<td align="right">563M</td>
+<td align="right">5.9 s</td>
+</tr>
+
+<tr>
+<td align="left"><code>jawiki.word_vectors.200d.10000.txt</code></td>
+<td align="right">10,000</td>
+<td align="right">22M</td>
+<td align="right">1.18 s</td>
+</tr>
+
+<tr>
+<td align="left"><code>jawiki.word_vectors.200d.10000.bin</code></td>
+<td align="right">10,000</td>
+<td align="right">7.7M</td>
+<td align="right">190 ms</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="plasticityai-magnitudeとの関連">plasticityai/magnitudeとの関連</h2>
+
+<p>単語ベクトルを効率よく扱う方法として、<code>magnitude</code>という軽量で遅延読み込み等をサポートしたパッケージがあります。Magnitude Formatsという形式で保存することで読み込み速度を大幅に短縮することができるほか、単語埋め込みで利用される類似度検索や、KerasやPytorchなど他のパッケージとのインターフェイスも提供されています。</p>
+
+<p><a href="https://github.com/plasticityai/magnitude">plasticityai/magnitude: A fast, efficient universal vector embedding utility package.</a></p>
+
+<p>単語ベクトルの読み込みの高速化を目指すのならばmagnitudeを使ったほうが効率が良いと思います。一方で、<code>gensim</code>への連携の容易さやモデルファイルの取り扱いはword2vec formatの方が良く、またminify_w2vで語彙を選別した後にmagnitudeで利用できる形に変換するという方法もあります。どの方法が一番良いかは利用ケース次第だと思います。</p>
+
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/minify-w2v/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

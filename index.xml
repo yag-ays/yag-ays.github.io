@@ -6,10 +6,24 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 22 Jan 2019 15:55:40 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 19 Feb 2019 10:03:37 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v</title>
+      <link>https://yag-ays.github.io/project/minify-w2v/</link>
+      <pubDate>Tue, 19 Feb 2019 10:03:37 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/minify-w2v/</guid>
+      <description>概要 最近では単語埋め込みのベクトルをニューラルネットの埋め込み層に利用する手法が多く使われていますが、学習済みの単語埋め込みは多くの語彙を含んでおり、ファイルサイズが大きくロード時間もかかります。再現性のために学習に使う外部データを固定したり、APIのためにDockerコンテナに同梱する際には、こういったリソースはなるべくサイズを減らしたいという場合があります。そこで、必要な語彙に限定することで学習済み単語埋め込みのモデルサイズを小さくするコードを書きました。
+yagays/minify_w2v: Minify word2vec model file
+使い方 動作は至ってシンプルで、読み込んだ学習済み単語ベクトルの中から指定された単語のベクトルのみを抜き出して出力するだけです。
+ 学習済みモデルを読み込む 必要な語彙を指定する 出力する  load_word2vecとsave_word2vecにはそれぞれbinaryオプションがあり、入力および出力をバイナリフォーマットかテキストフォーマットか選択できます。
+mw2v = MinifyW2V() mw2v.load_word2vec(&amp;quot;/path/to/model.txt&amp;quot;) mw2v.set_target_vocab(target_vocab=[&amp;quot;cat&amp;quot;, &amp;quot;dog&amp;quot;]) mw2v.save_word2vec(&amp;quot;/path/to/output.bin&amp;quot;, binary=True)  ベンチマーク 日本語 Wikipedia エンティティベクトルの単語ベクトルを元に、そこから語彙を10,000に減らしたときのファイルサイズや読み込み時間を比較した結果です。テキストファイルの場合はファイルフォーマットの構造上、語彙を減らせば線形でファイルサイズも小さくなりますし読み込み時間も小さくなります。
+   Name Vocab. size File size Load time     jawiki.word_vectors.200d.txt 727,471 1.6G 1min 27s   jawiki.word_vectors.200d.bin 727,471 563M 5.9 s   jawiki.word_vectors.200d.10000.txt 10,000 22M 1.18 s   jawiki.word_vectors.200d.10000.bin 10,000 7.7M 190 ms    plasticityai/magnitudeとの関連 単語ベクトルを効率よく扱う方法として、magnitudeという軽量で遅延読み込み等をサポートしたパッケージがあります。Magnitude Formatsという形式で保存することで読み込み速度を大幅に短縮することができるほか、単語埋め込みで利用される類似度検索や、KerasやPytorchなど他のパッケージとのインターフェイスも提供されています。</description>
+    </item>
     
     <item>
       <title>日本語Wikipediaで学習したdoc2vecモデル</title>
