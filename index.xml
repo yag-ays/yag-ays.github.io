@@ -6,10 +6,22 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 19 Feb 2019 10:03:37 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 23 Feb 2019 00:49:58 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現</title>
+      <link>https://yag-ays.github.io/project/all-but-the-top/</link>
+      <pubDate>Sat, 23 Feb 2019 00:49:58 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/all-but-the-top/</guid>
+      <description>概要 ICLR2018で発表されたAll-but-the-Top: Simple and Effective Postprocessing for Word Representationsの後処理を実装し、日本語学習済み分散表現に対して適用し評価を行いました。また、作成した単語ベクトルを配布します。
+All-but-the-Top All-but-the-Topは、学習済みの分散表現に対して特定の後処理を加えることにより、分散表現の評価に用いられるタスクにおいて性能向上を達成した手法です。単語ベクトル内に存在する偏りを無くすために、平均で標準化し、主成分分析で幾つかの方向の主成分を引くという処理をするというのものです。たったこれだけという感じですが、SIF Embeddingの研究と同様に理論的な裏付けがあるようです。こういった背景や英語での実験結果は論文を参考ください。日本語での解説はこちらの論文紹介スライドが参考になります。
+単語ベクトルのダウンロード 以下の2つの学習済み分散表現に対してAll-but-the-Topの後処理を適用したファイルです。配布するモデルは、元のファイル名に加えてabttという名前が付与されています。
+   ファイル 次元数/語彙数 ファイルサイズ     jawiki.word_vectors.100d.abtt.bin 100 / 727,471 285M   jawiki.word_vectors.200d.abtt.bin 200 / 727,471 563M   jawiki.word_vectors.300d.abtt.bin 300 / 727,471 840M   cc.ja.300d.abtt.bin 300 / 2,000,000 2.3G     jawiki.word_vectors: 日本語 Wikipedia エンティティベクトル  20181001版のjawiki.word_vectorsを使用 鈴木正敏, 松田耕史, 関根聡, 岡崎直観, 乾健太郎. Wikipedia 記事に対する拡張固有表現ラベルの多重付与. 言語処理学会第22回年次大会(NLP2016), March 2016.</description>
+    </item>
     
     <item>
       <title>語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v</title>

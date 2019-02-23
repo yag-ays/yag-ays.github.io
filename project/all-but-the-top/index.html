@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/" />
-<meta property="og:title" content="Project" />
-<meta property="twitter:title" content="Project">
+<meta property="og:url" content="https://yag-ays.github.io/project/all-but-the-top/" />
+<meta property="og:title" content="後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現" />
+<meta property="twitter:title" content="後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Out-of-the-box - Project 
+     Out-of-the-box - 後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/">
+<link rel="canonical" href="https://yag-ays.github.io/project/all-but-the-top/">
 
 
 <style media="screen">
@@ -973,8 +973,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/project/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -982,7 +980,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1007,102 +1005,271 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Project</div>
-                <ul>
-                    
-                        <li class="groupby">Feb, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 23, 2019</span>
-    <a href="https://yag-ays.github.io/project/all-but-the-top/"><span>後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現</span></a>
-</li>
+            <div class="page-heading">
 
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 19, 2019</span>
-    <a href="https://yag-ays.github.io/project/minify-w2v/"><span>語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v</span></a>
-</li>
+    後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現
 
-                        
-                    
-                        <li class="groupby">Jan, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 22, 2019</span>
-    <a href="https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/"><span>日本語Wikipediaで学習したdoc2vecモデル</span></a>
-</li>
+</div>
 
-                        
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 16, 2018</span>
-    <a href="https://yag-ays.github.io/project/wikipedia-pageview/"><span>Wikipediaの記事ごとのページビューを取得する</span></a>
-</li>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 7, 2018</span>
-    <a href="https://yag-ays.github.io/project/alacarte/"><span>A La Carte Embeddingの実装</span></a>
-</li>
+            <div class="markdown">
+                
+    
 
-                        
-                    
-                        <li class="groupby">Nov, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Nov 12, 2018</span>
-    <a href="https://yag-ays.github.io/project/wed/"><span>Word Embedding based Edit Distanceの実装</span></a>
-</li>
+<p><img src="https://yag-ays.github.io/img/all_but_the_top_header.png" alt="https://www.pexels.com/photo/green-pine-trees-covered-with-fogs-under-white-sky-during-daytime-167699/" /></p>
 
-                        
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 28, 2018</span>
-    <a href="https://yag-ays.github.io/project/embedding-visualization/"><span>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</span></a>
-</li>
+<h2 id="概要">概要</h2>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 23, 2018</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja/"><span>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</span></a>
-</li>
+<p>ICLR2018で発表された<a href="https://arxiv.org/abs/1702.01417">All-but-the-Top: Simple and Effective Postprocessing for Word Representations</a>の後処理を実装し、日本語学習済み分散表現に対して適用し評価を行いました。また、作成した単語ベクトルを配布します。</p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 6, 2018</span>
-    <a href="https://yag-ays.github.io/project/kanjivg-radical/"><span>漢字を構成する部首/偏旁のデータセット</span></a>
-</li>
+<h2 id="all-but-the-top">All-but-the-Top</h2>
 
-                        
-                    
-                        <li class="groupby">Jul, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 30, 2018</span>
-    <a href="https://yag-ays.github.io/project/cirrus/"><span>Wikipedia CirrusSearchのダンプデータを利用する</span></a>
-</li>
+<p>All-but-the-Topは、学習済みの分散表現に対して特定の後処理を加えることにより、分散表現の評価に用いられるタスクにおいて性能向上を達成した手法です。単語ベクトル内に存在する偏りを無くすために、平均で標準化し、主成分分析で幾つかの方向の主成分を引くという処理をするというのものです。たったこれだけという感じですが、SIF Embeddingの研究と同様に理論的な裏付けがあるようです。こういった背景や英語での実験結果は論文を参考ください。日本語での解説は<a href="https://www.slideshare.net/MacotoTachenaca/allbutthetop-simple-and-effective-postprocessing-for-word-representations-98611879">こちらの論文紹介スライド</a>が参考になります。</p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 25, 2018</span>
-    <a href="https://yag-ays.github.io/project/char-embedding/"><span>文字の図形的な埋め込み表現 Glyph-aware Character Embedding</span></a>
-</li>
+<h2 id="単語ベクトルのダウンロード">単語ベクトルのダウンロード</h2>
 
-                        
-                    
-                </ul>
+<p>以下の2つの学習済み分散表現に対してAll-but-the-Topの後処理を適用したファイルです。配布するモデルは、元のファイル名に加えて<code>abtt</code>という名前が付与されています。</p>
+
+<table>
+<thead>
+<tr>
+<th align="right">ファイル</th>
+<th align="right">次元数/語彙数</th>
+<th align="right">ファイルサイズ</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right"><a href="https://www.dropbox.com/s/nhwhgick37rh64k/jawiki.word_vectors.100d.abtt.bin?dl=0">jawiki.word_vectors.100d.abtt.bin</a></td>
+<td align="right">100 / 727,471</td>
+<td align="right">285M</td>
+</tr>
+
+<tr>
+<td align="right"><a href="https://www.dropbox.com/s/zjosb4wil5asri0/jawiki.word_vectors.200d.abtt.bin?dl=0">jawiki.word_vectors.200d.abtt.bin</a></td>
+<td align="right">200 / 727,471</td>
+<td align="right">563M</td>
+</tr>
+
+<tr>
+<td align="right"><a href="https://www.dropbox.com/s/twyfumale4okxn6/jawiki.word_vectors.300d.abtt.bin?dl=0">jawiki.word_vectors.300d.abtt.bin</a></td>
+<td align="right">300 / 727,471</td>
+<td align="right">840M</td>
+</tr>
+
+<tr>
+<td align="right"><a href="https://www.dropbox.com/s/zjwd7sf22tn8qs5/cc.ja.300d.abtt.bin?dl=0">cc.ja.300d.abtt.bin</a></td>
+<td align="right">300 / 2,000,000</td>
+<td align="right">2.3G</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li>jawiki.word_vectors: <a href="http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/">日本語 Wikipedia エンティティベクトル</a>
+
+<ul>
+<li>20181001版の<code>jawiki.word_vectors</code>を使用</li>
+<li>鈴木正敏, 松田耕史, 関根聡, 岡崎直観, 乾健太郎. Wikipedia 記事に対する拡張固有表現ラベルの多重付与. 言語処理学会第22回年次大会(NLP2016), March 2016.</li>
+</ul></li>
+<li>cc.ja: <a href="https://github.com/facebookresearch/fastText/blob/master/docs/crawl-vectors.md">facebookresearch/fastText</a>
+
+<ul>
+<li>E. Grave*, P. Bojanowski*, P. Gupta, A. Joulin, T. Mikolov, <a href="https://arxiv.org/abs/1802.06893">Learning Word Vectors for 157 Languages</a></li>
+</ul></li>
+</ul>
+
+<h2 id="実装">実装</h2>
+
+<p>ソースコードは以下のレポジトリにあります。</p>
+
+<p><a href="https://github.com/yagays/all_but_the_top">yagays/all_but_the_top</a></p>
+
+<p>ハイパーパラメータであるPCAの次元数は、論文中で経験的に示された<code>d/100</code>を用いています（<code>d</code>は単語ベクトルの次元数）。</p>
+
+<h2 id="評価">評価</h2>
+
+<p>ここでは、日本語での評価データセットが公開されている「<a href="https://github.com/tmu-nlp/JapaneseWordSimilarityDataset">日本語単語類似度データセット</a>」を用いた単語類似度による評価を行いました。以下の数値は、スピアマンの順位相関係数に100を掛けたものです。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">分散ベクトル</th>
+<th align="right">動詞</th>
+<th align="right">形容詞</th>
+<th align="right">名詞</th>
+<th align="right">副詞</th>
+<th align="right">平均</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">word2vec.100d</td>
+<td align="right"><strong>25.06</strong></td>
+<td align="right"><strong>21.42</strong></td>
+<td align="right"><strong>22.69</strong></td>
+<td align="right">18.57</td>
+<td align="right"><strong>21.94</strong></td>
+</tr>
+
+<tr>
+<td align="left">word2vec.100d + abtt</td>
+<td align="right">25.05</td>
+<td align="right">19.21</td>
+<td align="right">20.85</td>
+<td align="right"><strong>21.33</strong></td>
+<td align="right">21.61</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th align="left">分散ベクトル</th>
+<th align="right">動詞</th>
+<th align="right">形容詞</th>
+<th align="right">名詞</th>
+<th align="right">副詞</th>
+<th align="right">平均</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">word2vec.200d</td>
+<td align="right">25.88</td>
+<td align="right"><strong>22.20</strong></td>
+<td align="right"><strong>23.90</strong></td>
+<td align="right">20.63</td>
+<td align="right">23.15</td>
+</tr>
+
+<tr>
+<td align="left">word2vec.200d + abtt</td>
+<td align="right"><strong>26.55</strong></td>
+<td align="right">20.71</td>
+<td align="right">21.48</td>
+<td align="right"><strong>26.65</strong></td>
+<td align="right"><strong>23.85</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th align="left">分散ベクトル</th>
+<th align="right">動詞</th>
+<th align="right">形容詞</th>
+<th align="right">名詞</th>
+<th align="right">副詞</th>
+<th align="right">平均</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">word2vec.300d</td>
+<td align="right">25.72</td>
+<td align="right"><strong>22.34</strong></td>
+<td align="right"><strong>24.87</strong></td>
+<td align="right">21.85</td>
+<td align="right">23.70</td>
+</tr>
+
+<tr>
+<td align="left">word2vec.300d + abtt</td>
+<td align="right"><strong>26.50</strong></td>
+<td align="right">21.59</td>
+<td align="right">23.91</td>
+<td align="right"><strong>27.22</strong></td>
+<td align="right"><strong>24.81</strong></td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th align="left">分散ベクトル</th>
+<th align="right">動詞</th>
+<th align="right">形容詞</th>
+<th align="right">名詞</th>
+<th align="right">副詞</th>
+<th align="right">平均</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">fasttext.300d</td>
+<td align="right"><strong>21.04</strong></td>
+<td align="right"><strong>35.91</strong></td>
+<td align="right">31.01</td>
+<td align="right">30.98</td>
+<td align="right">29.73</td>
+</tr>
+
+<tr>
+<td align="left">fasttext.300d + abtt</td>
+<td align="right">20.36</td>
+<td align="right">35.80</td>
+<td align="right"><strong>31.95</strong></td>
+<td align="right"><strong>33.24</strong></td>
+<td align="right"><strong>30.34</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p>All-but-the-Topを適用することによって、200次元以上のモデルにおいて平均的にスピアマンの順位相関係数が向上していることがわかりました。ただし、すべての品詞において向上するわけではなく、形容詞や名詞では逆に数値が低くなっている場合もあります。単語埋め込みの研究においては幾つもの評価手法が存在し、これ自体は性能評価の1つの側面でしかありませんが、All-but-the-Topによる後処理が有用であることを示すことができたと思われます。</p>
+
+<p>なお、単語から単語ベクトルへの変換において、分かち書きで2単語以上に分割された単語列に関しては、<a href="http://www.anlp.jp/proceedings/annual_meeting/2016/pdf_dir/P9-8.pdf">堺澤ら</a>と同様に単語の平均ベクトルを用いています。また、どちらかに存在しない語彙が含まれていて単語ベクトルが計算できない場合は、類似度を<code>-1</code>としました。今回の実験が幾つかの既存研究における日本語単語類似度データセットでの結果と異なっているのは、これらの前処理や形態素解析の辞書が異なるからだと考えられるのですが、もし詳しい方がいらっしゃったらご指摘いただければと思います。</p>
+
+<p>実行した評価スクリプトは <a href="https://github.com/yagays/all_but_the_top/blob/master/src/evaluation.py"><code>evaluation.py</code></a>にあります。</p>
+
+<h2 id="ライセンス">ライセンス</h2>
+
+<p>本ページで配布しているモデルファイルのライセンスは<a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0.</a>です。</p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://www.slideshare.net/MacotoTachenaca/allbutthetop-simple-and-effective-postprocessing-for-word-representations-98611879">All-but-the-Top: Simple and Effective Postprocessing for Word Representations</a></li>
+<li><a href="https://ipsj.ixsq.nii.ac.jp/ej/index.php?active_action=repository_view_main_item_detail&amp;page_id=13&amp;block_id=8&amp;item_id=183799&amp;item_no=1">同義語を考慮した日本語の単語分散表現の学習</a></li>
+<li><a href="https://ipsj.ixsq.nii.ac.jp/ej/?action=pages_view_main&amp;active_action=repository_view_main_item_detail&amp;block_id=8&amp;item_id=141870&amp;item_no=1&amp;page_id=13&amp;utm_campaign=buffer&amp;utm_content=buffer43028&amp;utm_medium=social&amp;utm_source=twitter.com">日本語単語ベクトルの構築とその評価</a>
+
+<ul>
+<li>吉井らは単語類推タスクと文完成タスクの2種類で評価しているが、データセットが公開されていなかったため実験は行わなかった</li>
+</ul></li>
+<li><a href="http://chasen.org/~daiti-m/paper/SNLP10sentence.pdf">SNLP10sentence.pdf</a></li>
+<li><a href="http://komachi.hatenablog.com/entry/20180524/p1">電力が限界だとは言うけれど - 武蔵野日記</a></li>
+</ul>
+
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/all-but-the-top/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 
