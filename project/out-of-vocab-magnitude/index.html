@@ -1120,7 +1120,7 @@ In [ ]: character_ngram(&quot;uberxl&quot;)
 Out[ ]: ['ube', 'ber', 'erx', 'rxl', 'uber', 'berx', 'erxl', 'uberx', 'berxl']
 </code></pre>
 
-<p>こうやって見ると文字列で見たときに似ている単語同士は、そのngramの構成も近くなります。あとは、各ngramから何かしらのランダムベクトルが計算できれば、その足し合わせで表現すればランダムベクトルも近くなるはずです。なので、文字列を数字に変換した上で、それをシードとして一様乱数から分散表現の次元数分だけサンプリングすれば良いわけです。<code>uberx</code>と<code>uberxl</code>のngramで異なる部分は3つだけですので、その分少しだけ違うランダムさが加わったベクトルになります。これを論文では&rdquo;pseudorandomvector generator&rdquo;と呼んでいます。</p>
+<p>こうやって見ると、文字列で見たときに似ている単語同士は、当然ながらそのngramの構成も近くなります。あとは、各ngramから何かしらのランダムベクトルが計算できれば、その足し合わせで表現することでランダムベクトルも近くなるはずです。なので、文字列を数字に変換した上で、それをシードとして一様乱数から分散表現の次元数分だけサンプリングすれば良いわけです。<code>uberx</code>と<code>uberxl</code>のngramで異なる部分は3つだけですので、その分少しだけ違うランダムさが加わったベクトルになります。これを論文では&rdquo;pseudorandomvector generator&rdquo;と呼んでいます。</p>
 
 <h3 id="2項目matchの計算">2項目MATCHの計算</h3>
 
