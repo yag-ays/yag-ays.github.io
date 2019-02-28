@@ -1059,12 +1059,12 @@ margin-left: -4%;
 <li><strong>文字列的に似ているOOVの単語同士には、なるべく似たベクトル表現を付与したい</strong>
 
 <ul>
-<li>e.g. uberの車種である&rdquo;uberx&rdquo;と&rdquo;uberxl&rdquo;は、似た文字列であるから似たランダムベクトルになってほしい (OOVだけど意味的に似ていると想定される)</li>
+<li>e.g. uberの車種である<code>uberx</code>と<code>uberxl</code>は、似た文字列であるから似たランダムベクトルになってほしい (OOVだけど意味的に似ていると想定される)</li>
 </ul></li>
 <li><strong>OOVと文字列的に似ている単語が語彙中の中にあれば、そのベクトル表現と似たベクトル表現を付与したい</strong>
 
 <ul>
-<li>e.g. &ldquo;uberx&rdquo;というOOVは、&rdquo;uber&rdquo;が分散表現の語彙の中にあれば、それに近いランダムベクトル表現であってほしい (単語を構成する部分文字列の意味と似ていると想定される)</li>
+<li>e.g. <code>uberx</code>というOOVは、<code>uber</code>が分散表現の語彙の中にあれば、それに近いランダムベクトル表現であってほしい (単語を構成する部分文字列の意味と似ていると想定される)</li>
 </ul></li>
 </ul>
 
@@ -1110,7 +1110,7 @@ In [ ]: character_ngram(&quot;uberxl&quot;)
 Out[ ]: ['ube', 'ber', 'erx', 'rxl', 'uber', 'berx', 'erxl', 'uberx', 'berxl']
 </code></pre>
 
-<p>こうやって見ると文字列で見たときに似ている単語同士は、そのngramの構成も近くなります。あとは、各ngramから何かしらのランダムベクトルが計算できれば、その足し合わせで表現すればランダムベクトルも近くなるはずです。なので、文字列を数字に変換した上で、それをシードとして一様乱数から分散表現の次元数分だけサンプリングすれば良いわけです。&rdquo;uberx&rdquo;と&rdquo;uberxl&rdquo;のngramで異なる部分は3つだけですので、その分少しだけ違うランダムさが加わったベクトルになります。これを論文では&rdquo;pseudorandomvector generator&rdquo;と呼んでいます。</p>
+<p>こうやって見ると文字列で見たときに似ている単語同士は、そのngramの構成も近くなります。あとは、各ngramから何かしらのランダムベクトルが計算できれば、その足し合わせで表現すればランダムベクトルも近くなるはずです。なので、文字列を数字に変換した上で、それをシードとして一様乱数から分散表現の次元数分だけサンプリングすれば良いわけです。<code>uberx</code>と<code>uberxl</code>のngramで異なる部分は3つだけですので、その分少しだけ違うランダムさが加わったベクトルになります。これを論文では&rdquo;pseudorandomvector generator&rdquo;と呼んでいます。</p>
 
 <h3 id="2項目matchの計算">2項目MATCHの計算</h3>
 
