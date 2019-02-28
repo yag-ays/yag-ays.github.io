@@ -1031,6 +1031,8 @@ margin-left: -4%;
 
 <p>All-but-the-Topは、学習済みの分散表現に対して特定の後処理を加えることにより、分散表現の評価に用いられるタスクにおいて性能向上を達成した手法です。単語ベクトル内に存在する偏りを無くすために、平均で標準化し、主成分分析で幾つかの方向の主成分を引くという処理をするというのものです。たったこれだけという感じですが、SIF Embeddingの研究と同様に理論的な裏付けがあるようです。こういった背景や英語での実験結果は論文を参考ください。日本語での解説は<a href="https://www.slideshare.net/MacotoTachenaca/allbutthetop-simple-and-effective-postprocessing-for-word-representations-98611879">こちらの論文紹介スライド</a>が参考になります。</p>
 
+<hr />
+
 <h2 id="単語ベクトルのダウンロード">単語ベクトルのダウンロード</h2>
 
 <p>以下の2つの学習済み分散表現に対してAll-but-the-Topの後処理を適用したファイルです。配布するモデルは、元のファイル名に加えて<code>abtt</code>という名前が付与されています。</p>
@@ -1085,6 +1087,8 @@ margin-left: -4%;
 </ul></li>
 </ul>
 
+<hr />
+
 <h2 id="実装">実装</h2>
 
 <p>ソースコードは以下のレポジトリにあります。</p>
@@ -1092,6 +1096,8 @@ margin-left: -4%;
 <p><a href="https://github.com/yagays/all_but_the_top">yagays/all_but_the_top</a></p>
 
 <p>ハイパーパラメータであるPCAの次元数は、論文中で経験的に示された<code>d/100</code>を用いています（<code>d</code>は単語ベクトルの次元数）。</p>
+
+<hr />
 
 <h2 id="評価">評価</h2>
 
@@ -1235,9 +1241,13 @@ margin-left: -4%;
 
 <p>実行した評価スクリプトはレポジトリの<a href="https://github.com/yagays/all_but_the_top/blob/master/src/evaluation.py"><code>evaluation.py</code></a>にあります。</p>
 
+<hr />
+
 <h2 id="ライセンス">ライセンス</h2>
 
 <p>本ページで配布しているモデルファイルのライセンスは<a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0.</a>です。</p>
+
+<hr />
 
 <h2 id="参考">参考</h2>
 

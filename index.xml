@@ -6,10 +6,23 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 23 Feb 2019 00:49:58 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 27 Feb 2019 22:36:40 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>単語埋め込みにおけるout-of-vocabularyの対応 - magnitudeの初期化</title>
+      <link>https://yag-ays.github.io/project/out-of-vocab-magnitude/</link>
+      <pubDate>Wed, 27 Feb 2019 22:36:40 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/out-of-vocab-magnitude/</guid>
+      <description>概要 magnitudeという単語埋め込みを扱うライブラリには、単語を構成する文字列を考慮したout-of-vocabularyの初期化の方法が実装されています。EMNLP 2018の論文と実際のコードを元に、その初期化の方法を実装して試してみました。
+背景 KaggleのQuora Insincere Questionsコンペを終えて KaggleのQuora Insecure QuestionsのコンペではOOVの対応が重要だったっぽいけど、magnitudeはランダムベクトルの付与とかミススペルの対応とかしてくれるみたいだ。ロジック確認しないと何してるのかわからないけど……　https://t.co/d8tteqwwCp
+&amp;mdash; やぐ (@yag_ays) February 26, 2019 
+KaggleのNLPコンペであるQuora Insincere Questions Classificationが終わって上位陣の解法を眺めていたのですが、その中で目に止まったのがout-of-vocabulary（以降OOVと表記）の対応です。今回のコンペでは主催側が定めた幾つかの学習済み単語埋め込みしか使うことができないので、大規模コーパスから新しく学習することができません。そのため、データセットには含まれているが学習済み単語ベクトルには含まれていない単語であるout-of-vocabularyをどう扱うかが、前処理の重要な要素だったようです。それぞれの解法には以下のようなコメントが記載されています。
+ &amp;ldquo;The most important thing now is to find as many embeddings as possible for our vocabulary. (中略) For public test data we had around 50k of vocab tokens we did not find in the embeddings afterwards. &amp;rdquo; (1st place solution) &amp;ldquo;I applied spell correction to OOV words.</description>
+    </item>
     
     <item>
       <title>後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現</title>
