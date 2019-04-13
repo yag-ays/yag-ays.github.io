@@ -3,6 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yag-ays.github.io/</loc>
+    <lastmod>2019-04-11T10:15:26+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yag-ays.github.io/project/pretrained_embeddings/</loc>
+    <lastmod>2019-04-11T10:15:26+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yag-ays.github.io/project/</loc>
+    <lastmod>2019-04-11T10:15:26+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://yag-ays.github.io/project/out-of-vocab-magnitude/</loc>
     <lastmod>2019-02-27T22:36:40+09:00</lastmod>
   </url>
@@ -69,18 +86,6 @@
   
   <url>
     <loc>https://yag-ays.github.io/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://yag-ays.github.io/</loc>
-    <lastmod>2019-02-27T22:36:40+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://yag-ays.github.io/project/</loc>
-    <lastmod>2019-02-27T22:36:40+09:00</lastmod>
     <priority>0</priority>
   </url>
   
