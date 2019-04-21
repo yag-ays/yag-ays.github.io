@@ -6,10 +6,27 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 15 Apr 2019 21:44:12 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 21 Apr 2019 03:45:17 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>fasttextを用いた言語判定</title>
+      <link>https://yag-ays.github.io/project/fasttext_language_identification/</link>
+      <pubDate>Sun, 21 Apr 2019 03:45:17 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/fasttext_language_identification/</guid>
+      <description>Facebookが提供するfasttextの公式サイトにて、fasttextを用いた言語判定モデルが公開されていたので、実際に利用してみました。
+概要 fasttextはFacebookが公開している単語埋め込みの学習方法およびそのフレームワークです。word2vecとは違い、サブワードを利用した手法が特徴となっています。
+こちらの公式ブログの記事によると、fasttextによる言語判定は軽量でかつ高速に言語予測することができると述べられています。言語判定において広く使われるlangid.pyとの評価実験では、高い精度でかつ計算時間が1/10程度であることが示されています。またモデルファイルはオリジナルのサイズでは126MB、圧縮されたモデルは917kB (0.9MB)と、既存の単語埋め込みの学習済みモデルと比較してもかなり軽量になっています。
+なお「言語判定」(Language Identification)とは、与えられた文章がどの自然言語により書かれているかを判定するタスクを指します。例えば本記事に対して「日本語」(ja)であることを自動で判定するのが、言語判定です。
+使い方 まずは公開されているモデルを実際に動かしてみましょう。
+1. モデルのダウンロード fasttextのモデルをダウンロードします。下記ページにてlid.176.binまたはlid.176.ftzをダウンロードします。
+ Language identification · fastText  2. fasttextのpythonバインディングをインストール Pythonからfasttextを利用するためのPythonバインディングをインストールします。いくつかパッケージは存在しますが、pyfasttextはすでにメンテナンスされていないため、ここではFacebook公式のfastTextをインストールします。
+ fastText/python at master · facebookresearch/fastText  $ git clone https://github.com/facebookresearch/fastText.git $ cd fastText $ pip install .  3. モデルを読み込んで利用 さて、ようやく言語判定のモデルをロードして利用してみます。
+In []: from fastText import load_model In []: model = load_model(&amp;quot;lid.176.bin&amp;quot;) # or lid.176.ftz In []: model.predict(&#39;こんにちは&#39;) Out[]: ((&#39;__label__ja&#39;,), array([1.00002694])) In []: model.predict(&#39;你好&#39;) Out[]: ((&#39;__label__zh&#39;,), array([0.98323345])) In []: model.</description>
+    </item>
     
     <item>
       <title>MeCabの形態素解析の結果から正規表現を使って品詞列を抜き出すmecabpr</title>

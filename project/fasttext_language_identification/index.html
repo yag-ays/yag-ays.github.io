@@ -2,7 +2,6 @@
 <html lang="ja">
 
 <head>
-	<meta name="generator" content="Hugo 0.55.2" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/" />
-<meta property="og:title" content="Out-of-the-box" />
-<meta property="twitter:title" content="Out-of-the-box">
+<meta property="og:url" content="https://yag-ays.github.io/project/fasttext_language_identification/" />
+<meta property="og:title" content="fasttextを用いた言語判定" />
+<meta property="twitter:title" content="fasttextを用いた言語判定">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:image" content="https://yag-ays.github.io/img/banner.png">
 
-<meta property="og:description" content="yag_ays&#39;s blog">
-<meta property="twitter:description" content="yag_ays&#39;s blog">
+<meta property="og:description" content="">
+<meta property="twitter:description" content="">
 
 <title>
 
 
-    Out-of-the-box
+     fasttextを用いた言語判定 - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/">
+<link rel="canonical" href="https://yag-ays.github.io/project/fasttext_language_identification/">
 
 
 <style media="screen">
@@ -980,8 +979,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -989,7 +986,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1016,34 +1013,156 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                <p>yag_aysの資材置き場。out-of-the-boxなデータセット/コーパス/ノウハウを公開していきたい。</p>
+            <div class="page-heading">
 
-<p>記事一覧はこちら→ <a href="https://yag-ays.github.io/project/">PROJECT</a></p>
+    fasttextを用いた言語判定
+    <div class="container">
+      <div class="date">
+        2019-04-21
+      </div>
+    </div>
 
-<p>プロフィール→ <a href="https://yag.xyz/">Yuki Okuda</a></p>
+</div>
 
-                </div>
-            
-
-            
-                <div class="posts">
+            <div class="markdown">
                 
-                
-                </div>
-            
+    
 
-            <div class="best-posts">
-            
-            
+<p><img src="https://yag-ays.github.io/img/fasttext_language_identification_header.png" alt="https://www.pexels.com/photo/yellow-tassel-159581/" /></p>
+
+<p>Facebookが提供するfasttextの<a href="https://fasttext.cc">公式サイト</a>にて、fasttextを用いた言語判定モデルが公開されていたので、実際に利用してみました。</p>
+
+<h2 id="概要">概要</h2>
+
+<p>fasttextはFacebookが公開している単語埋め込みの学習方法およびそのフレームワークです。word2vecとは違い、サブワードを利用した手法が特徴となっています。</p>
+
+<p>こちらの<a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">公式ブログの記事</a>によると、fasttextによる言語判定は軽量でかつ高速に言語予測することができると述べられています。言語判定において広く使われる<code>langid.py</code>との評価実験では、高い精度でかつ計算時間が1/10程度であることが示されています。またモデルファイルはオリジナルのサイズでは126MB、圧縮されたモデルは917kB (0.9MB)と、既存の単語埋め込みの学習済みモデルと比較してもかなり軽量になっています。</p>
+
+<p>なお「言語判定」(Language Identification)とは、与えられた文章がどの自然言語により書かれているかを判定するタスクを指します。例えば本記事に対して「日本語」(ja)であることを自動で判定するのが、言語判定です。</p>
+
+<h2 id="使い方">使い方</h2>
+
+<p>まずは公開されているモデルを実際に動かしてみましょう。</p>
+
+<h3 id="1-モデルのダウンロード">1. モデルのダウンロード</h3>
+
+<p>fasttextのモデルをダウンロードします。下記ページにて<code>lid.176.bin</code>または<code>lid.176.ftz</code>をダウンロードします。</p>
+
+<ul>
+<li><a href="https://fasttext.cc/docs/en/language-identification.html">Language identification · fastText</a></li>
+</ul>
+
+<h3 id="2-fasttextのpythonバインディングをインストール">2. fasttextのpythonバインディングをインストール</h3>
+
+<p>Pythonからfasttextを利用するためのPythonバインディングをインストールします。いくつかパッケージは存在しますが、<a href="https://github.com/vrasneur/pyfasttext"><code>pyfasttext</code></a>はすでにメンテナンスされていないため、ここではFacebook公式の<a href="https://github.com/facebookresearch/fastText"><code>fastText</code></a>をインストールします。</p>
+
+<ul>
+<li><a href="https://github.com/facebookresearch/fastText/tree/master/python">fastText/python at master · facebookresearch/fastText</a></li>
+</ul>
+
+<pre><code class="language-sh">$ git clone https://github.com/facebookresearch/fastText.git
+$ cd fastText
+$ pip install .
+</code></pre>
+
+<h3 id="3-モデルを読み込んで利用">3. モデルを読み込んで利用</h3>
+
+<p>さて、ようやく言語判定のモデルをロードして利用してみます。</p>
+
+<pre><code class="language-py">In []: from fastText import load_model
+
+In []: model = load_model(&quot;lid.176.bin&quot;) # or lid.176.ftz
+
+In []: model.predict('こんにちは')
+Out[]: (('__label__ja',), array([1.00002694]))
+
+In []: model.predict('你好')
+Out[]: (('__label__zh',), array([0.98323345]))
+
+In []: model.predict('hello', k=2)
+Out[]: (('__label__en', '__label__fr'), array([0.24247202, 0.09511168]))
+</code></pre>
+
+<p>言語判定は上手くいっているようです。ただこのままでは<code>__label__</code>が付いていたり、予測する対象が複数の場合には出力が扱いにくいので、下記のような関数を用意してみました。</p>
+
+<pre><code class="language-py">def predict_language(text, model, k=1):
+    label, prob = model.predict(text, k)
+    return list(zip([l.replace(&quot;__label__&quot;, &quot;&quot;) for l in label], prob))
+</code></pre>
+
+<p><code>predict_language</code>を使うと、いい感じに出力することができました。</p>
+
+<pre><code class="language-py">In []: predict_language(&quot;こんにちは&quot;, model)
+Out[]: [('ja', 0.9995893239974976)]
+
+In []: predict_language(&quot;hello&quot;, model, k=2)
+Out[]: [('en', 0.24247202277183533), ('fr', 0.0951116755604744)]
+</code></pre>
+
+<h2 id="fasttextによるモデルの詳細">fasttextによるモデルの詳細</h2>
+
+<p>さて、fasttextはどのようにモデルを作成しているのでしょうか？<a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">公式ブログの記事</a>に学習方法の概要が記載されていたので簡単に見てみます。</p>
+
+<p>言語判定自体は、もともとfasttextが持っている教師あり学習の枠組みに沿って学習されています。ここではコマンドラインの<code>fasttext</code>を用いて学習されています。モデルの次元数は16、サブワードとして文字ngramが2,3,4をすべて利用しています。</p>
+
+<p>学習データについては実験を再現できる形では記載されていませんが「<a href="https://www.wikipedia.org">Wikipedia</a>, <a href="https://tatoeba.org/eng/">Tatoeba</a> and <a href="http://nlp.ffzg.hr/resources/corpora/setimes/">SETimes</a>」を利用したと書かれています。合計で176言語を対象にしており、それらは<a href="https://ja.wikipedia.org/wiki/ISO_639-1コード一覧">ISO 639</a>で定義されたコードが用いられています。ただしサポートされているコードを見ると2文字や3文字が混同していることから、639-1だったり639-2や639-3とバラバラのようです。</p>
+
+<p>モデルを圧縮する際にはWeight quantizationが用いられており、ベクトル圧縮の際には近似最近傍探索で用いられるProduct quantizationが用いられているようです。まあこのあたりはfasttextのコマンドラインの引数から指定することが可能であり、フレームワーク内に実装されている機能です。</p>
+
+<h2 id="言語判定の精度">言語判定の精度</h2>
+
+<p>公式ブログではlangid.pyと同精度と記載されいましたが、他の言語判定パッケージと比較したときにはどうでしょうか？こちらのブログ記事では、fasttextとlangid.pyに加えCLDとOpenNLPについて、多言語での言語判定の精度比較を行っています。</p>
+
+<p><a href="http://alexott.blogspot.com/2017/10/evaluating-fasttexts-models-for.html">Evaluating fastText&rsquo;s models for language detection | Alex Ott&rsquo;s blog</a></p>
+
+<p>その結果を要約すると、</p>
+
+<ul>
+<li>日本語や中国語などではどれも同等の性能</li>
+<li>CLDは「レア」な言語に強い</li>
+<li>fasttextは英語やフランス語、ドイツ語などの「メジャー」な言語に強い</li>
+<li>fasttextのモデル間では、圧縮されたモデルでは性能が下がった</li>
+</ul>
+
+<p>となったようです。また、短文においてはCLDよりfasttextの方がより信頼性が高いことが示されています。</p>
+
+<h2 id="まとめ">まとめ</h2>
+
+<p>本記事ではfasttextが提供する言語判定を実際に使いつつ、そのモデルの詳細や精度について見てきました。既存の言語判定器と比較しても同程度または高精度であることを考えると、やはり分散表現やニューラルネットの強さを感じます。手軽に利用することができますし、言語判定において利用を検討しても良いのではないかと思います。</p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://fasttext.cc/docs/en/language-identification.html">Language identification · fastText</a></li>
+<li><a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">Fast and accurate language identification using fastText</a></li>
+<li><a href="https://github.com/saffsd/langid.py">saffsd/langid.py: Stand-alone language identification system</a></li>
+<li><a href="https://github.com/vrasneur/pyfasttext">vrasneur/pyfasttext: Yet another Python binding for fastText</a></li>
+<li><a href="https://alexott.blogspot.com/2017/10/evaluating-fasttexts-models-for.html">Evaluating fastText&rsquo;s models for language detection | Alex Ott&rsquo;s blog</a></li>
+<li><a href="https://www.facebook.com/groups/1174547215919768/permalink/1702123316495486/?comment_id=1704414996266318&amp;reply_comment_id=1705159672858517&amp;notif_id=1507280476710677&amp;notif_t=group_comment">FastText Users公開グループ | Facebook</a></li>
+</ul>
+
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/fasttext_language_identification/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 
