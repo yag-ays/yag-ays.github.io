@@ -6,10 +6,31 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 21 Apr 2019 03:45:17 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 05 May 2019 12:10:06 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>深層学習時代の言語判定の最新動向</title>
+      <link>https://yag-ays.github.io/project/language_identification_in_dl_era/</link>
+      <pubDate>Sun, 05 May 2019 12:10:06 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/language_identification_in_dl_era/</guid>
+      <description>概要 言語判定（Language identification）とは、与えられた文字列が何語で書かれているかを判定するタスクです。例えば「こんにちは」なら日本語、「Hello World.」なら英語といったように、世界各国で話されている言語のうち何に属するかを推定するというものです。
+これだけ聞くと、非常に簡単な問題のように思えます。Google翻訳のような機械翻訳が高精度に文章を翻訳できる現在において、言語を判定するなんて行為はより基本的なことで、できて当たり前とも思われます。実際に2010年時点でサイボウズ・ラボの中谷さんが作成された言語判定エンジンlanguage-detectionは、49言語で99.77%の正解率で判定することができています(source)。他の言語処理タスクでは考えられないくらい高い正解率ですし、ここからの向上余地はほぼ無いように思えます。
+しかしながら、言語判定は今でも様々な論文が発表される分野です。極端な例を出すならば、Googleは自然言語処理において1st tierな学会であるEMNLPで2018年に言語判定の論文を出しています。このように現在でも研究され論文が通る分野であり、大学のみならず企業からも論文が発表される領域です。ではどこに研究の課題が残されているのでしょうか？また近年大きく発展した深層学習は、言語判定にどのように影響しているのでしょうか？
+ ここでは、近年論文として発表された3種類の言語判定の論文をもとに、深層学習時代の言語判定について見ていきたいと思います。
+複数の言語が混ざった文章の言語判定 A Fast, Compact, Accurate Model for Language Identification of Codemixed Text
+まずは冒頭でも紹介したEMNLP 2018のGoogleの論文です。論文タイトルにあるように複数言語が混ざった文章を対象にした言語判定は、既存の言語判定モデルでは無視されてきた領域でした。特にユーザが投稿するようなサービスにおいては、同じメッセージを複数言語で記載することが多く、そのような言語判定に対応するため、より粒度の細かい単位で言語判定することが必要です。
+例えば、以下のようなTweetはその代表例でしょう。
+新しい御代の幕開けに心からお祝い申し上げます。『令和』が日本の国に平和と繁栄をもたらす祝福された時代となるよう祈念致しております。🇯🇵 Congratulations on the beginning of the new era! We hope 令和 will be blessed with peace and prosperity for everyone in Japan.
+&amp;mdash; Tim Cook (@tim_cook) April 30, 2019 
+この論文で提案している手法CMXは、まずトークン(単語)単位で言語判定をしたのちに、貪欲法を用いて文章全体での言語判定を行うというものです。前半の言語判定に、文字特徴量とトークンの特徴量の両方を用いたシンプルなニューラルネットワークを用いています。
+  (Ref. https://arxiv.org/abs/1810.04142)
+文字特徴量は従来の言語判定と同じように文字n-gramを用いており、n=[1,4]を計算したのちにfeature hashingで語彙数をコントロールしています。これは、n-gramのnを増やすごとに生成される文字列のパターン数が指数的に増加することから、計算コストやモデルサイズを削減するためです。その他にも、ひらがなやハングルのように特定文字に対応する言語の特徴量や、辞書ベースの特徴量などを加えたモデルになっています。
+単語や文字単位での言語判定 LanideNN: Multilingual Language Identification on Character Window</description>
+    </item>
     
     <item>
       <title>fasttextを用いた言語判定</title>
@@ -202,7 +223,8 @@ yagays/kanjivg-radical
 データセットの詳細 kanjivg-radicalには4種類のデータが含まれています。
  漢字と部首/偏旁の変換データ 漢字と要素の変換データ 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字  以下では、部首/偏旁はradical、要素はelement、左右はleft_right、上下はtop_buttomと表現しています。
 1. 漢字と部首/偏旁の変換データ 漢字と部首/偏旁を対応付けしたデータセットです。漢字から部首/偏旁と、部首/偏旁から漢字の2種類のデータがあります。
- kanji2radical.json : 漢字から部首/偏旁への変換 radical2kanji.json : 部首/偏旁から漢字への変換  # kanji2radical.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;月&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;凶&amp;quot; ]  # radical2kanji.jsonのサンプル &amp;quot;月&amp;quot;: [ &amp;quot;肝&amp;quot;, &amp;quot;育&amp;quot;, &amp;quot;胆&amp;quot;, &amp;quot;朦&amp;quot;, &amp;quot;脱&amp;quot;, ...  2. 漢字と要素の変換データ 漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。
+ kanji2radical.json : 漢字から部首/偏旁への変換 radical2kanji.json : 部首/偏旁から漢字への変換
+# kanji2radical.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;月&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;凶&amp;quot; ]  # radical2kanji.jsonのサンプル &amp;quot;月&amp;quot;: [ &amp;quot;肝&amp;quot;, &amp;quot;育&amp;quot;, &amp;quot;胆&amp;quot;, &amp;quot;朦&amp;quot;, &amp;quot;脱&amp;quot;, ...   2. 漢字と要素の変換データ 漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。
  kanji2element.json : 漢字から要素への変換 element2kanji.json : 要素から漢字への変換  ここで使用している「要素」いう言葉は、部首/偏旁を構成する更に細かい単位での漢字のことを指しています。言語学的に定義された単語ではなく、KanjiVGで利用されていたelementの対訳として用いています。
 このデータでは構成している要素をすべて列挙しているので、結果の中には重複が含まれます。以下の例だと脳には「凶」という要素が含まれていますが、同時に「乂」という要素も含まれているため、どちらもkanji2elementの結果として出力されます。
 # kanji2element.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;乂&amp;quot;, &amp;quot;凶&amp;quot;, &amp;quot;丿&amp;quot;, &amp;quot;凵&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;月&amp;quot; ]  # element2kanji.</description>

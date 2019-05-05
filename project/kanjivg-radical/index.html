@@ -320,7 +320,7 @@ div.main .content .posts {
   margin-bottom: 4em;
 }
 div.main .content .page-heading {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   font-family: 'Helvetica Neue', 'Arial', sans-serif;
   letter-spacing: -0.005rem;
@@ -486,7 +486,7 @@ div.main .content {
     width: 100%;
 }
 div.main .content .markdown {
-  font-size: 1.1em;
+  font-size: 1.0em;
   line-height: 1.75em;
   color: #313537;
   font-family: serif;
@@ -632,7 +632,7 @@ div.main .content .markdown figure {
 div.main .content .markdown figure img {
   width: 100%;
   height: auto;
-  max-width: 100%;
+  max-width: 80%;
   display: block;
   position: static;
   margin: auto;
@@ -1070,26 +1070,27 @@ margin-left: -4%;
 
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical.json"><code>kanji2radical.json</code></a> : 漢字から部首/偏旁への変換</li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji.json"><code>radical2kanji.json</code></a> : 部首/偏旁から漢字への変換</li>
-</ul>
+
+<li><p><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji.json"><code>radical2kanji.json</code></a> : 部首/偏旁から漢字への変換</p>
 
 <pre><code># kanji2radical.jsonのサンプル
 &quot;脳&quot;: [
-    &quot;月&quot;,
-    &quot;⺍&quot;,
-    &quot;凶&quot;
+&quot;月&quot;,
+&quot;⺍&quot;,
+&quot;凶&quot;
 ]
 </code></pre>
 
 <pre><code># radical2kanji.jsonのサンプル
 &quot;月&quot;: [
-    &quot;肝&quot;,
-    &quot;育&quot;,
-    &quot;胆&quot;,
-    &quot;朦&quot;,
-    &quot;脱&quot;,
+&quot;肝&quot;,
+&quot;育&quot;,
+&quot;胆&quot;,
+&quot;朦&quot;,
+&quot;脱&quot;,
 ...
-</code></pre>
+</code></pre></li>
+</ul>
 
 <h3 id="2-漢字と要素の変換データ">2. 漢字と要素の変換データ</h3>
 
@@ -1131,16 +1132,17 @@ margin-left: -4%;
 
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_left_right.json"><code>kanji2radical_left_right.json</code></a></li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_left_right.json"><code>radical2kanji_left_right.json</code></a></li>
-</ul>
+
+<li><p><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_left_right.json"><code>radical2kanji_left_right.json</code></a></p>
 
 <pre><code># kanji2radical_left_right.jsonのサンプル
 {'乢': ['山', '乙'],
- '嶋': ['山', '鳥'],
- '恥': ['耳', '心'],
- '擦': ['扌', '察'],
+'嶋': ['山', '鳥'],
+'恥': ['耳', '心'],
+'擦': ['扌', '察'],
 ...
-</code></pre>
+</code></pre></li>
+</ul>
 
 <h3 id="4-漢字と部首-偏旁の変換データのうち-上下に分割できる漢字">4. 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</h3>
 
@@ -1148,16 +1150,17 @@ margin-left: -4%;
 
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_top_buttom.json"><code>kanji2radical_top_buttom.json</code></a></li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_top_buttom.json"><code>radical2kanji_top_buttom.json</code></a></li>
-</ul>
+
+<li><p><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_top_buttom.json"><code>radical2kanji_top_buttom.json</code></a></p>
 
 <pre><code># kanji2radical_top_buttom.jsonのサンプル
 {'云': ['二', '厶'],
- '賃': ['任', '貝'],
- '輩': ['非', '車'],
- '雪': ['雨', '⺕'],
- ...
-</code></pre>
+'賃': ['任', '貝'],
+'輩': ['非', '車'],
+'雪': ['雨', '⺕'],
+...
+</code></pre></li>
+</ul>
 
 <h2 id="統計">統計</h2>
 
