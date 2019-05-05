@@ -26,7 +26,7 @@
 例えば、以下のようなTweetはその代表例でしょう。
 新しい御代の幕開けに心からお祝い申し上げます。『令和』が日本の国に平和と繁栄をもたらす祝福された時代となるよう祈念致しております。🇯🇵 Congratulations on the beginning of the new era! We hope 令和 will be blessed with peace and prosperity for everyone in Japan.
 &amp;mdash; Tim Cook (@tim_cook) April 30, 2019 
-この論文で提案している手法CMXは、まずトークン(単語)単位で言語判定をしたのちに、貪欲法を用いて文章全体での言語判定を行うというものです。前半の言語判定に、文字特徴量とトークンの特徴量の両方を用いたシンプルなニューラルネットワークを用いています。
+この論文で提案している手法CMXは、まずトークン(単語)単位で言語判定をしたのちに、貪欲法を用いて文章全体での言語判定を行うというものです。前半の言語判定には文字特徴量とトークンの特徴量の両方を用いたシンプルなニューラルネットワークを用いています。
   (Ref. https://arxiv.org/abs/1810.04142)
 文字特徴量は従来の言語判定と同じように文字n-gramを用いており、n=[1,4]を計算したのちにfeature hashingで語彙数をコントロールしています。これは、n-gramのnを増やすごとに生成される文字列のパターン数が指数的に増加することから、計算コストやモデルサイズを削減するためです。その他にも、ひらがなやハングルのように特定文字に対応する言語の特徴量や、辞書ベースの特徴量などを加えたモデルになっています。
 単語や文字単位での言語判定 LanideNN: Multilingual Language Identification on Character Window</description>
