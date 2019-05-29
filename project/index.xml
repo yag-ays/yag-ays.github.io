@@ -6,10 +6,25 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 05 May 2019 12:10:06 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 29 May 2019 09:59:24 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み</title>
+      <link>https://yag-ays.github.io/project/swem/</link>
+      <pubDate>Wed, 29 May 2019 09:59:24 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/swem/</guid>
+      <description>単語埋め込み (Word Embedding) のみを利用して文章埋め込み (Sentence Embedding) を計算するSWEM (Simple Word-Embedding-based Methods) を実装しました。
+概要 文章に対する固定次元の分散表現を得る手法としては、doc2vecやSkip-thoughts、テキスト間の含意関係を学習することで分散表現を得るinfersent、最近では強力な言語モデルとなったBERTといった方法があります。これらの手法は、単語ベクトルに加えて文章ベクトルを得るためのニューラルネットワーク自体を、大規模コーパスから学習させる必要があります。
+そこで、より単純ながらも後続タスクへの精度がでる文章埋め込みの計算方法として、追加学習やパラメータチューニングを必要とせず単語埋め込みだけを利用するSWEMが提案されました。これはACL2018 &amp;ldquo;Baseline Needs More Love: On Simple Word-Embedding-Based Models and Associated Pooling Mechanisms&amp;rdquo;にて発表された方法で、複数のデータセットにおける評価において、既存のCNN/RNNモデルと同等またはそれ以上の精度となっています。ロジックは単純ながらもある程度良い性能を示すことから、強力なベースラインとして利用することができると考えられます。
+方法 SWEMでは以下の4つの方法が提案されています。
+ SWEM-aver：単語の分散表現に対してaverage poolingする SWEM-max：単語の分散表現に対してmax poolingする SWEM-concat：SWEM-averとSWEM-maxの結果を結合する SWEM-hier：n-gramのように固定長のウィンドウでaverage-poolingした結果に対してmax poolingする  これらは基本的に、文章に含まれる単語の分散表現全体に対して、どういう操作で固定時点のベクトルに集約するかといった操作の違いでしかありません。それぞれのaverage poolingやmax poolingは、element-wiseにaverageやmaxを取ります。Out-of-Vocabulary (OOV) な単語に対しては、[-0.01, 0.01]の範囲の一様乱数を用いて初期化します。なお、aver, max, concatに関してはパラメータはありませんが、SWEM-hierはn-gramのウィンドウの幅nを決める必要があります。
+ちなみに、結局のところどれが一番いいの？という話ですが、論文中の評価ではタスク/データ依存という結果になっており、一概にどれが良いかは断定できないようです。
+コード  https://github.com/yagays/swem  from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem import SWEM w2v_path = &amp;quot;/path/to/word_embedding.bin&amp;quot; w2v = KeyedVectors.load_word2vec_format(w2v_path, binary=True) tokenizer = MeCabTokenizer(&amp;quot;-O wakati&amp;quot;) swem = SWEM(w2v, tokenizer)  In []: text = &amp;quot;吾輩は猫である。名前はまだ無い。&amp;quot; # SWEM-aver In []: swem.</description>
+    </item>
     
     <item>
       <title>深層学習時代の言語判定の最新動向</title>
