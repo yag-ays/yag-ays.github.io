@@ -4,14 +4,19 @@
   
   <url>
     <loc>https://yag-ays.github.io/</loc>
-    <lastmod>2019-05-29T09:59:24+09:00</lastmod>
+    <lastmod>2019-06-05T20:11:43+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://yag-ays.github.io/project/</loc>
-    <lastmod>2019-05-29T09:59:24+09:00</lastmod>
+    <lastmod>2019-06-05T20:11:43+09:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://yag-ays.github.io/project/pytorch_bert_japanese/</loc>
+    <lastmod>2019-06-05T20:11:43+09:00</lastmod>
   </url>
   
   <url>

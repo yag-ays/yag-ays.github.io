@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/" />
-<meta property="og:title" content="Project" />
-<meta property="twitter:title" content="Project">
+<meta property="og:url" content="https://yag-ays.github.io/project/pytorch_bert_japanese/" />
+<meta property="og:title" content="pytorchでBERTの日本語学習済みモデルを利用する - 文章埋め込み編" />
+<meta property="twitter:title" content="pytorchでBERTの日本語学習済みモデルを利用する - 文章埋め込み編">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Project - Out-of-the-box 
+     pytorchでBERTの日本語学習済みモデルを利用する - 文章埋め込み編 - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/">
+<link rel="canonical" href="https://yag-ays.github.io/project/pytorch_bert_japanese/">
 
 
 <style media="screen">
@@ -979,8 +979,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/project/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -988,7 +986,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1015,147 +1013,189 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Project</div>
-                <ul>
-                    
-                        <li class="groupby">Jun, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jun 5, 2019</span>
-    <a href="https://yag-ays.github.io/project/pytorch_bert_japanese/"><span>pytorchでBERTの日本語学習済みモデルを利用する - 文章埋め込み編</span></a>
-</li>
+            <div class="page-heading">
 
-                        
-                    
-                        <li class="groupby">May, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">May 29, 2019</span>
-    <a href="https://yag-ays.github.io/project/swem/"><span>SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み</span></a>
-</li>
+    pytorchでBERTの日本語学習済みモデルを利用する - 文章埋め込み編
+    <div class="container">
+      <div class="date">
+        2019-06-05
+      </div>
+    </div>
 
-                        
-                            <li class="post-item">
-    <span class="meta">May 5, 2019</span>
-    <a href="https://yag-ays.github.io/project/language_identification_in_dl_era/"><span>深層学習時代の言語判定の最新動向</span></a>
-</li>
+</div>
 
-                        
-                    
-                        <li class="groupby">Apr, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Apr 21, 2019</span>
-    <a href="https://yag-ays.github.io/project/fasttext_language_identification/"><span>fasttextを用いた言語判定</span></a>
-</li>
+            <div class="markdown">
+                
+    
 
-                        
-                            <li class="post-item">
-    <span class="meta">Apr 15, 2019</span>
-    <a href="https://yag-ays.github.io/project/mecab_pos_regex/"><span>MeCabの形態素解析の結果から正規表現を使って品詞列を抜き出すmecabpr</span></a>
-</li>
+<p><img src="https://yag-ays.github.io/img/pytorch_bert_japanese_header.png" alt="https://www.pexels.com/photo/red-and-white-umbrella-during-night-time-39079/" /></p>
 
-                        
-                    
-                        <li class="groupby">Feb, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 27, 2019</span>
-    <a href="https://yag-ays.github.io/project/out-of-vocab-magnitude/"><span>単語埋め込みにおけるout-of-vocabularyの対応 - magnitudeの初期化</span></a>
-</li>
+<h2 id="概要">概要</h2>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 23, 2019</span>
-    <a href="https://yag-ays.github.io/project/all-but-the-top/"><span>後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現</span></a>
-</li>
+<p>BERT (Bidirectional Encoder Representations from Transformers) は、NAACL2019で論文が発表される前から大きな注目を浴びていた強力な言語モデルです。これまで提案されてきたELMoやOpenAI-GPTと比較して、双方向コンテキストを同時に学習するモデルを提案し、大規模コーパスを用いた事前学習とタスク固有のfine-tuningを組み合わせることで、各種タスクでSOTAを達成しました。</p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 19, 2019</span>
-    <a href="https://yag-ays.github.io/project/minify-w2v/"><span>語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v</span></a>
-</li>
+<p>そのように事前学習によって強力な言語モデルを獲得しているBERTですが、今回は日本語の学習済みBERTモデルを利用して、文章埋め込み (Sentence Embedding) を計算してみようと思います。</p>
 
-                        
-                    
-                        <li class="groupby">Jan, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 22, 2019</span>
-    <a href="https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/"><span>日本語Wikipediaで学習したdoc2vecモデル</span></a>
-</li>
+<hr />
 
-                        
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 16, 2018</span>
-    <a href="https://yag-ays.github.io/project/wikipedia-pageview/"><span>Wikipediaの記事ごとのページビューを取得する</span></a>
-</li>
+<h2 id="環境">環境</h2>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 7, 2018</span>
-    <a href="https://yag-ays.github.io/project/alacarte/"><span>A La Carte Embeddingの実装</span></a>
-</li>
+<p>今回は京都大学の黒橋・河原研究室が公開している「BERT日本語Pretrainedモデル」を利用します。</p>
 
-                        
-                    
-                        <li class="groupby">Nov, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Nov 12, 2018</span>
-    <a href="https://yag-ays.github.io/project/wed/"><span>Word Embedding based Edit Distanceの実装</span></a>
-</li>
+<ul>
+<li><a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?BERT%E6%97%A5%E6%9C%AC%E8%AA%9EPretrained%E3%83%A2%E3%83%87%E3%83%AB">BERT日本語Pretrainedモデル - KUROHASHI-KAWAHARA LAB</a></li>
+</ul>
 
-                        
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 28, 2018</span>
-    <a href="https://yag-ays.github.io/project/embedding-visualization/"><span>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</span></a>
-</li>
+<p>BERTの実装は、pytorchで書かれた<a href="https://github.com/huggingface/pytorch-pretrained-BERT"><code>pytorch-pretrained-BERT</code></a>がベースになります。また形態素解析器は、学習済みモデルに合わせるため<a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?JUMAN++">JUMAN++</a>を利用します。</p>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 23, 2018</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja/"><span>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</span></a>
-</li>
+<h2 id="方法">方法</h2>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 6, 2018</span>
-    <a href="https://yag-ays.github.io/project/kanjivg-radical/"><span>漢字を構成する部首/偏旁のデータセット</span></a>
-</li>
+<p>今回は<code>BertWithJumanModel</code>というトークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。</p>
 
-                        
-                    
-                        <li class="groupby">Jul, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 30, 2018</span>
-    <a href="https://yag-ays.github.io/project/cirrus/"><span>Wikipedia CirrusSearchのダンプデータを利用する</span></a>
-</li>
+<ul>
+<li><a href="https://github.com/yagays/pytorch_bert_japanese">yagays/pytorch_bert_japanese</a></li>
+</ul>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 25, 2018</span>
-    <a href="https://yag-ays.github.io/project/char-embedding/"><span>文字の図形的な埋め込み表現 Glyph-aware Character Embedding</span></a>
-</li>
+<pre><code class="language-py">In []: from bert_juman import BertWithJumanModel
 
-                        
-                    
-                </ul>
+In []: bert = BertWithJumanModel(&quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE&quot;)
+
+In []: bert.get_sentence_embedding(&quot;吾輩は猫である。&quot;)
+Out[]:
+array([ 2.22642735e-01, -2.40221739e-01,  1.09303640e-02, -1.02307117e+00,
+        1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01,
+       -2.77438164e-02, -8.05811465e-01,  3.46736580e-01, -7.20409870e-01,
+        1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01,
+        2.26500735e-01, -8.97880018e-01,  2.52314955e-01, -7.09809303e-01,
+[...]        
+</code></pre>
+
+<p>これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。</p>
+
+<p>また、BERTの隠れ層の位置や、プーリングの計算方法も選択できるようにしています。このあたりの設計は<a href="https://github.com/hanxiao/bert-as-service">hanxiao/bert-as-service</a> を参考にしています。</p>
+
+<pre><code class="language-py">In []: bert.get_sentence_embedding(&quot;吾輩は猫である。&quot;,
+   ...:                             pooling_layer=-1,
+   ...:                             pooling_strategy=&quot;REDUCE_MAX&quot;)
+   ...:
+Out[]:
+array([ 1.2089624 ,  0.6267309 ,  0.7243419 , -0.12712255,  1.8050476 ,
+        0.43929055,  0.605848  ,  0.5058241 ,  0.8335829 , -0.26000524,
+[...]        
+</code></pre>
+
+<hr />
+
+<h2 id="解説">解説</h2>
+
+<p>上記の<code>BertWithJumanModel</code>クラスの内部を順に解説していきます。そのまま上から実行しても動作するように記載しているので、途中の動作が気になる方は試してみて下さい。</p>
+
+<h3 id="1-学習済みモデルを-pytorch-pretrained-bert-で読み込む">1. 学習済みモデルを<code>pytorch-pretrained-bert</code>で読み込む</h3>
+
+<p>まず始めに配布されている学習済みモデルなどを<code>pytorch-pretrained-BERT</code>から読み込みます。</p>
+
+<pre><code class="language-py">import torch
+from pytorch_pretrained_bert import BertTokenizer, BertModel
+
+model = BertModel.from_pretrained(&quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/&quot;)
+bert_tokenizer = BertTokenizer(&quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/vocab.txt&quot;,
+                               do_lower_case=False, do_basic_tokenize=False)
+</code></pre>
+
+<p>モデルは<a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?BERT%E6%97%A5%E6%9C%AC%E8%AA%9EPretrained%E3%83%A2%E3%83%87%E3%83%AB">黒橋・河原研究室の配布サイト</a>からダウンロードし解凍します。<code>BertModel</code>の<code>from_pretrained()</code>で解凍先のパスを指定することで、モデルをロードすることができます。必要なファイルは<code>pytorch_model.bin</code>と<code>vocab.txt</code>のみです。</p>
+
+<p>なお、モデル配布ページでは<code>pytorch-pretrained-BERT</code>内の<code>tokenization.py</code>の特定行をコメントアウトするように指示されていますが、<code>BertTokenizer()</code>で引数を<code>do_basic_tokenize=False</code>とすれば対応は不要です。 </p>
+
+<h3 id="2-テキストを分かち書きして対応するid列に変換する">2. テキストを分かち書きして対応するid列に変換する</h3>
+
+<p>次に、与えられたテキストを分かち書きしてトークンに分割したのちに、対応するidに変換します。<code>pytorch-pretrained-BERT</code>は日本語の分かち書きに対応していないため、前者はJuman++によるトークナイザを自作し、後者は<code>BertTokenizer()</code>を利用します。</p>
+
+<pre><code class="language-py"># Jumanによるトークナイザ
+class JumanTokenizer():
+    def __init__(self):
+        self.juman = Juman()
+
+    def tokenize(self, text):
+        result = self.juman.analysis(text)
+        return [mrph.midasi for mrph in result.mrph_list()]
+</code></pre>
+
+<p>分かち書きしたトークン列には、テキストの冒頭に<code>[CLS]</code>トークンを付与します。得られたトークン列は、英語のトークナイズに対応できるようにスペース区切りで結合し、最後に<code>BertTokenizer()</code>でid列に変換します。この際には、学習済みモデルの<code>max_seq_length</code>が128に設定されているため、トークン列を前方から128個目までにしています。</p>
+
+<pre><code class="language-py">juman_tokenizer = JumanTokenizer()
+
+tokens = [&quot;[CLS]&quot;] + juman_tokenizer.tokenize(text)
+bert_tokens = bert_tokenizer.tokenize(&quot; &quot;.join(tokens[:128]))  # max_seq_len
+ids = bert_tokenizer.convert_tokens_to_ids(bert_tokens)
+tokens_tensor = torch.tensor(ids).reshape(1, -1)
+</code></pre>
+
+<p>例えば「<code>我輩は猫である。</code>」という文章は、以下のようにトークン化されid列に変換されます。ちなみに<code>我輩</code>という単語は辞書中に存在せずかつサブワードとしても分割できないことから、未知語として<code>id:1</code>(<code>[UNK]</code>)に変換されています。</p>
+
+<pre><code># text
+  吾輩は猫である
+# tokens
+  ['[CLS]', '吾輩', 'は', '猫', 'である']
+# tokens_tensor
+  tensor([[   2,    1,    9, 4817,   32]])
+</code></pre>
+
+<h3 id="3-bertのモデルに入力し-特徴ベクトルを得る">3. BERTのモデルに入力し、特徴ベクトルを得る</h3>
+
+<p>id列に変換したベクトルをBERTのモデルに入力し、それぞれの隠れ層から出力される特徴ベクトルを得ます。</p>
+
+<pre><code class="language-py">model.eval()
+with torch.no_grad():
+    all_encoder_layers, _ = model(tokens_tensor)
+</code></pre>
+
+<p><code>all_encoder_layers</code>には全12層から出力される特徴ベクトルが格納されています。</p>
+
+<h3 id="4-特徴ベクトルから文章埋め込みを得る">4. 特徴ベクトルから文章埋め込みを得る</h3>
+
+<p>最後に、BERTの隠れ層から得られた特徴ベクトルから文章埋め込みを計算します。BERTでは各入力のトークンに対応する<code>hidden_size</code>次元 (本モデルでは768次元) のベクトルが得られるため、それを文章埋め込みとしての固定次元のベクトルで表現する必要があります。</p>
+
+<p>ここでは<a href="https://github.com/hanxiao/bert-as-service">hanxiao/bert-as-service</a>での計算方法を参考に、SWEMと同じ方法でベクトルを時間方向にaverage-poolingしています。また利用するBERTの隠れ層は、最終層ではなくその一つ前の層を選択しています。</p>
+
+<pre><code class="language-py">pooling_layer = -2
+embedding = all_encoder_layers[pooling_layer].numpy()[0]
+np.mean(embedding, axis=0)
+</code></pre>
+
+<p>hanxiao/bert-as-serviceでは、この計算方法はいくつか選択できるようになっており、本家に習って<code>BertWithJumanModel</code>のコード内でも<code>REDUCE_MEAN</code>や<code>REDUCE_MAX</code>などの方法を指定できるようにしています。これらの手法は基本的にSWEMの概念と同じですので、詳細は「<a href="https://yag-ays.github.io/project/swem/">SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み</a>」の記事を参考ください。</p>
+
+<h2 id="参考">参考</h2>
+
+<ul>
+<li><a href="https://github.com/huggingface/pytorch-pretrained-BERT">huggingface/pytorch-pretrained-BERT: 📖The Big-&amp;-Extending-Repository-of-Transformers: Pretrained PyTorch models for Google’s BERT, OpenAI GPT &amp; GPT-2, Google/CMU Transformer-XL.</a></li>
+<li><a href="https://github.com/hanxiao/bert-as-service">hanxiao/bert-as-service: Mapping a variable-length sentence to a fixed-length vector using BERT model</a></li>
+<li><a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?BERT%E6%97%A5%E6%9C%AC%E8%AA%9EPretrained%E3%83%A2%E3%83%87%E3%83%AB">BERT日本語Pretrainedモデル - KUROHASHI-KAWAHARA LAB</a></li>
+<li><a href="https://arxiv.org/abs/1810.04805">[1810.04805] BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></li>
+<li><a href="https://dev.classmethod.jp/machine-learning/bert-text-embedding/">BERTの日本語事前学習済みモデルでテキスト埋め込みをやってみる ｜ DevelopersIO</a></li>
+</ul>
+
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/pytorch_bert_japanese/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 
