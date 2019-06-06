@@ -1129,20 +1129,20 @@ class JumanTokenizer():
 
 <pre><code class="language-py">juman_tokenizer = JumanTokenizer()
 
-tokens = [&quot;[CLS]&quot;] + juman_tokenizer.tokenize(text)
-bert_tokens = bert_tokenizer.tokenize(&quot; &quot;.join(tokens[:128]))  # max_seq_len
-ids = bert_tokenizer.convert_tokens_to_ids(bert_tokens)
+tokens = juman_tokenizer.tokenize(text)
+bert_tokens = bert_tokenizer.tokenize(&quot; &quot;.join(tokens))
+ids = bert_tokenizer.convert_tokens_to_ids([&quot;[CLS]&quot;] + bert_tokens[:126] + [&quot;[SEP]&quot;])
 tokens_tensor = torch.tensor(ids).reshape(1, -1)
 </code></pre>
 
 <p>例えば「<code>我輩は猫である。</code>」という文章は、以下のようにトークン化されid列に変換されます。ちなみに<code>我輩</code>という単語は辞書中に存在せずかつサブワードとしても分割できないことから、未知語として<code>id:1</code>(<code>[UNK]</code>)に変換されています。</p>
 
 <pre><code># text
-  吾輩は猫である
+  吾輩は猫である。
 # tokens
-  ['[CLS]', '吾輩', 'は', '猫', 'である']
+  ['[CLS]', '吾輩', 'は', '猫', 'である', '。', '[SEP]']
 # tokens_tensor
-  tensor([[   2,    1,    9, 4817,   32]])
+  tensor([[   2,    1,    9, 4817,   32,    7,    3]])
 </code></pre>
 
 <h3 id="3-bertのモデルに入力し-特徴ベクトルを得る">3. BERTのモデルに入力し、特徴ベクトルを得る</h3>
