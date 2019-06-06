@@ -1116,6 +1116,8 @@ bert_tokenizer = BertTokenizer(&quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/
 <p>次に、与えられたテキストを分かち書きしてトークンに分割したのちに、対応するidに変換します。<code>pytorch-pretrained-BERT</code>は日本語の分かち書きに対応していないため、前者はJuman++によるトークナイザを自作し、後者は<code>BertTokenizer()</code>を利用します。</p>
 
 <pre><code class="language-py"># Jumanによるトークナイザ
+from pyknp import Juman
+
 class JumanTokenizer():
     def __init__(self):
         self.juman = Juman()
