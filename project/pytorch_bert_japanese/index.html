@@ -1055,7 +1055,7 @@ margin-left: -4%;
 
 <h2 id="方法">方法</h2>
 
-<p>今回は<code>BertWithJumanModel</code>というトークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。</p>
+<p>今回は<code>BertWithJumanModel</code>という、トークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。</p>
 
 <ul>
 <li><a href="https://github.com/yagays/pytorch_bert_japanese">yagays/pytorch_bert_japanese</a></li>
@@ -1127,7 +1127,7 @@ class JumanTokenizer():
         return [mrph.midasi for mrph in result.mrph_list()]
 </code></pre>
 
-<p>分かち書きしたトークン列には、テキストの冒頭に<code>[CLS]</code>トークンを付与します。得られたトークン列は、英語のトークナイズに対応できるようにスペース区切りで結合し、最後に<code>BertTokenizer()</code>でid列に変換します。この際には、学習済みモデルの<code>max_seq_length</code>が128に設定されているため、トークン列を前方から128個目までにしています。</p>
+<p>分かち書きしたトークン列は、英語のトークナイズに対応できるようにスペース区切りで結合し、最後に<code>BertTokenizer()</code>でid列に変換します。この際に、テキストの最初と最後に<code>[CLS]</code>および<code>[SEP]</code>トークンを付与します。また、学習済みモデルの<code>max_seq_length</code>が128に設定されているため、トークン列の長さを調整しています。</p>
 
 <pre><code class="language-py">juman_tokenizer = JumanTokenizer()
 
