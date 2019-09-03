@@ -1090,15 +1090,16 @@ margin-left: -4%;
 </ul></li>
 <li>tokenize: トークナイザ</li>
 <li>min_count: 対象とする単語のコーパス内での頻度の最小値</li>
-<li>ngram: 対象とするngram</li>
-</ul>
+
+<li><p>ngram: 対象とするngram</p>
 
 <pre><code class="language-py">alc = ALaCarteEmbedding(word2vec=w2v,
-                        tokenize=tokenize,
-                        min_count=10,
-                        ngram=[1, 2])
+                    tokenize=tokenize,
+                    min_count=10,
+                    ngram=[1, 2])
 alc.build(documents)
-</code></pre>
+</code></pre></li>
+</ul>
 
 <p>類似する単語を推定するには<code>most_similar()</code>を利用します。ngramの場合はタプルで入力します。</p>
 

@@ -3,15 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yag-ays.github.io/project/elasticsearch-similarity-search/</loc>
+    <lastmod>2019-09-02T15:25:26+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yag-ays.github.io/</loc>
-    <lastmod>2019-07-26T11:45:37+09:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-09-02T15:25:26+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yag-ays.github.io/project/</loc>
-    <lastmod>2019-07-26T11:45:37+09:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-09-02T15:25:26+09:00</lastmod>
   </url>
   
   <url>
@@ -111,12 +114,10 @@
   
   <url>
     <loc>https://yag-ays.github.io/categories/</loc>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://yag-ays.github.io/tags/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

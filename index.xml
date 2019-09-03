@@ -6,10 +6,25 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 26 Jul 2019 11:45:37 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 15:25:26 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Elasticsearchで分散表現を使った類似文書検索</title>
+      <link>https://yag-ays.github.io/project/elasticsearch-similarity-search/</link>
+      <pubDate>Mon, 02 Sep 2019 15:25:26 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/elasticsearch-similarity-search/</guid>
+      <description>概要 Elasticseachに分散表現のベクトルに対する類似文書検索が実装されたということで、以下のElasticのブログ記事を参考に類似文書検索を試してみました。
+Text similarity search in Elasticsearch using vector fields | Elastic Blog
+tl;dr  Elasticsearchでベクトルの類似文書検索機能が実装された Wikipedia日本語記事全116万エントリーに対して検索時間は約0.8秒 Elasticsearchの既存の検索機能と組み合わせることが可能  方法 1. Elasticsearchの設定 Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、docker.elastic.coで提供されているバージョン7.3.1を利用しました。以下のようにdocker-compose.yamlを定義してdocker-compose upで起動します。
+# docker-compose.yaml version: &#39;3.3&#39; services: elasticsearch: image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1 ports: - &amp;quot;9200:9200&amp;quot; volumes: - es-data:/usr/share/elasticsearch/data tty: true environment: discovery.type: single-node volumes: es-data: driver: local  立ち上がった後はcurl http://127.0.0.1:9200/_cat/healthで結果が帰ってくればOKです。
+2. Wikipediaの本文を文ベクトルに変換してElasticsearchに投入する 今回はある程度現実的な状況を再現するため、データセットはWikipediaの日本語のすべてのエントリーを使用しました。Wikipediaのエントリーに含まれるテキストをダンプデータから抽出し、分散表現を計算するとともにElasticsearchにインポートします。文書の分散表現の計算には、SWEMのaverage-poolingを利用します。手法の詳細はこちらの記事を参考ください。
+まず index.jsonでインデックスのマッピングタイプを指定します。文書ベクトルには&amp;quot;type&amp;quot;: &amp;quot;dense_vector&amp;quot;、次元数を&amp;quot;dims&amp;quot;: 200で指定します。
+# index.json &amp;quot;properties&amp;quot;: { &amp;quot;title&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;text&amp;quot; }, &amp;quot;text&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;text&amp;quot; }, &amp;quot;text_vector&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;dense_vector&amp;quot;, &amp;quot;dims&amp;quot;: 200 } }  あとはElasticsearchに文書およびその文書の分散表現を登録していくだけです。注意点として、PythonのElasticsearchパッケージを利用する場合は、dense_vectorにはnumpyのndarrayではなくPythonのリスト型に変換したものを渡す必要があります。</description>
+    </item>
     
     <item>
       <title>絵文字の日本語読み辞書をUnicode 12.0対応に更新しました</title>
@@ -39,7 +54,8 @@
 環境 今回は京都大学の黒橋・河原研究室が公開している「BERT日本語Pretrainedモデル」を利用します。
  BERT日本語Pretrainedモデル - KUROHASHI-KAWAHARA LAB  BERTの実装は、pytorchで書かれたpytorch-pretrained-BERTがベースになります。また形態素解析器は、学習済みモデルに合わせるためJUMAN++を利用します。
 方法 今回はBertWithJumanModelという、トークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。
- yagays/pytorch_bert_japanese  In []: from bert_juman import BertWithJumanModel In []: bert = BertWithJumanModel(&amp;quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE&amp;quot;) In []: bert.get_sentence_embedding(&amp;quot;吾輩は猫である。&amp;quot;) Out[]: array([ 2.22642735e-01, -2.40221739e-01, 1.09303640e-02, -1.02307117e+00, 1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01, -2.77438164e-02, -8.05811465e-01, 3.46736580e-01, -7.20409870e-01, 1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01, 2.26500735e-01, -8.97880018e-01, 2.52314955e-01, -7.09809303e-01, [...]  これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。
+ yagays/pytorch_bert_japanese
+In []: from bert_juman import BertWithJumanModel In []: bert = BertWithJumanModel(&amp;quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE&amp;quot;) In []: bert.get_sentence_embedding(&amp;quot;吾輩は猫である。&amp;quot;) Out[]: array([ 2.22642735e-01, -2.40221739e-01, 1.09303640e-02, -1.02307117e+00, 1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01, -2.77438164e-02, -8.05811465e-01, 3.46736580e-01, -7.20409870e-01, 1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01, 2.26500735e-01, -8.97880018e-01, 2.52314955e-01, -7.09809303e-01, [...]   これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。
 また、BERTの隠れ層の位置や、プーリングの計算方法も選択できるようにしています。このあたりの設計はhanxiao/bert-as-service を参考にしています。
 In []: bert.</description>
     </item>
@@ -56,7 +72,8 @@ In []: bert.</description>
 方法 SWEMでは以下の4つの方法が提案されています。
  SWEM-aver：単語の分散表現に対してaverage poolingする SWEM-max：単語の分散表現に対してmax poolingする SWEM-concat：SWEM-averとSWEM-maxの結果を結合する SWEM-hier：n-gramのように固定長のウィンドウでaverage-poolingした結果に対してmax poolingする  これらは基本的に、文章に含まれる単語の分散表現全体に対して、どういう操作で固定時点のベクトルに集約するかといった操作の違いでしかありません。それぞれのaverage poolingやmax poolingは、element-wiseにaverageやmaxを取ります。Out-of-Vocabulary (OOV) な単語に対しては、[-0.01, 0.01]の範囲の一様乱数を用いて初期化します。なお、aver, max, concatに関してはパラメータはありませんが、SWEM-hierはn-gramのウィンドウの幅nを決める必要があります。
 ちなみに、結局のところどれが一番いいの？という話ですが、論文中の評価ではタスク/データ依存という結果になっており、一概にどれが良いかは断定できないようです。
-コード  https://github.com/yagays/swem  from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem import SWEM w2v_path = &amp;quot;/path/to/word_embedding.bin&amp;quot; w2v = KeyedVectors.load_word2vec_format(w2v_path, binary=True) tokenizer = MeCabTokenizer(&amp;quot;-O wakati&amp;quot;) swem = SWEM(w2v, tokenizer)  In []: text = &amp;quot;吾輩は猫である。名前はまだ無い。&amp;quot; # SWEM-aver In []: swem.</description>
+コード  https://github.com/yagays/swem
+from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem import SWEM w2v_path = &amp;quot;/path/to/word_embedding.bin&amp;quot; w2v = KeyedVectors.load_word2vec_format(w2v_path, binary=True) tokenizer = MeCabTokenizer(&amp;quot;-O wakati&amp;quot;) swem = SWEM(w2v, tokenizer)  In []: text = &amp;quot;吾輩は猫である。名前はまだ無い。&amp;quot; # SWEM-aver In []: swem.</description>
     </item>
     
     <item>
@@ -93,7 +110,8 @@ In []: bert.</description>
 使い方 まずは公開されているモデルを実際に動かしてみましょう。
 1. モデルのダウンロード fasttextのモデルをダウンロードします。下記ページにてlid.176.binまたはlid.176.ftzをダウンロードします。
  Language identification · fastText  2. fasttextのpythonバインディングをインストール Pythonからfasttextを利用するためのPythonバインディングをインストールします。いくつかパッケージは存在しますが、pyfasttextはすでにメンテナンスされていないため、ここではFacebook公式のfastTextをインストールします。
- fastText/python at master · facebookresearch/fastText  $ git clone https://github.com/facebookresearch/fastText.git $ cd fastText $ pip install .  3. モデルを読み込んで利用 さて、ようやく言語判定のモデルをロードして利用してみます。
+ fastText/python at master · facebookresearch/fastText
+$ git clone https://github.com/facebookresearch/fastText.git $ cd fastText $ pip install .   3. モデルを読み込んで利用 さて、ようやく言語判定のモデルをロードして利用してみます。
 In []: from fastText import load_model In []: model = load_model(&amp;quot;lid.176.bin&amp;quot;) # or lid.176.ftz In []: model.predict(&#39;こんにちは&#39;) Out[]: ((&#39;__label__ja&#39;,), array([1.00002694])) In []: model.predict(&#39;你好&#39;) Out[]: ((&#39;__label__zh&#39;,), array([0.98323345])) In []: model.</description>
     </item>
     
@@ -201,7 +219,8 @@ $ curl -X GET --header &#39;Accept: application/json; charset=utf-8&#39; &#39;ht
 なお、本ソースコードで精度評価やオリジナル実装との比較は行っていません。バグや細部の実装の違いが含まれている場合がありますのでご注意ください。
 オリジナルの実装 著者らがオリジナルの実装を公開しています。こちらは(当然ながら)スペースで単語が分割できる英語などの言語を対象にしています。
  NLPrinceton/ALaCarte  使い方 ALaCarteEmbeddingを作成し、コーパスに対して実行します。パラメータは以下の通りです。
- word2vec: 学習済み単語埋め込み  gensimのWord2VecKeyedVectorsを前提としています  tokenize: トークナイザ min_count: 対象とする単語のコーパス内での頻度の最小値 ngram: 対象とするngram  alc = ALaCarteEmbedding(word2vec=w2v, tokenize=tokenize, min_count=10, ngram=[1, 2]) alc.</description>
+ word2vec: 学習済み単語埋め込み  gensimのWord2VecKeyedVectorsを前提としています  tokenize: トークナイザ min_count: 対象とする単語のコーパス内での頻度の最小値 ngram: 対象とするngram
+alc = ALaCarteEmbedding(word2vec=w2v, tokenize=tokenize, min_count=10, ngram=[1, 2]) alc.</description>
     </item>
     
     <item>

@@ -1058,8 +1058,7 @@ margin-left: -4%;
 <p>今回は<code>BertWithJumanModel</code>という、トークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。</p>
 
 <ul>
-<li><a href="https://github.com/yagays/pytorch_bert_japanese">yagays/pytorch_bert_japanese</a></li>
-</ul>
+<li><p><a href="https://github.com/yagays/pytorch_bert_japanese">yagays/pytorch_bert_japanese</a></p>
 
 <pre><code class="language-py">In []: from bert_juman import BertWithJumanModel
 
@@ -1068,12 +1067,13 @@ In []: bert = BertWithJumanModel(&quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BP
 In []: bert.get_sentence_embedding(&quot;吾輩は猫である。&quot;)
 Out[]:
 array([ 2.22642735e-01, -2.40221739e-01,  1.09303640e-02, -1.02307117e+00,
-        1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01,
-       -2.77438164e-02, -8.05811465e-01,  3.46736580e-01, -7.20409870e-01,
-        1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01,
-        2.26500735e-01, -8.97880018e-01,  2.52314955e-01, -7.09809303e-01,
+    1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01,
+   -2.77438164e-02, -8.05811465e-01,  3.46736580e-01, -7.20409870e-01,
+    1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01,
+    2.26500735e-01, -8.97880018e-01,  2.52314955e-01, -7.09809303e-01,
 [...]        
-</code></pre>
+</code></pre></li>
+</ul>
 
 <p>これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。</p>
 
