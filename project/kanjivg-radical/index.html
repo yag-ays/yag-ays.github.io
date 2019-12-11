@@ -1031,80 +1031,52 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    
-
-<p><img src="https://yag-ays.github.io/img/kanji_header.png" alt="kanji_header" /></p>
-
+    <p><img src="https://yag-ays.github.io/img/kanji_header.png" alt="kanji_header"></p>
 <p>kanjivg-radicalは、漢字を構成する<a href="https://ja.wikipedia.org/wiki/%E9%83%A8%E9%A6%96">部首</a>や<a href="https://ja.wikipedia.org/wiki/%E5%81%8F%E6%97%81">偏旁</a>を容易に扱えるように対応付けしたデータセットです。</p>
-
 <p>「脳」という漢字は、「月」「⺍」「凶」のように幾つかのまとまりごとに細分化できます。このように意味ある要素に分解しデータセットにすることで、漢字を文字的に分解して扱ったり、逆に特定の部首/偏旁を持つ漢字を一括して検索することができます。</p>
-
 <p>このデータセットは、<a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているsvgデータを抽出および加工して作成されています。そのため、本データセットに含まれる部首/偏旁のアノテーションはすべてKanjiVGに準拠します。</p>
-
-<hr />
-
-<h2 id="ダウンロード">ダウンロード</h2>
-
+<hr>
+<h2 id="heading">ダウンロード</h2>
 <p>以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。<code>data/</code>配下にある各種jsonファイルが、データセットの本体です。</p>
-
 <p><a href="https://github.com/yagays/kanjivg-radical">yagays/kanjivg-radical</a></p>
-
-<hr />
-
-<h2 id="データセットの詳細">データセットの詳細</h2>
-
+<hr>
+<h2 id="heading1">データセットの詳細</h2>
 <p>kanjivg-radicalには4種類のデータが含まれています。</p>
-
 <ol>
 <li>漢字と部首/偏旁の変換データ</li>
 <li>漢字と要素の変換データ</li>
 <li>漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</li>
 <li>漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</li>
 </ol>
-
 <p>以下では、部首/偏旁は<code>radical</code>、要素は<code>element</code>、左右は<code>left_right</code>、上下は<code>top_buttom</code>と表現しています。</p>
-
-<h3 id="1-漢字と部首-偏旁の変換データ">1. 漢字と部首/偏旁の変換データ</h3>
-
+<h3 id="1-">1. 漢字と部首/偏旁の変換データ</h3>
 <p>漢字と部首/偏旁を対応付けしたデータセットです。漢字から部首/偏旁と、部首/偏旁から漢字の2種類のデータがあります。</p>
-
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical.json"><code>kanji2radical.json</code></a> : 漢字から部首/偏旁への変換</li>
-
-<li><p><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji.json"><code>radical2kanji.json</code></a> : 部首/偏旁から漢字への変換</p>
-
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji.json"><code>radical2kanji.json</code></a> : 部首/偏旁から漢字への変換</li>
+</ul>
 <pre><code># kanji2radical.jsonのサンプル
 &quot;脳&quot;: [
-&quot;月&quot;,
-&quot;⺍&quot;,
-&quot;凶&quot;
+    &quot;月&quot;,
+    &quot;⺍&quot;,
+    &quot;凶&quot;
 ]
-</code></pre>
-
-<pre><code># radical2kanji.jsonのサンプル
+</code></pre><pre><code># radical2kanji.jsonのサンプル
 &quot;月&quot;: [
-&quot;肝&quot;,
-&quot;育&quot;,
-&quot;胆&quot;,
-&quot;朦&quot;,
-&quot;脱&quot;,
+    &quot;肝&quot;,
+    &quot;育&quot;,
+    &quot;胆&quot;,
+    &quot;朦&quot;,
+    &quot;脱&quot;,
 ...
-</code></pre></li>
-</ul>
-
-<h3 id="2-漢字と要素の変換データ">2. 漢字と要素の変換データ</h3>
-
+</code></pre><h3 id="2-">2. 漢字と要素の変換データ</h3>
 <p>漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。</p>
-
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2element.json"><code>kanji2element.json</code></a> : 漢字から要素への変換</li>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/element2kanji.json"><code>element2kanji.json</code></a> : 要素から漢字への変換</li>
 </ul>
-
 <p>ここで使用している「要素」いう言葉は、部首/偏旁を構成する更に細かい単位での漢字のことを指しています。言語学的に定義された単語ではなく、KanjiVGで利用されていた<code>element</code>の対訳として用いています。</p>
-
 <p>このデータでは構成している要素をすべて列挙しているので、結果の中には重複が含まれます。以下の例だと脳には「凶」という要素が含まれていますが、同時に「乂」という要素も含まれているため、どちらもkanji2elementの結果として出力されます。</p>
-
 <pre><code># kanji2element.jsonのサンプル
 &quot;脳&quot;: [
     &quot;乂&quot;,
@@ -1114,9 +1086,7 @@ margin-left: -4%;
     &quot;⺍&quot;,
     &quot;月&quot;
 ]
-</code></pre>
-
-<pre><code># element2kanji.json
+</code></pre><pre><code># element2kanji.json
 &quot;月&quot;: [
     &quot;溯&quot;,
     &quot;齟&quot;,
@@ -1124,46 +1094,31 @@ margin-left: -4%;
     &quot;羂&quot;,
     &quot;肝&quot;,
     &quot;育&quot;,
-</code></pre>
-
-<h3 id="3-漢字と部首-偏旁の変換データのうち-左右に分割できる漢字">3. 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</h3>
-
+</code></pre><h3 id="3-">3. 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</h3>
 <p>1.のデータセットのうち、漢字の構成が左と右の2つに分割できるものだけを集めたデータです。3つ以上に分割される漢字や、左右のどちらかが複数に分割される漢字は含まれていません。</p>
-
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_left_right.json"><code>kanji2radical_left_right.json</code></a></li>
-
-<li><p><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_left_right.json"><code>radical2kanji_left_right.json</code></a></p>
-
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_left_right.json"><code>radical2kanji_left_right.json</code></a></li>
+</ul>
 <pre><code># kanji2radical_left_right.jsonのサンプル
 {'乢': ['山', '乙'],
-'嶋': ['山', '鳥'],
-'恥': ['耳', '心'],
-'擦': ['扌', '察'],
+ '嶋': ['山', '鳥'],
+ '恥': ['耳', '心'],
+ '擦': ['扌', '察'],
 ...
-</code></pre></li>
-</ul>
-
-<h3 id="4-漢字と部首-偏旁の変換データのうち-上下に分割できる漢字">4. 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</h3>
-
+</code></pre><h3 id="4-">4. 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</h3>
 <p>1.のデータセットのうち、漢字の構成が上と下の2つに分割できるものだけを集めたデータです。3つ以上に分割される漢字や、上下のどちらかが複数に分割される漢字は含まれていません。</p>
-
 <ul>
 <li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_top_buttom.json"><code>kanji2radical_top_buttom.json</code></a></li>
-
-<li><p><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_top_buttom.json"><code>radical2kanji_top_buttom.json</code></a></p>
-
+<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_top_buttom.json"><code>radical2kanji_top_buttom.json</code></a></li>
+</ul>
 <pre><code># kanji2radical_top_buttom.jsonのサンプル
 {'云': ['二', '厶'],
-'賃': ['任', '貝'],
-'輩': ['非', '車'],
-'雪': ['雨', '⺕'],
-...
-</code></pre></li>
-</ul>
-
-<h2 id="統計">統計</h2>
-
+ '賃': ['任', '貝'],
+ '輩': ['非', '車'],
+ '雪': ['雨', '⺕'],
+ ...
+</code></pre><h2 id="heading2">統計</h2>
 <table>
 <thead>
 <tr>
@@ -1172,26 +1127,22 @@ margin-left: -4%;
 <th align="right">登録部首/偏旁/要素数</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="left">kanji2radical</td>
 <td align="right">6,279</td>
 <td align="right">1,300</td>
 </tr>
-
 <tr>
 <td align="left">kanji2element</td>
 <td align="right">6,279</td>
 <td align="right">1,306</td>
 </tr>
-
 <tr>
 <td align="left">kanji2radical_left_right</td>
 <td align="right">3,190</td>
 <td align="right">1,013</td>
 </tr>
-
 <tr>
 <td align="left">kanji2radical_top_buttom</td>
 <td align="right">1,088</td>
@@ -1199,74 +1150,52 @@ margin-left: -4%;
 </tr>
 </tbody>
 </table>
-
-<hr />
-
-<h2 id="使い方">使い方</h2>
-
+<hr>
+<h2 id="heading3">使い方</h2>
 <p>配布しているjsonファイルを、ハッシュ関数や辞書形式など任意のプログラミング言語で読み込んで使用します。</p>
-
 <p>ここでは、Pythonでの利用方法を例示します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
 
-<pre><code class="language-py">import json
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_json</span>(filename):
+    <span style="color:#66d9ef">with</span> open(filename) <span style="color:#66d9ef">as</span> f:
+        d <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
+    <span style="color:#66d9ef">return</span> d
 
-def load_json(filename):
-    with open(filename) as f:
-        d = json.load(f)
-    return d
+kanji2radical <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">kanji2radical.json</span><span style="color:#e6db74">&#34;</span>)
+radical2kanji <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">radical2kanji.json</span><span style="color:#e6db74">&#34;</span>)    
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">kanji2radical[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">脳</span><span style="color:#e6db74">&#34;</span>] <span style="color:#75715e"># kanji to radicals</span>
 
-kanji2radical = load_json(&quot;kanji2radical.json&quot;)
-radical2kanji = load_json(&quot;radical2kanji.json&quot;)    
-</code></pre>
-
-<pre><code class="language-py">kanji2radical[&quot;脳&quot;] # kanji to radicals
-
-radical2kanji[&quot;月&quot;] # radical to kanjis
-</code></pre>
-
-<p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照ください。</p>
-
-<h2 id="作成方法">作成方法</h2>
-
+radical2kanji[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">月</span><span style="color:#e6db74">&#34;</span>] <span style="color:#75715e"># radical to kanjis</span>
+</code></pre></div><p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照ください。</p>
+<h2 id="heading4">作成方法</h2>
 <p><a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているすべての漢字に対して、svg内に含まれる<code>g</code>タグの<code>kvg:element</code>属性を抽出しています。抽出方法により、データセットに以下の違いがあります。</p>
-
 <ul>
 <li><code>kanji2radical.json</code>などの漢字と部首/偏旁の変換データは、対象となる漢字の直下に含まれる<code>kvg:element</code>属性のみを抽出</li>
 <li><code>kanji2element.json</code>などの漢字と要素の変換データは、すべての<code>kvg:element</code>属性を再帰的に抽出</li>
 </ul>
-
 <p>対象としたバージョンは最新版である2016/04/26リリースであり、variantを含まない<code>kanjivg-20160426-main.zip</code>を利用しています。</p>
-
 <p>ちなみに、このデータセットには含まれていませんが、KanjiVGには他にも一画ごとのストロークの形状を<code>kvg:type</code>として分類し記録しています。そういったより詳細な漢字の図形的情報が必要な場合は、本家のデータセットを参照ください。</p>
-
 <p><a href="http://kanjivg.tagaini.net/format.html">Format - KanjiVG</a></p>
-
-<h2 id="ライセンス">ライセンス</h2>
-
-<p>このリソースは<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a>の下に提供されています。</p>
-
-<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-
-<h2 id="参考">参考</h2>
-
+<h2 id="heading5">ライセンス</h2>
+<p>このリソースは<!-- raw HTML omitted -->クリエイティブ・コモンズ 表示 4.0 国際 ライセンス<!-- raw HTML omitted -->の下に提供されています。</p>
+<p>This work is licensed under a <!-- raw HTML omitted -->Creative Commons Attribution-ShareAlike 4.0 International License<!-- raw HTML omitted -->.</p>
+<h2 id="heading6">参考</h2>
 <ul>
 <li><a href="https://github.com/KanjiVG/kanjivg">KanjiVG/kanjivg: Kanji description and vectorial data in correct stroke order</a>
-
 <ul>
 <li><a href="https://www.moongift.jp/2017/11/kanjivg-%E6%BC%A2%E5%AD%97%E5%B9%B3%E4%BB%AE%E5%90%8D%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A%E3%82%A2%E3%83%AB%E3%83%95%E3%82%A1%E3%83%99%E3%83%83%E3%83%88%E6%95%B0%E5%AD%97%E3%81%AE%E6%9B%B8/">KanjiVG - 漢字/平仮名/カタカナ/アルファベット/数字の書き順付きSVG集 MOONGIFT</a></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p><a href="http://www.chise.org/ids/">CHISE 漢字構造情報データベース</a>の方が、より網羅性が高いデータセットです。CJK統合文字の拡張を含めてアノテーションが付けられています。</p>
-
 <ul>
 <li><a href="http://www.chise.org/ids/">CHISE / 漢字構造情報データベース</a>
-
 <ul>
 <li><a href="http://www.chise.org/ids-find">CHISE IDS Find</a></li>
 <li><a href="http://www.shuiren.org/chuden/toyoshi/syoseki/chise_ids.html">CHISE IDS 漢字検索の使い方―中国史研究のためのデジタルリソース入門</a></li>
 <li><a href="http://www.chise.org/dataset.ja.html">CHISE プロジェクト</a></li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
 

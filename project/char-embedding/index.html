@@ -1031,179 +1031,123 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    
-
-<p><img src="https://yag-ays.github.io/img/char_emebdding_01.png" alt="char_emebdding_01" /></p>
-
+    <p><img src="https://yag-ays.github.io/img/char_emebdding_01.png" alt="char_emebdding_01"></p>
 <p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。</p>
-
-<hr />
-
-<h2 id="ダウンロード">ダウンロード</h2>
-
+<hr>
+<h2 id="heading">ダウンロード</h2>
 <p>下記のGitHubレポジトリからダウンロード可能です。以下のURLを開いて「Download」をクリックしてください。</p>
-
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding/blob/master/convolutional_AE_300.tar.bz2">convolutional_AE_300.tar.bz2</a> (解凍前:88MB, 解凍後:180MB)</p>
-
 <p>以下の2つのファイルが入っています。フォーマットが異なるだけで、どちらも同じベクトルデータです。</p>
-
 <ul>
 <li><code>convolutional_AE_300.bin</code></li>
 <li><code>convolutional_AE_300.txt</code></li>
 </ul>
-
 <p>その他サンプルコードなどのすべてのファイルは、以下のレポジトリにあります。</p>
-
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding">yagays/glyph-aware-character-embedding</a></p>
-
-<h3 id="詳細">詳細</h3>
-
+<h3 id="heading1">詳細</h3>
 <ul>
 <li>ベクトル次元：<code>300</code></li>
 <li>文字の種類数：<code>44,637</code></li>
 <li>学習データに用いたフォント：<a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code></li>
 </ul>
-
-<hr />
-
-<h2 id="使い方">使い方</h2>
-
+<hr>
+<h2 id="heading2">使い方</h2>
 <p>gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には<strong>加法性がありません</strong>。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
 
-<pre><code class="language-py">from gensim.models import KeyedVectors
-
-model = KeyedVectors.load_word2vec_format(&quot;data/convolutional_AE_300.bin&quot;, binary=True)
-</code></pre>
-
-<p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなく<a href="https://ja.wikipedia.org/wiki/%D0%90">キリル文字の「a」</a>です。</p>
-
-<pre><code class="language-py">In []: model.most_similar(&quot;a&quot;)
+model <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">data/convolutional_AE_300.bin</span><span style="color:#e6db74">&#34;</span>, binary<span style="color:#f92672">=</span>True)
+</code></pre></div><p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなく<a href="https://ja.wikipedia.org/wiki/%D0%90">キリル文字の「a」</a>です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#34;</span>)
 Out[]:
-[('а', 1.0000001192092896),
- ('ả', 0.961397111415863),
- ('ä', 0.9610118269920349),
- ('ā', 0.9582812190055847),
- ('á', 0.957198441028595),
- ('à', 0.9558833241462708),
- ('å', 0.938391923904419),
- ('ầ', 0.9370290040969849),
- ('ǎ', 0.9368112087249756),
- ('ấ', 0.9365179538726807)]
-</code></pre>
-
-<p><a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code>に含まれるすべての文字に対して操作が可能です。</p>
-
-<pre><code class="language-py">In []: model.most_similar(&quot;油&quot;)
+[(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">а</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">1.0000001192092896</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ả</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.961397111415863</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ä</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9610118269920349</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ā</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9582812190055847</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">á</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.957198441028595</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">à</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9558833241462708</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">å</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.938391923904419</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ầ</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9370290040969849</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ǎ</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9368112087249756</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ấ</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9365179538726807</span>)]
+</code></pre></div><p><a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code>に含まれるすべての文字に対して操作が可能です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">油</span><span style="color:#e6db74">&#34;</span>)
 Out[]:
-[('汕', 0.9025427103042603),
- ('泊', 0.8892871737480164),
- ('伷', 0.884428083896637),
- ('浊', 0.8678311109542847),
- ('沖', 0.8532482385635376),
- ('沽', 0.8451510667800903),
- ('沺', 0.8355003595352173),
- ('沾', 0.8313066959381104),
- ('涃', 0.8284391164779663),
- ('泩', 0.8275920152664185)]
-</code></pre>
+[(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">汕</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9025427103042603</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">泊</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8892871737480164</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">伷</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.884428083896637</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">浊</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8678311109542847</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">沖</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8532482385635376</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">沽</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8451510667800903</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">沺</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8355003595352173</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">沾</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8313066959381104</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">涃</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8284391164779663</span>),
+ (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">泩</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.8275920152664185</span>)]
+</code></pre></div><p>ユニコードには同じような外見で異なるコードポイントが割り当てられているものが存在します。それらを区別する際には、<code>ord()</code>で数値への変換を行うか、<code>unicodedata.name()</code>で文字の名前を表示するのが有効です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: <span style="color:#66d9ef">for</span> char, score <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">は</span><span style="color:#e6db74">&#34;</span>, topn<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>):
+    <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>:     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([char, str(score), hex(ord(char)), unicodedata<span style="color:#f92672">.</span>name(char, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">UNKNOWN</span><span style="color:#e6db74">&#34;</span>)]))
 
-<p>ユニコードには同じような外見で異なるコードポイントが割り当てられているものが存在します。それらを区別する際には、<code>ord()</code>で数値への変換を行うか、<code>unicodedata.name()</code>で文字の名前を表示するのが有効です。</p>
-
-<pre><code class="language-py">In []: for char, score in model.most_similar(&quot;は&quot;, topn=15):
-    ...:     print(&quot;\t&quot;.join([char, str(score), hex(ord(char)), unicodedata.name(char, &quot;UNKNOWN&quot;)]))
-
-け      0.8354311585426331      0x3051  HIRAGANA LETTER KE
-ほ      0.8342610597610474      0x307b  HIRAGANA LETTER HO
-げ      0.7546985745429993      0x3052  HIRAGANA LETTER GE
-ば      0.7366447448730469      0x3070  HIRAGANA LETTER BA
-ぱ      0.7308192253112793      0x3071  HIRAGANA LETTER PA
-に      0.7154880166053772      0x306b  HIRAGANA LETTER NI
-⒑      0.7061284780502319      0x2491  NUMBER TEN FULL STOP
-냐      0.6923456192016602      0xb0d0  HANGUL SYLLABLE NYA
-댜      0.682737410068512       0xb31c  HANGUL SYLLABLE DYA
-⒙      0.6763017773628235      0x2499  NUMBER EIGHTEEN FULL STOP
-砂      0.6754936575889587      0x7802  CJK UNIFIED IDEOGRAPH-7802
-⒔      0.6732239723205566      0x2494  NUMBER THIRTEEN FULL STOP
-탅      0.6726106405258179      0xd0c5  HANGUL SYLLABLE TANJ
-㢟      0.6707605719566345      0x389f  CJK UNIFIED IDEOGRAPH-389F
-叵      0.6700443029403687      0x53f5  CJK UNIFIED IDEOGRAPH-53F5
-</code></pre>
-
-<p>Kerasなどに利用できる埋め込み層の作成方法は、下記サンプルコードを参照下さい。</p>
-
+<span style="color:#960050;background-color:#1e0010">け</span>      <span style="color:#ae81ff">0.8354311585426331</span>      <span style="color:#ae81ff">0x3051</span>  HIRAGANA LETTER KE
+<span style="color:#960050;background-color:#1e0010">ほ</span>      <span style="color:#ae81ff">0.8342610597610474</span>      <span style="color:#ae81ff">0x307b</span>  HIRAGANA LETTER HO
+<span style="color:#960050;background-color:#1e0010">げ</span>      <span style="color:#ae81ff">0.7546985745429993</span>      <span style="color:#ae81ff">0x3052</span>  HIRAGANA LETTER GE
+<span style="color:#960050;background-color:#1e0010">ば</span>      <span style="color:#ae81ff">0.7366447448730469</span>      <span style="color:#ae81ff">0x3070</span>  HIRAGANA LETTER BA
+<span style="color:#960050;background-color:#1e0010">ぱ</span>      <span style="color:#ae81ff">0.7308192253112793</span>      <span style="color:#ae81ff">0x3071</span>  HIRAGANA LETTER PA
+<span style="color:#960050;background-color:#1e0010">に</span>      <span style="color:#ae81ff">0.7154880166053772</span>      <span style="color:#ae81ff">0x306b</span>  HIRAGANA LETTER NI
+<span style="color:#960050;background-color:#1e0010">⒑</span>      <span style="color:#ae81ff">0.7061284780502319</span>      <span style="color:#ae81ff">0x2491</span>  NUMBER TEN FULL STOP
+<span style="color:#960050;background-color:#1e0010">냐</span>      <span style="color:#ae81ff">0.6923456192016602</span>      <span style="color:#ae81ff">0xb0d0</span>  HANGUL SYLLABLE NYA
+<span style="color:#960050;background-color:#1e0010">댜</span>      <span style="color:#ae81ff">0.682737410068512</span>       <span style="color:#ae81ff">0xb31c</span>  HANGUL SYLLABLE DYA
+<span style="color:#960050;background-color:#1e0010">⒙</span>      <span style="color:#ae81ff">0.6763017773628235</span>      <span style="color:#ae81ff">0x2499</span>  NUMBER EIGHTEEN FULL STOP
+<span style="color:#960050;background-color:#1e0010">砂</span>      <span style="color:#ae81ff">0.6754936575889587</span>      <span style="color:#ae81ff">0x7802</span>  CJK UNIFIED IDEOGRAPH<span style="color:#f92672">-</span><span style="color:#ae81ff">7802</span>
+<span style="color:#960050;background-color:#1e0010">⒔</span>      <span style="color:#ae81ff">0.6732239723205566</span>      <span style="color:#ae81ff">0x2494</span>  NUMBER THIRTEEN FULL STOP
+<span style="color:#960050;background-color:#1e0010">탅</span>      <span style="color:#ae81ff">0.6726106405258179</span>      <span style="color:#ae81ff">0xd0c5</span>  HANGUL SYLLABLE TANJ
+<span style="color:#960050;background-color:#1e0010">㢟</span>      <span style="color:#ae81ff">0.6707605719566345</span>      <span style="color:#ae81ff">0x389f</span>  CJK UNIFIED IDEOGRAPH<span style="color:#f92672">-</span><span style="color:#ae81ff">389</span>F
+<span style="color:#960050;background-color:#1e0010">叵</span>      <span style="color:#ae81ff">0.6700443029403687</span>      <span style="color:#ae81ff">0x53f5</span>  CJK UNIFIED IDEOGRAPH<span style="color:#f92672">-</span><span style="color:#ae81ff">53</span>F5
+</code></pre></div><p>Kerasなどに利用できる埋め込み層の作成方法は、下記サンプルコードを参照下さい。</p>
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding/tree/master/example">glyph-aware-character-embedding/example at master · yagays/glyph-aware-character-embedding</a></p>
-
-<hr />
-
-<h2 id="手法">手法</h2>
-
-<h3 id="訓練">訓練</h3>
-
+<hr>
+<h2 id="heading3">手法</h2>
+<h3 id="heading4">訓練</h3>
 <p>文字の図形的な埋め込み表現を得るために、文字を画像としてデータ化した上でConvolutional AutoEncoderを利用しました。AutoEncoderは入力と出力が同じ値になるようなニューラルネットで、構造として入力層/出力層よりも次元数の少ない中間層を持つことで、低次元での表現を学習することができます。</p>
-
 <p>学習データの作成においては<a href="https://arxiv.org/abs/1708.04755">[Su and Lee , 2017]</a>を参考に、利用したフォントが図形として描写可能なすべての文字に対して、背景が黒色で文字が白色の60x60の画像を作成しました。学習の際には、画像をグレースケールに変換後に正規化しました。</p>
-
 <p>Convolutional AutoEncoderの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
-
-<p><img src="https://yag-ays.github.io/img/convAE_model.png" alt="convAE_model" />
-  <em>Fig. Convolutional AutoEncoderの概念図</em></p>
-
-<h3 id="評価">評価</h3>
-
+<p><img src="https://yag-ays.github.io/img/convAE_model.png" alt="convAE_model">
+<em>Fig. Convolutional AutoEncoderの概念図</em></p>
+<h3 id="heading5">評価</h3>
 <p>テストデータの文字をConvolutional AutoEncoderで復元した結果は、以下のようになりました。中国語や韓国語、図形的な丸囲いの文字など、おおよそ文字を再構成できていることがわかります。</p>
-
-<p><img src="https://yag-ays.github.io/img/model_output.png" alt="model_output" />
-  <em>Fig. 上段：convAEに入力された画像 下段：convAEで出力された画像</em></p>
-
-<h3 id="可視化">可視化</h3>
-
+<p><img src="https://yag-ays.github.io/img/model_output.png" alt="model_output">
+<em>Fig. 上段：convAEに入力された画像 下段：convAEで出力された画像</em></p>
+<h3 id="heading6">可視化</h3>
 <p>可視化の手法を別記事にて追加しました。TensorBoardを用いてt-SNEによる低次元での可視化の方法を記載しています。</p>
-
 <p><a href="https://yag-ays.github.io/project/embedding-visualization/">Out-of-the-box - 学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</a></p>
-
-<hr />
-
-<h2 id="ライセンス">ライセンス</h2>
-
+<hr>
+<h2 id="heading7">ライセンス</h2>
 <p><strong>CC-BY</strong></p>
-
-<p>このリソースは<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a>の下に提供されています。</p>
-
-<h2 id="クレジット">クレジット</h2>
-
+<p>このリソースは<!-- raw HTML omitted -->クリエイティブ・コモンズ 表示 4.0 国際 ライセンス<!-- raw HTML omitted -->の下に提供されています。</p>
+<h2 id="heading8">クレジット</h2>
 <ul>
 <li><a href="https://www.google.com/get/noto/">Google Noto Fonts</a>: <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">SIL Open Font License, Version 1.1</a></li>
 </ul>
-
-<hr />
-
-<h2 id="参考">参考</h2>
-
-<h3 id="論文">論文</h3>
-
+<hr>
+<h2 id="heading9">参考</h2>
+<h3 id="heading10">論文</h3>
 <ul>
 <li><a href="https://ieeexplore.ieee.org/document/7841067/">Document classification through image-based character embedding and wildcard training - IEEE Conference Publication</a>
-
 <ul>
-<li>pdf: <a href="http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf">http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf</a></li>
-</ul></li>
+<li>pdf: <a href="http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf"><a href="http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf">http://ucrel.lancs.ac.uk/bignlp2016/Shimada.pdf</a></a></li>
+</ul>
+</li>
 <li><a href="https://arxiv.org/abs/1708.04755">[1708.04755] Learning Chinese Word Representations From Glyphs Of Characters</a></li>
 <li><a href="https://arxiv.org/abs/1709.00028">[1709.00028] Glyph-aware Embedding of Chinese Characters</a></li>
 <li><a href="https://link.springer.com/chapter/10.1007/978-3-319-70096-0_39">Deep Clustering with Convolutional Autoencoders | SpringerLink</a></li>
 <li><a href="https://arxiv.org/abs/1704.04859">[1704.04859] Learning Character-level Compositionality with Visual Features</a></li>
 </ul>
-
-<h3 id="ウェブ">ウェブ</h3>
-
+<h3 id="heading11">ウェブ</h3>
 <ul>
 <li><a href="https://elix-tech.github.io/ja/2016/07/17/autoencoder.html">Kerasで学ぶAutoencoder</a></li>
 <li><a href="http://dl-kento.hatenablog.com/entry/2018/02/22/200811">PytorchによるAutoEncoder Familyの実装 - 前に逃げる</a></li>
 <li><a href="http://hironsan.hatenablog.com/entry/learning-character-embeddings">Pythonで日本語の文字分散表現を学習する - 自然言語処理の深遠</a></li>
 <li><a href="https://minimaxir.com/2017/04/char-embeddings/">Pretrained Character Embeddings for Deep Learning and Automatic Text Generation</a></li>
 </ul>
-
-<h3 id="データセット">データセット</h3>
-
+<h3 id="heading12">データセット</h3>
 <ul>
 <li><a href="http://www.jnlp.org/SNOW/D17">SNOW D17: 形の似ている漢字リスト - 長岡技術科学大学 自然言語処理研究室</a></li>
 </ul>

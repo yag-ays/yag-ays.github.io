@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/fasttext_language_identification/" />
-<meta property="og:title" content="fasttextを用いた言語判定" />
-<meta property="twitter:title" content="fasttextを用いた言語判定">
+<meta property="og:url" content="https://yag-ays.github.io/project/leakage_pmi/" />
+<meta property="og:title" content="文書分類においてリークとなるようなデータ内に現れる特定のパターンを見つける" />
+<meta property="twitter:title" content="文書分類においてリークとなるようなデータ内に現れる特定のパターンを見つける">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     fasttextを用いた言語判定 - Out-of-the-box 
+     文書分類においてリークとなるようなデータ内に現れる特定のパターンを見つける - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/fasttext_language_identification/">
+<link rel="canonical" href="https://yag-ays.github.io/project/leakage_pmi/">
 
 
 <style media="screen">
@@ -1020,10 +1020,10 @@ margin-left: -4%;
         <div class="content">
             <div class="page-heading">
 
-    fasttextを用いた言語判定
+    文書分類においてリークとなるようなデータ内に現れる特定のパターンを見つける
     <div class="container">
       <div class="date">
-        2019-04-21
+        2019-12-11
       </div>
     </div>
 
@@ -1031,82 +1031,186 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/fasttext_language_identification_header.png" alt=""></p>
-<p>Facebookが提供するfasttextの<a href="https://fasttext.cc">公式サイト</a>にて、fasttextを用いた言語判定モデルが公開されていたので、実際に利用してみました。</p>
-<h2 id="heading">概要</h2>
-<p>fasttextはFacebookが公開している単語埋め込みの学習方法およびそのフレームワークです。word2vecとは違い、サブワードを利用した手法が特徴となっています。</p>
-<p>こちらの<a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">公式ブログの記事</a>によると、fasttextによる言語判定は軽量でかつ高速に言語予測することができると述べられています。言語判定において広く使われる<code>langid.py</code>との評価実験では、高い精度でかつ計算時間が1/10程度であることが示されています。またモデルファイルはオリジナルのサイズでは126MB、圧縮されたモデルは917kB (0.9MB)と、既存の単語埋め込みの学習済みモデルと比較してもかなり軽量になっています。</p>
-<p>なお「言語判定」(Language Identification)とは、与えられた文章がどの自然言語により書かれているかを判定するタスクを指します。例えば本記事に対して「日本語」(ja)であることを自動で判定するのが、言語判定です。</p>
-<h2 id="heading1">使い方</h2>
-<p>まずは公開されているモデルを実際に動かしてみましょう。</p>
-<h3 id="1-">1. モデルのダウンロード</h3>
-<p>fasttextのモデルをダウンロードします。下記ページにて<code>lid.176.bin</code>または<code>lid.176.ftz</code>をダウンロードします。</p>
+    <h2 id="heading">概要</h2>
+<p>自然言語処理における教師有り学習では、対象となる文書から何らかの意味やパターンを見つけ、正解ラベルとの対応関係をモデルが学習することで、未知の文書に対するラベルの予測を行います。このとき、学習データの文書内に何らかの不適切な情報が混入することにより、意図せずモデルの精度が向上することがあります。これをリーク (Leakage)と呼び、自然言語処理のみならず機械学習が陥りやすい問題として広く認識されています。</p>
+<p>2つの文章の意味の関係性（意味が同じか違うか）を推論するタスクで用いられている<a href="https://nlp.stanford.edu/projects/snli/">The Stanford Natural Language Inference (SNLI)</a>コーパスにおいては、特定のラベルにおいてある単語が多く現れやすいということが報告されています。例えば「nobody」や「no」などの否定形が入る文章は3値分類のなかの「Contradiction(矛盾)」というラベルに含まれやすく、否定形があればとりあえずこのラベルといったように、機械学習モデルが本来学習してほしい意味的な部分以外で答えを出してしまいかねないという問題があります。このコーパスは人手で作成されていることから、こういった隠れた傾向を表す情報はAnnotation Artifactsと呼ばれています。</p>
+<p><a href="https://www.aclweb.org/anthology/N18-2017/">https://www.aclweb.org/anthology/N18-2017/</a></p>
+<p>今回は、自然言語処理においてリークとなるような、特定のラベルと強く関係している単語を見つける方法を紹介します。また、こういった人間が知る情報を使って前処理や評価を行う意義についても議論してみたいと思います。</p>
+<h2 id="pmi">自己相互情報量PMIによる特定パターンの抽出</h2>
+<p>今回は自己相互情報量（以降PMI）を使います。PMIは単語の共起を表す指標として自然言語処理で広く使われている方法です。このPMIを特定のラベルの特定の単語に対して計算することにより、そのラベルと強く関連している単語を抽出します。計算式としては以下のようになります。</p>
+<p><img src="https://yag-ays.github.io/img/leakage_pmi_01.png" alt="">
+<em>Img: <a href="https://www.aclweb.org/anthology/N18-2017">https://www.aclweb.org/anthology/N18-2017</a> より</em></p>
+<p>分子にはあるラベルの文書内に存在するある単語の頻度、分母には全ラベルの文書内に存在する単語の頻度と、ラベルの文書数があります。式の気持ちとしては、特定のラベルに偏った単語は<code>p(word, class)</code>と<code>p(word, .)</code>がほぼ同じようになるためPMIが大きくなり、全ラベルにまたがって存在する単語は<code>p(word, class)</code>よりも<code>p(word,.)</code>の方が大きくなるため、PMIが小さくなるようになっています。</p>
+<p>このPMIは任意の単語に対して各ラベルぞれぞれに計算されるため、そのラベル間のPMIの値の差が大きいラベルに注目することで、リークと判断されうる単語や特性のパターンを確認することができます。</p>
+<h2 id="heading1">実験</h2>
+<p><a href="https://www.rondhuit.com/download.html">「Livedoorニュースコーパス」</a>を対象に、特定ラベルに現れるパターンを検知してみます。このコーパスは、「livedoor ニュース」が配信していたメディアのうち、9つのカテゴリのニュース記事本文が含まれています。</p>
+<h2 id="heading2">結果</h2>
+<p>Livedoorニュースコーパスのそれぞれのラベルに対して全単語のPMIを計算し、各ラベルのPMI平均との差が大きいそれぞれ上位3件の単語を以下に示します。</p>
+<table>
+<thead>
+<tr>
+<th align="left">label \ rank</th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">dokujo-tsushin</td>
+<td align="left">オフィスエムツー</td>
+<td align="left">はるひ</td>
+<td align="left">ゆるっ</td>
+</tr>
+<tr>
+<td align="left">it-life-hack</td>
+<td align="left">虎の巻</td>
+<td align="left">イケショップ</td>
+<td align="left">紺子</td>
+</tr>
+<tr>
+<td align="left">kaden-channel</td>
+<td align="left">ビデオSALON</td>
+<td align="left">MIYUKI</td>
+<td align="left">KOMATSU</td>
+</tr>
+<tr>
+<td align="left">livedoor-homme</td>
+<td align="left">求人情報</td>
+<td align="left">type</td>
+<td align="left">@type</td>
+</tr>
+<tr>
+<td align="left">movie-enter</td>
+<td align="left">ベルセルク</td>
+<td align="left">ジョン・カーター</td>
+<td align="left">映画批評</td>
+</tr>
+<tr>
+<td align="left">peachy</td>
+<td align="left">兼美</td>
+<td align="left">韓国コスメ</td>
+<td align="left">Write</td>
+</tr>
+<tr>
+<td align="left">smax</td>
+<td align="left">ICS</td>
+<td align="left">開発コード名</td>
+<td align="left">IceCream</td>
+</tr>
+<tr>
+<td align="left">sports-watch</td>
+<td align="left">週刊アサヒ芸能</td>
+<td align="left">すぽると！</td>
+<td align="left">サッカー解説者</td>
+</tr>
+<tr>
+<td align="left">topic-news</td>
+<td align="left">韓国ニュース</td>
+<td align="left">ビッグダディ</td>
+<td align="left">デヴィ夫人</td>
+</tr>
+</tbody>
+</table>
+<h2 id="heading3">具体事例</h2>
+<p>それでは、実際に上記の単語がどのように文書中に表れるかを見てみましょう。まずはdokujo-tsushinのPMI値が高い単語を文中から抽出してみます。</p>
+<h3 id="dokujotsushin">dokujo-tsushin「オフィスエムツー」「はるひ」の場合</h3>
+<blockquote>
+<p>杉本彩が言っていたっけ、「若いころに戻りたいとか、若く見られたい、とは思わない。今の自分がどう美しくあるかを追求したい」って。（オフィスエムツー／オオノマキ）</p>
+<p>dokujo-tsushin/dokujo-tsushin-4788357.txt</p>
+</blockquote>
+<blockquote>
+<p>絵本を読んでみたいが、どんな本が自分に向いているかわからないという人は、まず図書館の絵本コーナーへ行って見るといい。何冊も手に取る間に、自分の好みの絵やストーリーに出合えるはず。読み終えたとき気持ちが前向きになれる本がいい。（オフィスエムツー／神田はるひ）</p>
+<p>dokujo-tsushin/dokujo-tsushin-4788373.txt</p>
+</blockquote>
+<p>これを見ると「オフィスエムツー」というのは文末に現れる著者情報であることがわかります。この単語はdokujo-tsushinのラベルのなかの31.8%もの文章に含まれており、記事本文の内容とは無関係に記号的な用途として記載されていることがわかります。また「はるひ」も同様に、文末の著者名の一部でした。</p>
+<h3 id="dokujotsushin1">dokujo-tsushin「ゆるっ」の場合</h3>
+<blockquote>
+<p>『結婚』よりも『結婚生活』を続ける方が難しい…!?　Presented by ゆるっとCafe</p>
+<p>dokujo-tsushin/dokujo-tsushin-5283348.txt</p>
+</blockquote>
+<blockquote>
+<p>・『旦那に薬を盛りました』　著・森野いずみゆるっとCafe/竹書房 刊</p>
+<p>dokujo-tsushin/dokujo-tsushin-5283348.txt</p>
+</blockquote>
+<p>これらの単語はどうやら特定のメディア名の一部であることがわかります。「Presented by ゆるっとCafe」というフレーズは、このラベルの文書全体のうち7.4%程度に含まれていました。また、上記リストには掲載していないですが、上位には「Presented」という単語も含まれていました。こちらは一般的に使われる単語ではあるものの、ここでは他のカテゴリより頻繁に使われる単語として検知できています。</p>
+<h3 id="peachy">peachy「韓国コスメ」の場合</h3>
+<p>一方で、特定のパターンと呼ぶにふさわしくない単語もあります。peachyにおける「韓国コスメ」は以下のように文章中で使用されています。</p>
+<blockquote>
+<p>日本で人気の韓国コスメ、今年は「カシコイ」マルチコスメが主流</p>
+<p>peachy/peachy-4721837.txt</p>
+</blockquote>
+<blockquote>
+<p>■その他の韓国コスメも要チェック！</p>
+<p>peachy/peachy-4972021.txt</p>
+</blockquote>
+<p>この「韓国コスメ」の場合は多くが文章中で使われており、特定のパターンとして出現しているわけではないことがデータセットを確認することでわかります。2つ目の特定フレーズ内で出現することもありますが、この単語自体は問題なさそうです。</p>
+<h3 id="heading4">特定フレーズと判断されたもの代表例</h3>
 <ul>
-<li><a href="https://fasttext.cc/docs/en/language-identification.html">Language identification · fastText</a></li>
+<li>dokujo-tsushin
+<ul>
+<li>「（オフィスエムツー／{著者名}）」「Presented by ゆるっとCafe」</li>
 </ul>
-<h3 id="2-fasttextpython">2. fasttextのpythonバインディングをインストール</h3>
-<p>Pythonからfasttextを利用するためのPythonバインディングをインストールします。いくつかパッケージは存在しますが、<a href="https://github.com/vrasneur/pyfasttext"><code>pyfasttext</code></a>はすでにメンテナンスされていないため、ここではFacebook公式の<a href="https://github.com/facebookresearch/fastText"><code>fastText</code></a>をインストールします。</p>
+</li>
+<li>it-life-hack
 <ul>
-<li><a href="https://github.com/facebookresearch/fastText/tree/master/python">fastText/python at master · facebookresearch/fastText</a></li>
+<li>「■PC便利技が満載！「知っ得！虎の巻」ブログ」「【知っ得！虎の巻】」</li>
+<li>「■【復活！イケショップのレアものがいっぱい】の記事をもっと見る」「【イケショップのレア物】」</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ git clone https://github.com/facebookresearch/fastText.git
-$ cd fastText
-$ pip install .
-</code></pre></div><h3 id="3-">3. モデルを読み込んで利用</h3>
-<p>さて、ようやく言語判定のモデルをロードして利用してみます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: <span style="color:#f92672">from</span> fastText <span style="color:#f92672">import</span> load_model
-
-In []: model <span style="color:#f92672">=</span> load_model(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">lid.176.bin</span><span style="color:#e6db74">&#34;</span>) <span style="color:#75715e"># or lid.176.ftz</span>
-
-In []: model<span style="color:#f92672">.</span>predict(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">こんにちは</span><span style="color:#e6db74">&#39;</span>)
-Out[]: ((<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__label__ja</span><span style="color:#e6db74">&#39;</span>,), array([<span style="color:#ae81ff">1.00002694</span>]))
-
-In []: model<span style="color:#f92672">.</span>predict(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">你好</span><span style="color:#e6db74">&#39;</span>)
-Out[]: ((<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__label__zh</span><span style="color:#e6db74">&#39;</span>,), array([<span style="color:#ae81ff">0.98323345</span>]))
-
-In []: model<span style="color:#f92672">.</span>predict(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hello</span><span style="color:#e6db74">&#39;</span>, k<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-Out[]: ((<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__label__en</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__label__fr</span><span style="color:#e6db74">&#39;</span>), array([<span style="color:#ae81ff">0.24247202</span>, <span style="color:#ae81ff">0.09511168</span>]))
-</code></pre></div><p>言語判定は上手くいっているようです。ただこのままでは<code>__label__</code>が付いていたり、予測する対象が複数の場合には出力が扱いにくいので、下記のような関数を用意してみました。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict_language</span>(text, model, k<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
-    label, prob <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(text, k)
-    <span style="color:#66d9ef">return</span> list(zip([l<span style="color:#f92672">.</span>replace(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">__label__</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> label], prob))
-</code></pre></div><p><code>predict_language</code>を使うと、いい感じに出力することができました。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: predict_language(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">こんにちは</span><span style="color:#e6db74">&#34;</span>, model)
-Out[]: [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ja</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.9995893239974976</span>)]
-
-In []: predict_language(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">hello</span><span style="color:#e6db74">&#34;</span>, model, k<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-Out[]: [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">en</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.24247202277183533</span>), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">fr</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.0951116755604744</span>)]
-</code></pre></div><h2 id="fasttext">fasttextによるモデルの詳細</h2>
-<p>さて、fasttextはどのようにモデルを作成しているのでしょうか？<a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">公式ブログの記事</a>に学習方法の概要が記載されていたので簡単に見てみます。</p>
-<p>言語判定自体は、もともとfasttextが持っている教師あり学習の枠組みに沿って学習されています。ここではコマンドラインの<code>fasttext</code>を用いて学習されています。ベクトルの次元数は16、サブワードとして文字ngramが2,3,4をすべて利用しています。</p>
-<p>学習データについては実験を再現できる形では記載されていませんが「<a href="https://www.wikipedia.org">Wikipedia</a>, <a href="https://tatoeba.org/eng/">Tatoeba</a> and <a href="http://nlp.ffzg.hr/resources/corpora/setimes/">SETimes</a>」を利用したと書かれています。合計で176言語を対象にしており、それらは<a href="https://ja.wikipedia.org/wiki/ISO_639-1%E3%82%B3%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7">ISO 639</a>で定義されたコードが用いられています。ただしサポートされているコードを見ると2文字や3文字が混同していることから、639-1だったり639-2や639-3とバラバラのようです。</p>
-<p>モデルを圧縮する際にはWeight quantizationが用いられており、ベクトル圧縮の際には近似最近傍探索で用いられるProduct quantizationが用いられているようです。まあこのあたりはfasttextのコマンドラインの引数から指定することが可能であり、フレームワーク内に実装されている機能です。</p>
-<h2 id="heading2">言語判定の精度</h2>
-<p>公式ブログではlangid.pyと同精度と記載されいましたが、他の言語判定パッケージと比較したときにはどうでしょうか？こちらのブログ記事では、fasttextとlangid.pyに加えCLDとOpenNLPについて、多言語での言語判定の精度比較を行っています。</p>
-<p><a href="http://alexott.blogspot.com/2017/10/evaluating-fasttexts-models-for.html">Evaluating fastText's models for language detection | Alex Ott's blog</a></p>
-<p>その結果を要約すると、</p>
+</li>
+<li>kaden-channel
 <ul>
-<li>日本語や中国語などではどれも同等の性能</li>
-<li>CLDは「レア」な言語に強い</li>
-<li>fasttextは英語やフランス語、ドイツ語などの「メジャー」な言語に強い</li>
-<li>fasttextのモデル間では、圧縮されたモデルでは性能が下がった</li>
+<li>「【ビデオSALON】」「■ビデオSALON　イベント・製品レポート 最新記事」</li>
+<li>「（{著者名}）」</li>
 </ul>
-<p>となったようです。また、短文においてはCLDよりfasttextの方がより信頼性が高いことが示されています。</p>
-<h2 id="heading3">まとめ</h2>
-<p>本記事ではfasttextが提供する言語判定を実際に使いつつ、そのモデルの詳細や精度について見てきました。既存の言語判定器と比較しても同程度または高精度であることを考えると、やはり分散表現やニューラルネットの強さを感じます。手軽に利用することができますし、言語判定において利用を検討しても良いのではないかと思います。</p>
-<h2 id="heading4">参考</h2>
+</li>
+<li>livedoor-homme
 <ul>
-<li><a href="https://fasttext.cc/docs/en/language-identification.html">Language identification · fastText</a></li>
-<li><a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">Fast and accurate language identification using fastText</a></li>
-<li><a href="https://github.com/saffsd/langid.py">saffsd/langid.py: Stand-alone language identification system</a></li>
-<li><a href="https://github.com/vrasneur/pyfasttext">vrasneur/pyfasttext: Yet another Python binding for fastText</a></li>
-<li><a href="https://alexott.blogspot.com/2017/10/evaluating-fasttexts-models-for.html">Evaluating fastText's models for language detection | Alex Ott's blog</a></li>
-<li><a href="https://www.facebook.com/groups/1174547215919768/permalink/1702123316495486/?comment_id=1704414996266318&amp;reply_comment_id=1705159672858517&amp;notif_id=1507280476710677&amp;notif_t=group_comment">FastText Users公開グループ | Facebook</a></li>
+<li>「livedoor求人・転職は、あなたがどんな求人情報を探しているのかを瞬時に判断しておすすめするコンテンツ。」</li>
+<li>「（情報提供元：@type）」</li>
+</ul>
+</li>
+<li>peachy
+<ul>
+<li>「■「Peachy」無料アプリ-iPhone-」「■「Peachy」無料アプリ-Android-」</li>
+</ul>
+</li>
+<li>sports-watch
+<ul>
+<li>「・週刊アサヒ芸能［BookLive!］」「・週刊アサヒ芸能 ［ライト版］」</li>
+</ul>
+</li>
+<li>topic-news
+<ul>
+<li>「【韓国ニュース】」</li>
+</ul>
+</li>
+</ul>
+<h2 id="--">議論 - リークか特徴量か？</h2>
+<p>ここまでで、文書分類においてリークとなりうる特定のパターンを抽出してきました。結果としては、意外と著者名や決まったフレーズが含まれており、文書の意味とは別の観点で文書分類のモデルが学習されうることが確認できました。</p>
+<p>では、これらのリークとなるような単語や定型文は除去すべきでしょうか？また、どの程度の頻出度合いや傾向のものまで削除すべきでしょうか？</p>
+<p>これに対する明確な答えは存在しないというのが個人的な考え方です。より正確に言えば、モデルを構築する人間が定めたタスクや、測りたい精度次第で答えが変わりうると思います。</p>
+<h3 id="heading5">例：モデルのベンチマークとして利用する場合</h3>
+<p>データセットはあくまでも評価として利用し、機械学習モデルの性能や機能が主軸に置かれている場合は、特に取り除く必要はないかもしれません。特に、既存手法との比較においては相対的な数字の比較となるため、利用するデータセットや前処理などは揃えておくべきでしょう。特定のラベルに多く存在するフレーズも特徴量として活用して学習できる構造であれば、それを使って高い精度を出すこと自体に問題はないように思います。ただ、その結果を用いて「データセットが表現する意味を捉えて予測ができている」と結論付けるのには、少し疑問が残ります。</p>
+<h3 id="heading6">例：サービスとして運用し続ける場合</h3>
+<p>ではこれが実際のサービスやプロダクションで利用するモデルの場合はどうでしょうか？</p>
+<p>手元にあるデータやその背後にある生成分布と、将来的に得られるものが同じ場合であれば問題はありません。今回のLivedoorニュースコーパスの例で言えば、</p>
+<ul>
+<li>特定ラベルで付与される著者情報が将来的に変わらない</li>
+<li>著者情報が記事末尾に付与されるというデータの性質が変わらない（途中から無くなったり文言が変わったりしない）</li>
+</ul>
+<p>のであれば、特定のフレーズを取り除くことは必要ないかもしれません。しかし、実際にはそういうことが保証されないことの方が多いでしょう。自然言語処理においては、常に新しい未知語などが出現しますし、今回のような著者名やメディア名も変わりうると容易に想像できます。現在のトレーニングデータとテストデータにおいては高い精度が出せるモデルでも、今後そういったリークに該当する特徴量が未知のデータにおいてはその特徴量が得られないことにより、精度低下を引き起こすことが考えられます。逆に言えば、いまあるデータセットではモデルの精度を過大評価しているかもしれません。</p>
+<p>一方で、こういった将来起こりうるデータセットの変化を正しく予測することはできません。また、どういった情報がリークなのかという判断や、それを見越した汎化性能を正しく評価することも難しいと考えられます。そこには常に人間の常識や予想が入り込むため、モデルの表現力や汎化性能という観点での扱いが難しいと感じます。</p>
+<h2 id="heading7">まとめ</h2>
+<p>この記事では、リークと呼ばれる特定のラベルと強く関係する単語やフレーズを発見する手法を紹介し、実際にLivedoorニュースコーパスで検証しました。この手法を使うことによって、モデルに学習してほしくない単語や特定のフレーズを取り除くことができます。一方で、こうした人間の解釈が伴う前処理はその意義や目的が明確でないと扱いが難しく、万能な正解が存在しないことも注意が必要です。</p>
+<h2 id="heading8">参考</h2>
+<ul>
+<li><a href="https://www.aclweb.org/anthology/N18-2017/">Annotation Artifacts in Natural Language Inference Data - ACL Anthology</a></li>
 </ul>
 
 
 <div style="text-align: right">
-  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/fasttext_language_identification/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/leakage_pmi/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
       alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
   <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>

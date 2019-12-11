@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Project on Out-of-the-box</title>
@@ -6,10 +6,29 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 02 Sep 2019 15:25:26 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 11 Dec 2019 09:20:57 +0900</lastBuildDate>
     
 	<atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>文書分類においてリークとなるようなデータ内に現れる特定のパターンを見つける</title>
+      <link>https://yag-ays.github.io/project/leakage_pmi/</link>
+      <pubDate>Wed, 11 Dec 2019 09:20:57 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/leakage_pmi/</guid>
+      <description>概要 自然言語処理における教師有り学習では、対象となる文書から何らかの意味やパターンを見つけ、正解ラベルとの対応関係をモデルが学習することで、未知の文書に対するラベルの予測を行います。このとき、学習データの文書内に何らかの不適切な情報が混入することにより、意図せずモデルの精度が向上することがあります。これをリーク (Leakage)と呼び、自然言語処理のみならず機械学習が陥りやすい問題として広く認識されています。
+2つの文章の意味の関係性（意味が同じか違うか）を推論するタスクで用いられているThe Stanford Natural Language Inference (SNLI)コーパスにおいては、特定のラベルにおいてある単語が多く現れやすいということが報告されています。例えば「nobody」や「no」などの否定形が入る文章は3値分類のなかの「Contradiction(矛盾)」というラベルに含まれやすく、否定形があればとりあえずこのラベルといったように、機械学習モデルが本来学習してほしい意味的な部分以外で答えを出してしまいかねないという問題があります。このコーパスは人手で作成されていることから、こういった隠れた傾向を表す情報はAnnotation Artifactsと呼ばれています。
+https://www.aclweb.org/anthology/N18-2017/
+今回は、自然言語処理においてリークとなるような、特定のラベルと強く関係している単語を見つける方法を紹介します。また、こういった人間が知る情報を使って前処理や評価を行う意義についても議論してみたいと思います。
+自己相互情報量PMIによる特定パターンの抽出 今回は自己相互情報量（以降PMI）を使います。PMIは単語の共起を表す指標として自然言語処理で広く使われている方法です。このPMIを特定のラベルの特定の単語に対して計算することにより、そのラベルと強く関連している単語を抽出します。計算式としては以下のようになります。
+Img: https://www.aclweb.org/anthology/N18-2017 より
+分子にはあるラベルの文書内に存在するある単語の頻度、分母には全ラベルの文書内に存在する単語の頻度と、ラベルの文書数があります。式の気持ちとしては、特定のラベルに偏った単語はp(word, class)とp(word, .)がほぼ同じようになるためPMIが大きくなり、全ラベルにまたがって存在する単語はp(word, class)よりもp(word,.)の方が大きくなるため、PMIが小さくなるようになっています。
+このPMIは任意の単語に対して各ラベルぞれぞれに計算されるため、そのラベル間のPMIの値の差が大きいラベルに注目することで、リークと判断されうる単語や特性のパターンを確認することができます。
+実験 「Livedoorニュースコーパス」を対象に、特定ラベルに現れるパターンを検知してみます。このコーパスは、「livedoor ニュース」が配信していたメディアのうち、9つのカテゴリのニュース記事本文が含まれています。
+結果 Livedoorニュースコーパスのそれぞれのラベルに対して全単語のPMIを計算し、各ラベルのPMI平均との差が大きいそれぞれ上位3件の単語を以下に示します。
+   label \ rank 1 2 3     dokujo-tsushin オフィスエムツー はるひ ゆるっ   it-life-hack 虎の巻 イケショップ 紺子   kaden-channel ビデオSALON MIYUKI KOMATSU   livedoor-homme 求人情報 type @type   movie-enter ベルセルク ジョン・カーター 映画批評   peachy 兼美 韓国コスメ Write   smax ICS 開発コード名 IceCream   sports-watch 週刊アサヒ芸能 すぽると！ サッカー解説者   topic-news 韓国ニュース ビッグダディ デヴィ夫人    具体事例 それでは、実際に上記の単語がどのように文書中に表れるかを見てみましょう。まずはdokujo-tsushinのPMI値が高い単語を文中から抽出してみます。</description>
+    </item>
     
     <item>
       <title>Elasticsearchで分散表現を使った類似文書検索</title>
@@ -22,11 +41,11 @@ Text similarity search in Elasticsearch using vector fields | Elastic Blog
 類似文書検索とは、与えられたクエリの文書と似ている文書を文書集合内から検索する技術です。この際に必要となるのが「似ている」という概念で、計算機上でどうやって2つの文書間の類似度を数値として表現するかがポイントになります。例えば、互いの文書に出現する単語の一致度や重複度合いを測ったり、TF-IDFやBM25などで文書をベクトル化して比較する方法があります。ただしこれらの方法では、言い換え表現や表記の違いにより同じ意味の単語が異なる単語だと判定されたり、文書の中では重要でない単語に強く影響されるなどの問題点がありました。
 そこでこの記事では、意味的な空間上に単語や文書を埋め込む分散表現という手法を用いて、任意の文書を数百次元のベクトルに変換します。そして類似度の計算では、2つの文書それぞれの分散表現のベクトルのコサイン類似度を計算することによって、文書間の意味的な近さ/遠さを表現します。検索の際には、与えられたクエリ文書をベクトル化したあと、文書集合内のすべての文書のベクトルと類似度を計算し降順に並べ替えることで、類似文章が得られるというわけです。
 それではElasticsearchの環境構築から類似文書検索までを順に解説していきます。本記事では重要なコードの部分のみ提示していますが、全体の実験コードはこちらのレポジトリにありますので必要に応じて参照ください。
-tl;dr  Elasticsearchでベクトルの類似文書検索機能が実装された Wikipedia日本語記事全116万エントリーに対して検索時間は約0.8秒 Elasticsearchの既存の検索機能と組み合わせることが可能  方法 1. Elasticsearchの設定 Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、docker.elastic.coで提供されているバージョン7.3.1を利用しました。以下のようにdocker-compose.yamlを定義してdocker-compose upで起動します。
-# docker-compose.yaml version: &#39;3.3&#39; services: elasticsearch: image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1 ports: - &amp;quot;9200:9200&amp;quot; volumes: - es-data:/usr/share/elasticsearch/data tty: true environment: discovery.type: single-node volumes: es-data: driver: local  立ち上がった後はcurl http://127.0.0.1:9200/_cat/healthで結果が帰ってくればOKです。
+tl;dr  Elasticsearchでベクトルの類似文書検索機能が実装された Wikipedia日本語記事全116万エントリーに対して検索時間は約0.8秒 Elasticsearchの既存の検索機能と組み合わせることが可能   方法 1. Elasticsearchの設定 Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、docker.elastic.coで提供されているバージョン7.3.1を利用しました。以下のようにdocker-compose.yamlを定義してdocker-compose upで起動します。
+# docker-compose.yaml version: &amp;#39;3.3&amp;#39; services: elasticsearch: image: docker.elastic.co/elasticsearch/elasticsearch:7.3.1 ports: - &amp;#34;9200:9200&amp;#34; volumes: - es-data:/usr/share/elasticsearch/data tty: true environment: discovery.type: single-node volumes: es-data: driver: local 立ち上がった後はcurl http://127.0.0.1:9200/_cat/healthで結果が帰ってくればOKです。
 2. Wikipediaの本文を文ベクトルに変換してElasticsearchに投入する 今回はある程度現実的な状況を再現するため、データセットはWikipediaの日本語のすべてのエントリーを使用しました。Wikipediaのエントリーに含まれるテキストをダンプデータから抽出し、分散表現を計算するとともにElasticsearchにインポートします。文書の分散表現の計算には、SWEMのaverage-poolingを利用します。手法の詳細はこちらの記事を参考ください。
 まず index.jsonでインデックスのマッピングタイプを指定します。文書ベクトルには&amp;quot;type&amp;quot;: &amp;quot;dense_vector&amp;quot;、次元数を&amp;quot;dims&amp;quot;: 200で指定します。
-# index.json &amp;quot;properties&amp;quot;: { &amp;quot;title&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;text&amp;quot; }, &amp;quot;text&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;text&amp;quot; }, &amp;quot;text_vector&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;dense_vector&amp;quot;, &amp;quot;dims&amp;quot;: 200 } }  あとはElasticsearchに文書およびその文書の分散表現を登録していくだけです。注意点として、PythonのElasticsearchパッケージを利用する場合は、dense_vectorにはnumpyのndarrayではなくPythonのリスト型に変換したものを渡す必要があります。</description>
+# index.json &amp;#34;properties&amp;#34;: { &amp;#34;title&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34; }, &amp;#34;text&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;text&amp;#34; }, &amp;#34;text_vector&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;dense_vector&amp;#34;, &amp;#34;dims&amp;#34;: 200 } } あとはElasticsearchに文書およびその文書の分散表現を登録していくだけです。注意点として、PythonのElasticsearchパッケージを利用する場合は、dense_vectorにはnumpyのndarrayではなくPythonのリスト型に変換したものを渡す必要があります。</description>
     </item>
     
     <item>
@@ -37,13 +56,13 @@ tl;dr  Elasticsearchでベクトルの類似文書検索機能が実装された
       <guid>https://yag-ays.github.io/project/emoji-ja-update-12/</guid>
       <description>以前に公開した「Unicode絵文字の日本語読み/キーワード/分類辞書」ですが、Unicode 12.0が公開され絵文字も追加されたので、辞書を更新しました。
 前回の記事：📙Unicode絵文字の日本語読み/キーワード/分類辞書📙 - Out-of-the-box
-🔖 リリース Githubレポジトリの20190726リリースからダウンロードするか、現在masterブランチに含まれている各種ファイルを利用ください。
+ 🔖 リリース Githubレポジトリの20190726リリースからダウンロードするか、現在masterブランチに含まれている各種ファイルを利用ください。
  Release 20190726 · yagays/emoji-ja  前回からの変更点は以下の通りです。
-- [update] Unicode 12.0の新しい絵文字を追加 - [update] Unicode 12.0で変更されたグループ名/サブグループ名の翻訳を更新 - [fix] サブグループ名において、スペース区切りをハイフンに変更 (e.g.動物 鳥類→動物-鳥類)  絵文字の追加がメインですが、サブグループ名でこれまでスペース区切りで表していたものをハイフン区切りに変更しておりますので、以前のバージョンを利用していた方はご注意下さい🙏
-👀 追加された絵文字 せっかくなので、追加された絵文字を少し見てみましょう。
+- [update] Unicode 12.0の新しい絵文字を追加 - [update] Unicode 12.0で変更されたグループ名/サブグループ名の翻訳を更新 - [fix] サブグループ名において、スペース区切りをハイフンに変更 (e.g.動物 鳥類→動物-鳥類) 絵文字の追加がメインですが、サブグループ名でこれまでスペース区切りで表していたものをハイフン区切りに変更しておりますので、以前のバージョンを利用していた方はご注意下さい🙏
+ 👀 追加された絵文字 せっかくなので、追加された絵文字を少し見てみましょう。
 カワウソ 各種メディアでも取り上げられていたカワウソ（otter）ですが、日本語のキーワードを見るとラッコ（Sea otter）も付与されているようです（参考）。Emojipediaの🦦 Otter Emojiを見てみると、カワウソかラッコかイマイチ区別が付かないですが、Microsoftのotterは貝を持っているのでラッコを意識してそうな雰囲気があります。
- &amp;quot;🦦&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;カワウソ&amp;quot;, &amp;quot;ラッコ&amp;quot;, &amp;quot;動物&amp;quot;, &amp;quot;遊び好き&amp;quot;, &amp;quot;魚を食べる&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;カワウソ&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;動物と自然&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;動物-哺乳類&amp;quot; }  玉ねぎとにんにく 玉ねぎとにんにくも今回から追加されました。どちらも似たような外見ですが、Emojipediaの🧅 Onion Emojiと🧄 Garlic Emojiを見比べてみると、丸みや色で区別しているようですね。Googleは唯一玉ねぎの絵文字に輪切りの状態のものを載せていて、頑張って区別しました感があります。
-&amp;quot;🧄&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;におい&amp;quot;, &amp;quot;ニンニク&amp;quot;, &amp;quot;薬味&amp;quot;, &amp;quot;野菜&amp;quot;, &amp;quot;香り&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;ニンニク&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;飲み物と食べ物&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;食べ物-野菜&amp;quot; }, &amp;quot;🧅&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;タマネギ&amp;quot;, &amp;quot;ねぎ&amp;quot;, &amp;quot;玉ねぎ&amp;quot;, &amp;quot;薬味&amp;quot;, &amp;quot;野菜&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;タマネギ&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;飲み物と食べ物&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;食べ物-野菜&amp;quot; }  📝 参考  Emoji Recently Added, v12.</description>
+ &amp;quot;🦦&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;カワウソ&amp;quot;, &amp;quot;ラッコ&amp;quot;, &amp;quot;動物&amp;quot;, &amp;quot;遊び好き&amp;quot;, &amp;quot;魚を食べる&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;カワウソ&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;動物と自然&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;動物-哺乳類&amp;quot; } 玉ねぎとにんにく 玉ねぎとにんにくも今回から追加されました。どちらも似たような外見ですが、Emojipediaの🧅 Onion Emojiと🧄 Garlic Emojiを見比べてみると、丸みや色で区別しているようですね。Googleは唯一玉ねぎの絵文字に輪切りの状態のものを載せていて、頑張って区別しました感があります。
+&amp;quot;🧄&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;におい&amp;quot;, &amp;quot;ニンニク&amp;quot;, &amp;quot;薬味&amp;quot;, &amp;quot;野菜&amp;quot;, &amp;quot;香り&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;ニンニク&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;飲み物と食べ物&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;食べ物-野菜&amp;quot; }, &amp;quot;🧅&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;タマネギ&amp;quot;, &amp;quot;ねぎ&amp;quot;, &amp;quot;玉ねぎ&amp;quot;, &amp;quot;薬味&amp;quot;, &amp;quot;野菜&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;タマネギ&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;飲み物と食べ物&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;食べ物-野菜&amp;quot; } 📝 参考  Emoji Recently Added, v12.</description>
     </item>
     
     <item>
@@ -54,13 +73,12 @@ tl;dr  Elasticsearchでベクトルの類似文書検索機能が実装された
       <guid>https://yag-ays.github.io/project/pytorch_bert_japanese/</guid>
       <description>概要 BERT (Bidirectional Encoder Representations from Transformers) は、NAACL2019で論文が発表される前から大きな注目を浴びていた強力な言語モデルです。これまで提案されてきたELMoやOpenAI-GPTと比較して、双方向コンテキストを同時に学習するモデルを提案し、大規模コーパスを用いた事前学習とタスク固有のfine-tuningを組み合わせることで、各種タスクでSOTAを達成しました。
 そのように事前学習によって強力な言語モデルを獲得しているBERTですが、今回は日本語の学習済みBERTモデルを利用して、文章埋め込み (Sentence Embedding) を計算してみようと思います。
-環境 今回は京都大学の黒橋・河原研究室が公開している「BERT日本語Pretrainedモデル」を利用します。
+ 環境 今回は京都大学の黒橋・河原研究室が公開している「BERT日本語Pretrainedモデル」を利用します。
  BERT日本語Pretrainedモデル - KUROHASHI-KAWAHARA LAB  BERTの実装は、pytorchで書かれたpytorch-pretrained-BERTがベースになります。また形態素解析器は、学習済みモデルに合わせるためJUMAN++を利用します。
 方法 今回はBertWithJumanModelという、トークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。
- yagays/pytorch_bert_japanese
-In []: from bert_juman import BertWithJumanModel In []: bert = BertWithJumanModel(&amp;quot;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE&amp;quot;) In []: bert.get_sentence_embedding(&amp;quot;吾輩は猫である。&amp;quot;) Out[]: array([ 2.22642735e-01, -2.40221739e-01, 1.09303640e-02, -1.02307117e+00, 1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01, -2.77438164e-02, -8.05811465e-01, 3.46736580e-01, -7.20409870e-01, 1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01, 2.26500735e-01, -8.97880018e-01, 2.52314955e-01, -7.09809303e-01, [...]   これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。
+ yagays/pytorch_bert_japanese  In []: from bert_juman import BertWithJumanModel In []: bert = BertWithJumanModel(&amp;#34;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE&amp;#34;) In []: bert.get_sentence_embedding(&amp;#34;吾輩は猫である。&amp;#34;) Out[]: array([ 2.22642735e-01, -2.40221739e-01, 1.09303640e-02, -1.02307117e+00, 1.78834641e+00, -2.73566216e-01, -1.57942638e-01, -7.98571169e-01, -2.77438164e-02, -8.05811465e-01, 3.46736580e-01, -7.20409870e-01, 1.03382647e-01, -5.33944130e-01, -3.25344890e-01, -1.02880754e-01, 2.26500735e-01, -8.97880018e-01, 2.52314955e-01, -7.09809303e-01, [...] これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。
 また、BERTの隠れ層の位置や、プーリングの計算方法も選択できるようにしています。このあたりの設計はhanxiao/bert-as-service を参考にしています。
-In []: bert.</description>
+In []: bert.get_sentence_embedding(&amp;#34;吾輩は猫である。&amp;#34;, .</description>
     </item>
     
     <item>
@@ -75,8 +93,7 @@ In []: bert.</description>
 方法 SWEMでは以下の4つの方法が提案されています。
  SWEM-aver：単語の分散表現に対してaverage poolingする SWEM-max：単語の分散表現に対してmax poolingする SWEM-concat：SWEM-averとSWEM-maxの結果を結合する SWEM-hier：n-gramのように固定長のウィンドウでaverage-poolingした結果に対してmax poolingする  これらは基本的に、文章に含まれる単語の分散表現全体に対して、どういう操作で固定時点のベクトルに集約するかといった操作の違いでしかありません。それぞれのaverage poolingやmax poolingは、element-wiseにaverageやmaxを取ります。Out-of-Vocabulary (OOV) な単語に対しては、[-0.01, 0.01]の範囲の一様乱数を用いて初期化します。なお、aver, max, concatに関してはパラメータはありませんが、SWEM-hierはn-gramのウィンドウの幅nを決める必要があります。
 ちなみに、結局のところどれが一番いいの？という話ですが、論文中の評価ではタスク/データ依存という結果になっており、一概にどれが良いかは断定できないようです。
-コード  https://github.com/yagays/swem
-from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem import SWEM w2v_path = &amp;quot;/path/to/word_embedding.bin&amp;quot; w2v = KeyedVectors.load_word2vec_format(w2v_path, binary=True) tokenizer = MeCabTokenizer(&amp;quot;-O wakati&amp;quot;) swem = SWEM(w2v, tokenizer)  In []: text = &amp;quot;吾輩は猫である。名前はまだ無い。&amp;quot; # SWEM-aver In []: swem.</description>
+コード  https://github.com/yagays/swem  from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem import SWEM w2v_path = &amp;#34;/path/to/word_embedding.bin&amp;#34; w2v = KeyedVectors.load_word2vec_format(w2v_path, binary=True) tokenizer = MeCabTokenizer(&amp;#34;-O wakati&amp;#34;) swem = SWEM(w2v, tokenizer) In []: text = &amp;#34;吾輩は猫である。名前はまだ無い。&amp;#34; # SWEM-aver In []: swem.</description>
     </item>
     
     <item>
@@ -89,15 +106,21 @@ from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem
 これだけ聞くと非常に簡単な問題のように思えますよね。出てくる単語を辞書で探せば何語か分かりそうなものですし、書かれている文字を見ても容易に判別できそうな気がします。Google翻訳のような機械翻訳が高精度に文章を翻訳できる現在において、言語を判定するなんて行為はより基本的なことで、できて当たり前とも思えます。実際に2010年時点でサイボウズ・ラボの中谷さんが作成された言語判定エンジンlanguage-detectionは、49言語で99.77%の正解率で判定することができています(source)。他の言語処理タスクでは考えられないくらい高い正解率ですし、ここからの向上余地なんてほぼ無いんじゃないかと考えてしまいます。
 しかしながら、言語判定は今でも様々な論文が発表される分野です。極端な例を出すならば、Googleは自然言語処理において1st tierな学会であるEMNLPで2018年に言語判定の論文を出しています。このように現在でも研究され論文が通る分野であり、大学のみならず企業からも論文が発表される領域です。では、どこに研究の課題が残されているのでしょうか？また近年大きく発展した深層学習は、言語判定にどのように影響しているのでしょうか？
  ここでは、近年発表された3種類の言語判定の論文をもとに、深層学習時代の言語判定について見ていきたいと思います。
-複数の言語が混ざった文章の言語判定 A Fast, Compact, Accurate Model for Language Identification of Codemixed Text
+ 複数の言語が混ざった文章の言語判定 A Fast, Compact, Accurate Model for Language Identification of Codemixed Text
 まずは冒頭でも紹介したEMNLP 2018のGoogleの論文です。論文タイトルにあるように複数言語が混ざった文章を対象にした言語判定は、既存の言語判定モデルでは無視されてきた領域でした。特にユーザが投稿するようなサービスにおいては同じメッセージを複数言語で記載することが多く、そのような言語判定に対応するため、より粒度の細かい単位で言語判定することが必要となります。
 例えば、以下のようなTweetはその代表例でしょう。
-新しい御代の幕開けに心からお祝い申し上げます。『令和』が日本の国に平和と繁栄をもたらす祝福された時代となるよう祈念致しております。🇯🇵 Congratulations on the beginning of the new era! We hope 令和 will be blessed with peace and prosperity for everyone in Japan.
-&amp;mdash; Tim Cook (@tim_cook) April 30, 2019 
 この論文で提案している手法CMXは、まずトークン(単語)単位で言語判定をしたのちに、貪欲法を用いて文章全体での言語判定を行うというものです。前半の言語判定には文字特徴量とトークンの特徴量の両方を用いたシンプルなニューラルネットワークを用いています。
-  (Ref. https://arxiv.org/abs/1810.04142)
 文字特徴量は従来の言語判定と同じように文字n-gramを用いており、n=[1,4]を計算したのちにfeature hashingで語彙数をコントロールしています。これは、n-gramのnを増やすごとに生成される文字列のパターン数が指数的に増加することから、計算コストやモデルサイズを削減するためです。その他にも、ひらがなやハングルのように特定文字に対応する言語の特徴量や、辞書ベースの特徴量などを加えたモデルになっています。
-単語や文字単位での言語判定 LanideNN: Multilingual Language Identification on Character Window</description>
+単語や文字単位での言語判定 LanideNN: Multilingual Language Identification on Character Window
+単一文章に対して複数言語を判定できるようになれば、次に知りたくなるのは文章中での言語の出現位置や、どこで言語が変わったかといった文章内の情報です。さきほどのGoogleの論文ではトークン単位で推定しつつ全体の文章の言語判定をしていましたが、EACL 2017で発表されたLanideNNでは入力文を文字単位で言語判定するモデルを提案しています。
+提案モデルは文字を入力にしたBidirectional RNNを構成し、それぞれの文字に対して言語を予測するモデルになっています。長い文章の場合は、特定のwindow sizeごとにモデルから予測を出力し、windowをずらしながら文章全体をカバーするよう予測していきます。
+LanideNN は実装や学習済みモデル、データセットも公開されています。
+ tomkocmi/LanideNN LanideNN | ÚFAL  より多様な言語に対応した言語判定 Incorporating Dialectal Variability for Socially Equitable Language Identification
+これまでの言語判定は複数言語に対応しつつもモデルの精度を下げないことが目標でしたが、ACL 2017のEquilidではより社会的に公平性を保つよう、マイナーな言語や方言に対応できる言語判定モデルを作成しています。
+既存の言語判定モデルがコーパスを作成する際には、研究の主流であるヨーロッパ系の言語が主体となっていたり、Wikipediaなどのウェブソースでは人口が多い言語で書かれた文章が手に入りやすい環境であることにより、どうしても主要な言語で精度が出せることが重要でした。この論文では、地理的であったり社会的な多様性を考慮したコーパスを作成し、かつモデルもそうした細かな差異を認識できるよう工夫しています。
+モデルはLanideNN と同様に文字ベースのニューラルネットを採用しており、綴りや音韻といった要素をモデルに組み込むことを意図していると論文では述べられています。言語判定はトークン単位で行われます。ニューラルネットについてはAttention付きのencode-decoderモデルで、encoderとdecoderはそれぞれ3-layerのRNNです。
+Equilidは実装や学習済みモデルも公開されており、配布されている学習済みモデルでは70言語に対応しているようです。
+ davidjurgens/equilid: Socially-Equitable Language Identification   まとめ これまで最新の深層学習を用いた言語判定をいくつか見てきました。これらに共通する特徴としては、単語や文字単位で言語判定を行い、より複雑な言語特徴が得られるようなモデルを作成するように変化していることが分かります。</description>
     </item>
     
     <item>
@@ -113,9 +136,8 @@ from gensim.models import KeyedVectors from swem import MeCabTokenizer from swem
 使い方 まずは公開されているモデルを実際に動かしてみましょう。
 1. モデルのダウンロード fasttextのモデルをダウンロードします。下記ページにてlid.176.binまたはlid.176.ftzをダウンロードします。
  Language identification · fastText  2. fasttextのpythonバインディングをインストール Pythonからfasttextを利用するためのPythonバインディングをインストールします。いくつかパッケージは存在しますが、pyfasttextはすでにメンテナンスされていないため、ここではFacebook公式のfastTextをインストールします。
- fastText/python at master · facebookresearch/fastText
-$ git clone https://github.com/facebookresearch/fastText.git $ cd fastText $ pip install .   3. モデルを読み込んで利用 さて、ようやく言語判定のモデルをロードして利用してみます。
-In []: from fastText import load_model In []: model = load_model(&amp;quot;lid.176.bin&amp;quot;) # or lid.176.ftz In []: model.predict(&#39;こんにちは&#39;) Out[]: ((&#39;__label__ja&#39;,), array([1.00002694])) In []: model.predict(&#39;你好&#39;) Out[]: ((&#39;__label__zh&#39;,), array([0.98323345])) In []: model.</description>
+ fastText/python at master · facebookresearch/fastText  $ git clone https://github.com/facebookresearch/fastText.git $ cd fastText $ pip install . 3. モデルを読み込んで利用 さて、ようやく言語判定のモデルをロードして利用してみます。
+In []: from fastText import load_model In []: model = load_model(&amp;#34;lid.176.bin&amp;#34;) # or lid.176.ftz In []: model.predict(&amp;#39;こんにちは&amp;#39;) Out[]: ((&amp;#39;__label__ja&amp;#39;,), array([1.00002694])) In []: model.predict(&amp;#39;你好&amp;#39;) Out[]: ((&amp;#39;__label__zh&amp;#39;,), array([0.98323345])) In []: model.</description>
     </item>
     
     <item>
@@ -126,11 +148,11 @@ In []: from fastText import load_model In []: model = load_model(&amp;quot;lid.1
       <guid>https://yag-ays.github.io/project/mecab_pos_regex/</guid>
       <description>MeCabの形態素解析の結果から、正規表現を使って品詞列を抜き出すためのパッケージmecabpr(mecab-pos-regexp)を作成しました。
 概要 キーフレーズ抽出などのタスクにおいて、MeCabの形態素解析した文字列の中から「形容詞に続く名詞」や「任意の長さを持つ名詞の系列」といった特定のパターンを持つ品詞列を取り出したいことがあります。そのようなパターンを正規表現の記法を用いて表現し、一致する品詞列を抜き出すためのパッケージを作成しました。
-ソースコード  https://github.com/yagays/mecabpr  使い方 インストール mecabprはpipを使ってインストールできます。
-$ pip install mecabpr  準備 mecabprを読み込みます。
-import mecabpr mpr = mecabpr.MeCabPosRegex() sentence = &amp;quot;あらゆる現実をすべて自分のほうへねじ曲げたのだ。&amp;quot;   MeCabPosRegex()にはMeCabに渡すオプションを指定できます  MeCabPosRegex(&amp;quot;-d /path/to/mecab-ipadic-neologd&amp;quot;)でNEologdの辞書を使うことができます  mpr.findall()の引数には、対象とする文字列と、正規表現で表した品詞列を指定します  品詞には任意の階層を指定することができ、階層間を-で区切って入力します (e.g. 名詞-固有名詞-人名-一般)   あとは、以下のように品詞のパターンを指定すると、目的の品詞列を取得できます。
-例）「名詞」を抽出する In []: mpr.findall(sentence, &amp;quot;名詞&amp;quot;) Out[]: [[&#39;現実&#39;], [&#39;すべて&#39;], [&#39;自分&#39;], [&#39;ほう&#39;], [&#39;の&#39;]]  例）「名詞に続く助詞」を抽出する In []: mpr.findall(sentence, &amp;quot;名詞助詞&amp;quot;) Out[]: [[&#39;現実&#39;, &#39;を&#39;], [&#39;自分&#39;, &#39;の&#39;], [&#39;ほう&#39;, &#39;へ&#39;]]  ちなみに、&amp;quot;名詞助詞&amp;quot;のように一続きに表現しても問題ないですが、可読性のために&amp;quot;(名詞)(助詞)&amp;quot;のように品詞を括弧で括っても同様の結果が得られます。
-例）「名詞に続く助詞が2回続くパターン」を抽出する 通常の正規表現と同様の記法を使うことができます。ここでは{2}を指定することで、2回の繰り返しを表現しています。
+ ソースコード  https://github.com/yagays/mecabpr  使い方 インストール mecabprはpipを使ってインストールできます。
+$ pip install mecabpr 準備 mecabprを読み込みます。
+import mecabpr mpr = mecabpr.MeCabPosRegex() sentence = &amp;#34;あらゆる現実をすべて自分のほうへねじ曲げたのだ。&amp;#34;  MeCabPosRegex()にはMeCabに渡すオプションを指定できます  MeCabPosRegex(&amp;quot;-d /path/to/mecab-ipadic-neologd&amp;quot;)でNEologdの辞書を使うことができます   mpr.findall()の引数には、対象とする文字列と、正規表現で表した品詞列を指定します  品詞には任意の階層を指定することができ、階層間を-で区切って入力します (e.g. 名詞-固有名詞-人名-一般)    あとは、以下のように品詞のパターンを指定すると、目的の品詞列を取得できます。
+ 例）「名詞」を抽出する In []: mpr.findall(sentence, &amp;#34;名詞&amp;#34;) Out[]: [[&amp;#39;現実&amp;#39;], [&amp;#39;すべて&amp;#39;], [&amp;#39;自分&amp;#39;], [&amp;#39;ほう&amp;#39;], [&amp;#39;の&amp;#39;]] 例）「名詞に続く助詞」を抽出する In []: mpr.findall(sentence, &amp;#34;名詞助詞&amp;#34;) Out[]: [[&amp;#39;現実&amp;#39;, &amp;#39;を&amp;#39;], [&amp;#39;自分&amp;#39;, &amp;#39;の&amp;#39;], [&amp;#39;ほう&amp;#39;, &amp;#39;へ&amp;#39;]] ちなみに、&amp;quot;名詞助詞&amp;quot;のように一続きに表現しても問題ないですが、可読性のために&amp;quot;(名詞)(助詞)&amp;quot;のように品詞を括弧で括っても同様の結果が得られます。
+ 例）「名詞に続く助詞が2回続くパターン」を抽出する 通常の正規表現と同様の記法を使うことができます。ここでは{2}を指定することで、2回の繰り返しを表現しています。
 In [42]: mpr.</description>
     </item>
     
@@ -141,10 +163,8 @@ In [42]: mpr.</description>
       
       <guid>https://yag-ays.github.io/project/out-of-vocab-magnitude/</guid>
       <description>概要 magnitudeという単語埋め込みを扱うライブラリには、単語を構成する文字列を考慮したout-of-vocabularyの初期化の方法が実装されています。EMNLP 2018の論文と実際のコードを元に、その初期化の方法を実装して試してみました。
-背景 KaggleのQuora Insincere Questionsコンペを終えて KaggleのQuora Insecure QuestionsのコンペではOOVの対応が重要だったっぽいけど、magnitudeはランダムベクトルの付与とかミススペルの対応とかしてくれるみたいだ。ロジック確認しないと何してるのかわからないけど……　https://t.co/d8tteqwwCp
-&amp;mdash; やぐ (@yag_ays) February 26, 2019 
-KaggleのNLPコンペであるQuora Insincere Questions Classificationが終わって上位陣の解法を眺めていたのですが、その中で目に止まったのがout-of-vocabulary（以降OOVと表記）の対応です。今回のコンペでは主催側が定めた幾つかの学習済み単語埋め込みしか使うことができないので、大規模コーパスから新しく学習することができません。そのため、データセットには含まれているが学習済み単語ベクトルには含まれていない単語であるout-of-vocabularyをどう扱うかが、前処理の重要な要素だったようです。それぞれの解法には以下のようなコメントが記載されています。
- &amp;ldquo;The most important thing now is to find as many embeddings as possible for our vocabulary. (中略) For public test data we had around 50k of vocab tokens we did not find in the embeddings afterwards. &amp;rdquo; (1st place solution) &amp;ldquo;I applied spell correction to OOV words.</description>
+ 背景 KaggleのQuora Insincere Questionsコンペを終えて KaggleのNLPコンペであるQuora Insincere Questions Classificationが終わって上位陣の解法を眺めていたのですが、その中で目に止まったのがout-of-vocabulary（以降OOVと表記）の対応です。今回のコンペでは主催側が定めた幾つかの学習済み単語埋め込みしか使うことができないので、大規模コーパスから新しく学習することができません。そのため、データセットには含まれているが学習済み単語ベクトルには含まれていない単語であるout-of-vocabularyをどう扱うかが、前処理の重要な要素だったようです。それぞれの解法には以下のようなコメントが記載されています。
+ &amp;ldquo;The most important thing now is to find as many embeddings as possible for our vocabulary. (中略) For public test data we had around 50k of vocab tokens we did not find in the embeddings afterwards. &amp;quot; (1st place solution) &amp;ldquo;I applied spell correction to OOV words.&amp;rdquo; (2nd place solution) &amp;ldquo;Try stemmer, lemmatizer, spell correcter, etc. to find word vectors&amp;rdquo; (3rd place kernel)  興味深いのが3位のkernelのこの部分のコードで、単語ベクトルが見つからなかった場合にひたすら単語の表記をあれこれ変えて辞書に当てる努力をしています。</description>
     </item>
     
     <item>
@@ -155,7 +175,7 @@ KaggleのNLPコンペであるQuora Insincere Questions Classificationが終わ�
       <guid>https://yag-ays.github.io/project/all-but-the-top/</guid>
       <description>概要 ICLR2018で発表されたAll-but-the-Top: Simple and Effective Postprocessing for Word Representationsの後処理を実装し、日本語学習済み分散表現に対して適用し評価を行いました。また、作成した単語ベクトルを配布します。
 All-but-the-Top All-but-the-Topは、学習済みの分散表現に対して特定の後処理を加えることにより、分散表現の評価に用いられるタスクにおいて性能向上を達成した手法です。単語ベクトル内に存在する偏りを無くすために、平均で標準化し、主成分分析で幾つかの方向の主成分を引くという処理をするというのものです。たったこれだけという感じですが、SIF Embeddingの研究と同様に理論的な裏付けがあるようです。こういった背景や英語での実験結果は論文を参考ください。日本語での解説はこちらの論文紹介スライドが参考になります。
-単語ベクトルのダウンロード 以下の2つの学習済み分散表現に対してAll-but-the-Topの後処理を適用したファイルです。配布するモデルは、元のファイル名に加えてabttという名前が付与されています。
+ 単語ベクトルのダウンロード 以下の2つの学習済み分散表現に対してAll-but-the-Topの後処理を適用したファイルです。配布するモデルは、元のファイル名に加えてabttという名前が付与されています。
    ファイル 次元数/語彙数 ファイルサイズ     jawiki.word_vectors.100d.abtt.bin 100 / 727,471 285M   jawiki.word_vectors.200d.abtt.bin 200 / 727,471 563M   jawiki.word_vectors.300d.abtt.bin 300 / 727,471 840M   cc.ja.300d.abtt.bin 300 / 2,000,000 2.3G     jawiki.word_vectors: 日本語 Wikipedia エンティティベクトル  20181001版のjawiki.word_vectorsを使用 鈴木正敏, 松田耕史, 関根聡, 岡崎直観, 乾健太郎. Wikipedia 記事に対する拡張固有表現ラベルの多重付与. 言語処理学会第22回年次大会(NLP2016), March 2016.</description>
     </item>
     
@@ -169,7 +189,7 @@ All-but-the-Top All-but-the-Topは、学習済みの分散表現に対して特�
 yagays/minify_w2v: Minify word2vec model file
 使い方 動作は至ってシンプルで、読み込んだ学習済み単語ベクトルの中から指定された単語のベクトルのみを抜き出して出力するだけです。
  学習済みモデルを読み込む 必要な語彙を指定する 出力する  load_word2vecとsave_word2vecにはそれぞれbinaryオプションがあり、入力および出力をバイナリフォーマットかテキストフォーマットか選択できます。
-mw2v = MinifyW2V() mw2v.load_word2vec(&amp;quot;/path/to/model.txt&amp;quot;) mw2v.set_target_vocab(target_vocab=[&amp;quot;cat&amp;quot;, &amp;quot;dog&amp;quot;]) mw2v.save_word2vec(&amp;quot;/path/to/output.bin&amp;quot;, binary=True)  ベンチマーク 日本語 Wikipedia エンティティベクトルの単語ベクトルを元に、そこから語彙を10,000に減らしたときのファイルサイズや読み込み時間を比較した結果です。テキストファイルの場合はファイルフォーマットの構造上、語彙を減らせば線形でファイルサイズも小さくなりますし読み込み時間も小さくなります。
+mw2v = MinifyW2V() mw2v.load_word2vec(&amp;#34;/path/to/model.txt&amp;#34;) mw2v.set_target_vocab(target_vocab=[&amp;#34;cat&amp;#34;, &amp;#34;dog&amp;#34;]) mw2v.save_word2vec(&amp;#34;/path/to/output.bin&amp;#34;, binary=True) ベンチマーク 日本語 Wikipedia エンティティベクトルの単語ベクトルを元に、そこから語彙を10,000に減らしたときのファイルサイズや読み込み時間を比較した結果です。テキストファイルの場合はファイルフォーマットの構造上、語彙を減らせば線形でファイルサイズも小さくなりますし読み込み時間も小さくなります。
    Name Vocab. size File size Load time     jawiki.word_vectors.200d.txt 727,471 1.6G 1min 27s   jawiki.word_vectors.200d.bin 727,471 563M 5.9 s   jawiki.word_vectors.200d.10000.txt 10,000 22M 1.18 s   jawiki.word_vectors.200d.10000.bin 10,000 7.7M 190 ms    plasticityai/magnitudeとの関連 単語ベクトルを効率よく扱う方法として、magnitudeという軽量で遅延読み込み等をサポートしたパッケージがあります。Magnitude Formatsという形式で保存することで読み込み速度を大幅に短縮することができるほか、単語埋め込みで利用される類似度検索や、KerasやPytorchなど他のパッケージとのインターフェイスも提供されています。</description>
     </item>
     
@@ -182,8 +202,8 @@ mw2v = MinifyW2V() mw2v.load_word2vec(&amp;quot;/path/to/model.txt&amp;quot;) mw
       <description>日本語Wikipediaを対象にdoc2vec学習させたモデルを作成したので、学習済みモデルとして公開します。
 概要 doc2vecは2014年にQuoc LeとTomas Mikolovによって発表された文章の埋め込みの手法です。今更doc2vecかという感じではありますが、日本語のdoc2vecの学習済みモデルは探した限り容易に利用できるものがなかったこともあり、せっかくなので作成したモデルを配布します。
 word2vecのような単語の分散表現においては学習済みモデルとして配布されたものを利用することが多いですが、文章の埋め込みに関しては対象とするドキュメント集合やそのドメインに特化した学習モデルを作成することが多い印象です。なので、学習済みモデルファイルの配布自体にそれほど意味があるわけではなさそうですが、既存手法との比較に利用したり、とりあえず何かしらの手法で単語列から文章ベクトルにしたいといった場合には便利かと思います。まあ何も無いよりかはマシかなという雰囲気です。今回の作成の経緯として、別の手法を実装する際にdoc2vecが内部で使われていたということで副次的に必要になったからだったのですが、ふと利用したいときに気軽に利用できるというのは結構良いのではないかと思います。
-モデル ここでは2つの学習アルゴリズムでdoc2vecを学習しました。dbow300dはdistributed bag of words (PV-DBOW)を、dmpv300dはdistributed memory (PV-DM)を用いています。なお、モデルファイルはサイズが大きいため、Googleドライブに配置してあります。下記リンク先からダウンロードしてください。
- dbow300d  https://www.dropbox.com/s/j75s0eq4eeuyt5n/jawiki.doc2vec.dbow300d.tar.bz2?dl=0 圧縮ファイルのサイズ：5.48GB  dmpv300d  https://www.dropbox.com/s/njez3f1pjv9i9xj/jawiki.doc2vec.dmpv300d.tar.bz2?dl=0 圧縮ファイルのサイズ：8.86GB   モデルの学習パラメータ    param dbow300d dmpv300d     dm 0 1   vector_size 300 300   window 15 10   alpha 0.025 0.05   min_count 5 2   sample 1e-5 0   epochs 20 20   dbow_words 1 0    dbow300dのパラメータは、An Empirical Evaluation of doc2vec with Practical Insights into Document Embedding GenerationにおけるEnglish Wikipeiaの学習時のパラメータを利用しました。dmpv300dのパラメータは、Gensim Doc2Vec Tutorial on the IMDB Sentiment Datasetの設定を参考にしました。</description>
+ モデル ここでは2つの学習アルゴリズムでdoc2vecを学習しました。dbow300dはdistributed bag of words (PV-DBOW)を、dmpv300dはdistributed memory (PV-DM)を用いています。なお、モデルファイルはサイズが大きいため、Googleドライブに配置してあります。下記リンク先からダウンロードしてください。
+ dbow300d  https://www.dropbox.com/s/j75s0eq4eeuyt5n/jawiki.doc2vec.dbow300d.tar.bz2?dl=0 圧縮ファイルのサイズ：5.48GB   dmpv300d  https://www.dropbox.com/s/njez3f1pjv9i9xj/jawiki.doc2vec.dmpv300d.tar.bz2?dl=0 圧縮ファイルのサイズ：8.86GB    モデルの学習パラメータ    param dbow300d dmpv300d     dm 0 1   vector_size 300 300   window 15 10   alpha 0.025 0.05   min_count 5 2   sample 1e-5 0   epochs 20 20   dbow_words 1 0    dbow300dのパラメータは、An Empirical Evaluation of doc2vec with Practical Insights into Document Embedding GenerationにおけるEnglish Wikipeiaの学習時のパラメータを利用しました。dmpv300dのパラメータは、Gensim Doc2Vec Tutorial on the IMDB Sentiment Datasetの設定を参考にしました。</description>
     </item>
     
     <item>
@@ -200,8 +220,8 @@ Pageviews Analysisではグラフによる時系列の可視化、複数記事�
 Wikimedia REST APIドキュメント
 こちらもREST APIのドキュメントからパラメータを指定してリクエストを送り、ウェブ上で結果を確認する機能があります。同時にcurlのコマンドやURLのエンドポイントも自動で生成してくれるので、サンプルで動かす際には便利です。
 例えばプロジェクトja.wikipedia.orgにおける機械学習という記事の2018/12/01から2018/12/03ページビューを得るときのコマンドは以下のようになりました。
-$ curl -X GET --header &#39;Accept: application/json; charset=utf-8&#39; &#39;https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/%E8%87%AA%E7%84%B6%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86/daily/20181201/20181203&#39;  返ってくる結果は以下のようになります。
-{ &amp;quot;items&amp;quot;: [ { &amp;quot;project&amp;quot;: &amp;quot;ja.wikipedia&amp;quot;, &amp;quot;article&amp;quot;: &amp;quot;機械学習&amp;quot;, &amp;quot;granularity&amp;quot;: &amp;quot;daily&amp;quot;, &amp;quot;timestamp&amp;quot;: &amp;quot;2018120100&amp;quot;, &amp;quot;access&amp;quot;: &amp;quot;all-access&amp;quot;, &amp;quot;agent&amp;quot;: &amp;quot;all-agents&amp;quot;, &amp;quot;views&amp;quot;: 210 }, [...] ] }  なお、ドキュメントにも記載されていますが、複数のクエリを機械的にリクエストするときにはUser-AgentやApi-User-Agentをヘッダに含めてリクエスト送り元がわかるようにしましょう。Pythonのrequestsパッケージで実行する場合は以下のようにヘッダで情報を付与します。</description>
+$ curl -X GET --header &amp;#39;Accept: application/json; charset=utf-8&amp;#39; &amp;#39;https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/%E8%87%AA%E7%84%B6%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86/daily/20181201/20181203&amp;#39; 返ってくる結果は以下のようになります。
+{ &amp;#34;items&amp;#34;: [ { &amp;#34;project&amp;#34;: &amp;#34;ja.wikipedia&amp;#34;, &amp;#34;article&amp;#34;: &amp;#34;機械学習&amp;#34;, &amp;#34;granularity&amp;#34;: &amp;#34;daily&amp;#34;, &amp;#34;timestamp&amp;#34;: &amp;#34;2018120100&amp;#34;, &amp;#34;access&amp;#34;: &amp;#34;all-access&amp;#34;, &amp;#34;agent&amp;#34;: &amp;#34;all-agents&amp;#34;, &amp;#34;views&amp;#34;: 210 }, [...] ] } なお、ドキュメントにも記載されていますが、複数のクエリを機械的にリクエストするときにはUser-AgentやApi-User-Agentをヘッダに含めてリクエスト送り元がわかるようにしましょう。Pythonのrequestsパッケージで実行する場合は以下のようにヘッダで情報を付与します。</description>
     </item>
     
     <item>
@@ -212,7 +232,7 @@ $ curl -X GET --header &#39;Accept: application/json; charset=utf-8&#39; &#39;ht
       <guid>https://yag-ays.github.io/project/alacarte/</guid>
       <description>ACL2018にて発表された&amp;ldquo;A La Carte Embedding: Cheap but Effective Induction of Semantic Feature Vectors&amp;rdquo;を実装しました。未知語やngramなどの単語埋め込みを既知の学習済みベクトルから計算する手法です。
 この記事はSansan Advent Calendar 2018 の8日目の記事です。
-概要 &amp;ldquo;A La Carte Embedding&amp;rdquo;は、文脈における周囲の単語埋め込みを平均したものが学習済みの単語埋め込みと一致するように線形変換を学習することで、未知語に関しても単語埋め込みのベクトルを推定する手法です。これにより、通常の単語埋め込みでは学習が難しいような低頻度語であったり、複合名詞などの複数の単語からなる語においても、分散表現を得ることができます。
+概要 &amp;ldquo;A La Carte Embedding&amp;quot;は、文脈における周囲の単語埋め込みを平均したものが学習済みの単語埋め込みと一致するように線形変換を学習することで、未知語に関しても単語埋め込みのベクトルを推定する手法です。これにより、通常の単語埋め込みでは学習が難しいような低頻度語であったり、複合名詞などの複数の単語からなる語においても、分散表現を得ることができます。
 本論文の著者らは、これまでにSIF Embeddingなど理論寄りな方面から単語埋め込みや文章のベクトル表現を研究しているプリンストン大学のSanjeev Aroraのグループです。
 ロジック A La Carte Embeddingに必要なのは、大規模コーパスと学習済みの単語ベクトルです。
 学習の流れとしては、
@@ -222,8 +242,7 @@ $ curl -X GET --header &#39;Accept: application/json; charset=utf-8&#39; &#39;ht
 なお、本ソースコードで精度評価やオリジナル実装との比較は行っていません。バグや細部の実装の違いが含まれている場合がありますのでご注意ください。
 オリジナルの実装 著者らがオリジナルの実装を公開しています。こちらは(当然ながら)スペースで単語が分割できる英語などの言語を対象にしています。
  NLPrinceton/ALaCarte  使い方 ALaCarteEmbeddingを作成し、コーパスに対して実行します。パラメータは以下の通りです。
- word2vec: 学習済み単語埋め込み  gensimのWord2VecKeyedVectorsを前提としています  tokenize: トークナイザ min_count: 対象とする単語のコーパス内での頻度の最小値 ngram: 対象とするngram
-alc = ALaCarteEmbedding(word2vec=w2v, tokenize=tokenize, min_count=10, ngram=[1, 2]) alc.</description>
+ word2vec: 学習済み単語埋め込み  gensimのWord2VecKeyedVectorsを前提としています   tokenize: トークナイザ min_count: 対象とする単語のコーパス内での頻度の最小値 ngram: 対象とするngram  alc = ALaCarteEmbedding(word2vec=w2v, tokenize=tokenize, min_count=10, ngram=[1, 2]) alc.</description>
     </item>
     
     <item>
@@ -235,16 +254,17 @@ alc = ALaCarteEmbedding(word2vec=w2v, tokenize=tokenize, min_count=10, ngram=[1,
       <description>Leading NLP Ninjaのep.12で紹介されていたWord Embedding based Edit Distanceを実装してみました。
 Word Embedding based Edit Distance Word Embedding based Edit Distance（WED）は、文字列間の類似度を計算する編集距離（Edit Distance）を拡張して、単語埋め込みの類似度を使うことによって文章間の意味的な距離を編集距離的に計算しようというものです。編集距離では文字の追加/削除/置換のコストが1なのに対し、WEDではそれぞれのコストは以下のように設定しています。問題は単語埋め込みの類似度をどう使うかですが、追加と置換のコストに関しては対応する文中に近い単語があればそっちの類似度分をコスト1から差し引く、置換に関しては単語間の類似度を単純にコストから差し引くといった形で拡張しています。
 ここで、単語間の類似度は以下のように計算しています。
-なので、このアルゴリズムに出てくるパラメータはw,b,λ,μの4つです。
+なので、このアルゴリズムに出てくるパラメータはw`,`b`,λ,μ`の4つです。
 詳しくはLeading NLP Ninjaの解説の方を参照ください。
 実装 yagays/wed: Python implementation of Word Embedding based Edit Distance
 基本的には編集距離の実装に用いる動的計画法をそのままに、コスト部分を論文通りに拡張すればOKです。ただし、実装が合っているかどうかすごく不安なので、あくまで参考適度に……。
 注意点として、DPの配列の0行目と0列目では片方の文字列を削除したときのコストが入るので、単純に行/列ごとに1をインクリメントしていくのではなく、上記コストを計算する必要があります。
 評価 流石に論文のような評価はしていませんが、手元でSTAIR Captionsを対象に類似度計算をした結果、まあまあ妥当そうな結果になりました。ここでは15,000件くらいの文章を対象に、馬が走っているという文章に似た文章を近い順に10件列挙しています。
-[[&#39;一頭の茶色い馬が走っている&#39;, 0.6571005980449359], [&#39;芝生の上を人がのった馬が走っている&#39;, 1.073464996815989], [&#39;黄色いスクールバスが走っている&#39;, 1.0986647573718564], [&#39;道路を首輪をした白い馬が走っている&#39;, 1.1281587567774887], [&#39;尻尾の長い茶色の馬が歩いている&#39;, 1.1786151622459524], [&#39;汽車のミニチュアが走っている&#39;, 1.2233853716174816], [&#39;車の外を白や茶色の馬が走っている&#39;, 1.2432452098145987], [&#39;大きな道路をトラックが走っている&#39;, 1.2456263623812807], [&#39;フリスビーをくわえた犬が走っている&#39;, 1.2533987344007116], [&#39;曲がりくねった道をレーサーが走っている&#39;, 1.2657003314558781]]  感想 実装/評価する上で気になった点を幾つか。
+[[&#39;一頭の茶色い馬が走っている&#39;, 0.6571005980449359], [&#39;芝生の上を人がのった馬が走っている&#39;, 1.073464996815989], [&#39;黄色いスクールバスが走っている&#39;, 1.0986647573718564], [&#39;道路を首輪をした白い馬が走っている&#39;, 1.1281587567774887], [&#39;尻尾の長い茶色の馬が歩いている&#39;, 1.1786151622459524], [&#39;汽車のミニチュアが走っている&#39;, 1.2233853716174816], [&#39;車の外を白や茶色の馬が走っている&#39;, 1.2432452098145987], [&#39;大きな道路をトラックが走っている&#39;, 1.2456263623812807], [&#39;フリスビーをくわえた犬が走っている&#39;, 1.2533987344007116], [&#39;曲がりくねった道をレーサーが走っている&#39;, 1.2657003314558781]] 感想 実装/評価する上で気になった点を幾つか。
 1. 追加／削除のコスト まずはじめに気になる点として、WEDの追加/削除のコスト計算がそれで良いのか問題。今回の論文の計算方法では、文章中の全単語の中から最も近い単語の類似度を用いるので、文中でどれだけ離れていても一番意味的に近い単語が採用される点が気になります。文章が長ければ長いほど似た単語が現れやすいでしょうし、編集距離を拡張している意味が何なのかよくわからなくなってきます。一度類似した単語として利用したら以降は使わないとか、前後n単語のみの類似度を使うとか、もう少し改良が必要な気がします。
 2. パラメータ調整 そもそも最適なパラメータ調整がかなり難しいです。追加/削除と置換のコストがバランス取れていないと一単語置換するより1単語削除して1単語追加したほうが良いみたいになることもあり、この辺ピーキーすぎて調整が難しいところ。単語間類似度を計算するときにcos類似度→[0,1]の類似度に変換している部分も、改良の余地があると思います。
-3. 文字列間の文章長の影響 また、極端に短い文章を対象にすると、意味的に関係が無くてもトータルのコストが低くなる場合があります。このあたりはコスト周りのパラメータの調整でも限界があると思うので、Quoraの質問ペアのようなある程度整ったデータセットでないと辛い部分でしょう。といってもそこは従来の編集距離でも同じことなので、的外れな意見ではあります。</description>
+3. 文字列間の文章長の影響 また、極端に短い文章を対象にすると、意味的に関係が無くてもトータルのコストが低くなる場合があります。このあたりはコスト周りのパラメータの調整でも限界があると思うので、Quoraの質問ペアのようなある程度整ったデータセットでないと辛い部分でしょう。といってもそこは従来の編集距離でも同じことなので、的外れな意見ではあります。
+4. 計算コスト 論文中には計算量は編集距離と同じとありますが、追加/削除の類似度計算は比較する文章中の単語数だけ必要です。また、基本的には与えられた文章ペアの類似度を計算する方法なので、ある一つのクエリ文章に対して類似した文章を大量の候補の中から検索するといった用途には活用しにくいと思います。</description>
     </item>
     
     <item>
@@ -257,9 +277,10 @@ Word Embedding based Edit Distance Word Embedding based Edit Distance（WED）�
 可視化の際に用いられるツールとしては、TensorFlowのツールの一つであるTensorBoardが、豊富な機能とインタラクティブな操作性を備えていて一番使い勝手が良いと思います。ただ、TensorFlowと組み合わせた可視化は容易なのですが、他のツールやパッケージで作成したコードをそのまま読み込めないなど、かゆいところに手が届かないと感じる部分もあります。
 そこで今回は、すでに学習された単語の分散表現を可視化するために、
  gensimを用いてベクトルを読み込み、 PyTorchのTensor形式に変換したうえで、 tensorboardXを用いてTensorBoardが読み込めるログ形式に出力する  ことで、TensorBoard上で分散表現を可視化します。いろいろなステップがあって一見して遠回りに思えますが、コード自体は10行に満たないほどで完結します。個人的には、Tensorflowで学習済み分散表現を読み込むよりも、これらを組み合わせたやり方のほうが簡潔に書くことができて好きです。
-方法 準備 必要な外部パッケージは、gensim/pytorch/tensorboardX/tensorflowの4つです。インストールされていない場合はpipなどであらかじめインストールしておきます。
-$ pip isntall gensim torch tensorboardX tensorflow  分散表現の読み込みからtensorboard形式のログ出力まで TensorBoardで可視化するまでに必要な本体のコードです。これだけ！
-import gensim import torch from tensorboardX import SummaryWriter vec_path = &amp;quot;entity_vector.model.bin&amp;quot; writer = SummaryWriter() model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True) weights = model.vectors labels = model.index2word # DEBUG: visualize vectors up to 1000 weights = weights[:1000] labels = labels[:1000] writer.add_embedding(torch.FloatTensor(weights), metadata=labels)  コード内のvec_pathは、任意の学習済みベクトルのファイルに置き換えてください。</description>
+ 方法 準備 必要な外部パッケージは、gensim`/pytorch/tensorboardX/tensorflowの4つです。インストールされていない場合はpip`などであらかじめインストールしておきます。
+$ pip isntall gensim torch tensorboardX tensorflow 分散表現の読み込みからtensorboard形式のログ出力まで TensorBoardで可視化するまでに必要な本体のコードです。これだけ！
+import gensim import torch from tensorboardX import SummaryWriter vec_path = &amp;#34;entity_vector.model.bin&amp;#34; writer = SummaryWriter() model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True) weights = model.vectors labels = model.index2word # DEBUG: visualize vectors up to 1000 weights = weights[:1000] labels = labels[:1000] writer.add_embedding(torch.FloatTensor(weights), metadata=labels) コード内のvec_pathは、任意の学習済みベクトルのファイルに置き換えてください。
+また、途中で差し込まれているDEBUGの部分では、TensorBoardの読み込みスピード等を考慮して対象単語数を1000に絞っています。本来ならばこのような操作は不要ですが、かといってすべてのベクトルをTensorBoardで読み込んだとしても、デフォルトではランダムに10万件しか表示されません。学習済み分散表現の単語数があまりにも多い場合は、自分の可視化したい単語等に限定するなど少し工夫が必要です。</description>
     </item>
     
     <item>
@@ -273,9 +294,9 @@ TwitterやInstagramなどのSNSを通じた絵文字の普及により、emoji2v
 このように、絵文字を機械的な処理や研究対象として扱うには、絵文字の読み方であったり意味を表す単語、または意味的な種類で分類したカテゴリが必要になります。こうした辞書は、英語においてはemojilibがありますが、絵文字は文化的に異なった意味として用いられる場合があるため、それらの対訳をそのまま利用できないことがあります。
 そのため、日本語で容易に使えるリソースとしてemoji_jaを作成しました。
 (追記:2019/07/26) 絵文字の日本語読み辞書をUnicode 12.0対応に更新しました - Out-of-the-box
-💻 ダウンロード 以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。data/配下にある各種jsonファイルが、データセットの本体です。
+ 💻 ダウンロード 以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。data/配下にある各種jsonファイルが、データセットの本体です。
 yagays/emoji-ja: 📙UNICODE絵文字の日本語読み/キーワード/分類辞書📙
-📁 データセット emoji-jaには下記の3種類のデータが含まれています。
+ 📁 データセット emoji-jaには下記の3種類のデータが含まれています。
  emoji_ja.json: 絵文字に対応するキーワードやメタ情報 group2emoji_ja.json: 絵文字のグループ/サブグループに対応した絵文字のリスト keyword2emoji_ja.json: 絵文字のキーワードに対応した絵文字のリスト  1️⃣ emoji_ja.jsonデータ emoji_ja.jsonには、絵文字に対応する以下のメタデータが含まれています。
    カラム 概要 取得元     keywords 絵文字に関連したキーワード CJK Annotations (CLDR Version 33)   short_name 絵文字を表す短い名前 CJK Annotations (CLDR Version 33)   group 絵文字を意味的に分類したときのグループ Emoji List, v11.0を元に翻訳   subgroup 絵文字を意味的に分類したときのサブグループ Emoji List, v11.0を元に翻訳    { &amp;quot;♟&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;チェス&amp;quot;, &amp;quot;チェスの駒&amp;quot;, &amp;quot;捨て駒&amp;quot;, &amp;quot;駒&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;チェスの駒&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;活動&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;ゲーム&amp;quot; }, &amp;quot;♾&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;万物&amp;quot;, &amp;quot;永遠&amp;quot;, &amp;quot;無限&amp;quot;, &amp;quot;無限大&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;無限大&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;記号&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;その他 シンボル&amp;quot; }, .</description>
     </item>
@@ -289,16 +310,15 @@ yagays/emoji-ja: 📙UNICODE絵文字の日本語読み/キーワード/分類�
       <description>kanjivg-radicalは、漢字を構成する部首や偏旁を容易に扱えるように対応付けしたデータセットです。
 「脳」という漢字は、「月」「⺍」「凶」のように幾つかのまとまりごとに細分化できます。このように意味ある要素に分解しデータセットにすることで、漢字を文字的に分解して扱ったり、逆に特定の部首/偏旁を持つ漢字を一括して検索することができます。
 このデータセットは、KanjiVGで公開されているsvgデータを抽出および加工して作成されています。そのため、本データセットに含まれる部首/偏旁のアノテーションはすべてKanjiVGに準拠します。
-ダウンロード 以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。data/配下にある各種jsonファイルが、データセットの本体です。
+ ダウンロード 以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。data/配下にある各種jsonファイルが、データセットの本体です。
 yagays/kanjivg-radical
-データセットの詳細 kanjivg-radicalには4種類のデータが含まれています。
+ データセットの詳細 kanjivg-radicalには4種類のデータが含まれています。
  漢字と部首/偏旁の変換データ 漢字と要素の変換データ 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字  以下では、部首/偏旁はradical、要素はelement、左右はleft_right、上下はtop_buttomと表現しています。
 1. 漢字と部首/偏旁の変換データ 漢字と部首/偏旁を対応付けしたデータセットです。漢字から部首/偏旁と、部首/偏旁から漢字の2種類のデータがあります。
- kanji2radical.json : 漢字から部首/偏旁への変換 radical2kanji.json : 部首/偏旁から漢字への変換
-# kanji2radical.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;月&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;凶&amp;quot; ]  # radical2kanji.jsonのサンプル &amp;quot;月&amp;quot;: [ &amp;quot;肝&amp;quot;, &amp;quot;育&amp;quot;, &amp;quot;胆&amp;quot;, &amp;quot;朦&amp;quot;, &amp;quot;脱&amp;quot;, ...   2. 漢字と要素の変換データ 漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。
+ kanji2radical.json : 漢字から部首/偏旁への変換 radical2kanji.json : 部首/偏旁から漢字への変換  # kanji2radical.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;月&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;凶&amp;quot; ] # radical2kanji.jsonのサンプル &amp;quot;月&amp;quot;: [ &amp;quot;肝&amp;quot;, &amp;quot;育&amp;quot;, &amp;quot;胆&amp;quot;, &amp;quot;朦&amp;quot;, &amp;quot;脱&amp;quot;, ... 2. 漢字と要素の変換データ 漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。
  kanji2element.json : 漢字から要素への変換 element2kanji.json : 要素から漢字への変換  ここで使用している「要素」いう言葉は、部首/偏旁を構成する更に細かい単位での漢字のことを指しています。言語学的に定義された単語ではなく、KanjiVGで利用されていたelementの対訳として用いています。
 このデータでは構成している要素をすべて列挙しているので、結果の中には重複が含まれます。以下の例だと脳には「凶」という要素が含まれていますが、同時に「乂」という要素も含まれているため、どちらもkanji2elementの結果として出力されます。
-# kanji2element.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;乂&amp;quot;, &amp;quot;凶&amp;quot;, &amp;quot;丿&amp;quot;, &amp;quot;凵&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;月&amp;quot; ]  # element2kanji.</description>
+# kanji2element.jsonのサンプル &amp;quot;脳&amp;quot;: [ &amp;quot;乂&amp;quot;, &amp;quot;凶&amp;quot;, &amp;quot;丿&amp;quot;, &amp;quot;凵&amp;quot;, &amp;quot;⺍&amp;quot;, &amp;quot;月&amp;quot; ] # element2kanji.</description>
     </item>
     
     <item>
@@ -317,8 +337,8 @@ Wikipediaに関するダンプデータは以下の2つです。
    ファイル 内容     jawiki-YYYYMMDD-cirrussearch-content.json.gz Wikipediaの本文（namespaceが0）   jawiki-YYYYMMDD-cirrussearch-general.json.gz Wikipediaのその他情報（namespaceが0以外）    その他の接頭辞の対応関係は以下の通りです。
  jawiki: ウィキペディア jawikibooks: ウィキブックス jawikinews: ウィキニュース jawikiquote: ウィキクォート jawikisource: ウィキソース jawikiversity: ウィキバーシティ  CirrusSearchのデータ CirrusSearchのダンプデータは、1行が1つのjsonとなっており、2行で1つのエントリーを表しています。
 奇数行 奇数行にはエントリーに固有のidが記載されています。この_idから該当のエントリーにアクセスするには、https://ja.wikipedia.org/?curid=3240437のようにcuridのパラーメータを指定します。
-{ &amp;quot;index&amp;quot;: { &amp;quot;_type&amp;quot;: &amp;quot;page&amp;quot;, &amp;quot;_id&amp;quot;: &amp;quot;3240437&amp;quot; } }  偶数行 偶数行にはエントリーの情報が記載されています。下記の例では、複数の要素が入った配列や長い文字列は...で省略しています。
-{ &amp;quot;template&amp;quot;: [ &amp;quot;Template:各年の文学ヘッダ&amp;quot;, .</description>
+{ &amp;#34;index&amp;#34;: { &amp;#34;_type&amp;#34;: &amp;#34;page&amp;#34;, &amp;#34;_id&amp;#34;: &amp;#34;3240437&amp;#34; } } 偶数行 偶数行にはエントリーの情報が記載されています。下記の例では、複数の要素が入った配列や長い文字列は...で省略しています。
+{ &amp;#34;template&amp;#34;: [ &amp;#34;Template:各年の文学ヘッダ&amp;#34;, ... ], &amp;#34;content_model&amp;#34;: &amp;#34;wikitext&amp;#34;, &amp;#34;opening_text&amp;#34;: &amp;#34;1972年の文学では、1972年（昭和47年）の文学に関する出来事について記述する。&amp;#34;, &amp;#34;wiki&amp;#34;: &amp;#34;jawiki&amp;#34;, &amp;#34;auxiliary_text&amp;#34;: [ &amp;#34; 1972年 こちらもご覧下さい 社会 政治 経済 .</description>
     </item>
     
     <item>
@@ -328,15 +348,15 @@ Wikipediaに関するダンプデータは以下の2つです。
       
       <guid>https://yag-ays.github.io/project/char-embedding/</guid>
       <description>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。
-ダウンロード 下記のGitHubレポジトリからダウンロード可能です。以下のURLを開いて「Download」をクリックしてください。
+ ダウンロード 下記のGitHubレポジトリからダウンロード可能です。以下のURLを開いて「Download」をクリックしてください。
 convolutional_AE_300.tar.bz2 (解凍前:88MB, 解凍後:180MB)
 以下の2つのファイルが入っています。フォーマットが異なるだけで、どちらも同じベクトルデータです。
  convolutional_AE_300.bin convolutional_AE_300.txt  その他サンプルコードなどのすべてのファイルは、以下のレポジトリにあります。
 yagays/glyph-aware-character-embedding
-詳細  ベクトル次元：300 文字の種類数：44,637 学習データに用いたフォント：Google Noto Fonts NotoSansCJKjp-Regular  使い方 gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には加法性がありません。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。
-from gensim.models import KeyedVectors model = KeyedVectors.load_word2vec_format(&amp;quot;data/convolutional_AE_300.bin&amp;quot;, binary=True)  most_similar()を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなくキリル文字の「a」です。
-In []: model.most_similar(&amp;quot;a&amp;quot;) Out[]: [(&#39;а&#39;, 1.0000001192092896), (&#39;ả&#39;, 0.961397111415863), (&#39;ä&#39;, 0.9610118269920349), (&#39;ā&#39;, 0.9582812190055847), (&#39;á&#39;, 0.957198441028595), (&#39;à&#39;, 0.9558833241462708), (&#39;å&#39;, 0.938391923904419), (&#39;ầ&#39;, 0.9370290040969849), (&#39;ǎ&#39;, 0.9368112087249756), (&#39;ấ&#39;, 0.9365179538726807)]  Google Noto Fonts NotoSansCJKjp-Regularに含まれるすべての文字に対して操作が可能です。
-In []: model.most_similar(&amp;quot;油&amp;quot;) Out[]: [(&#39;汕&#39;, 0.9025427103042603), (&#39;泊&#39;, 0.</description>
+詳細  ベクトル次元：300 文字の種類数：44,637 学習データに用いたフォント：Google Noto Fonts NotoSansCJKjp-Regular   使い方 gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には加法性がありません。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。
+from gensim.models import KeyedVectors model = KeyedVectors.load_word2vec_format(&amp;#34;data/convolutional_AE_300.bin&amp;#34;, binary=True) most_similar()を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなくキリル文字の「a」です。
+In []: model.most_similar(&amp;#34;a&amp;#34;) Out[]: [(&amp;#39;а&amp;#39;, 1.0000001192092896), (&amp;#39;ả&amp;#39;, 0.961397111415863), (&amp;#39;ä&amp;#39;, 0.9610118269920349), (&amp;#39;ā&amp;#39;, 0.9582812190055847), (&amp;#39;á&amp;#39;, 0.957198441028595), (&amp;#39;à&amp;#39;, 0.9558833241462708), (&amp;#39;å&amp;#39;, 0.938391923904419), (&amp;#39;ầ&amp;#39;, 0.9370290040969849), (&amp;#39;ǎ&amp;#39;, 0.9368112087249756), (&amp;#39;ấ&amp;#39;, 0.9365179538726807)] Google Noto Fonts NotoSansCJKjp-Regularに含まれるすべての文字に対して操作が可能です。
+In []: model.most_similar(&amp;#34;油&amp;#34;) Out[]: [(&amp;#39;汕&amp;#39;, 0.9025427103042603), (&amp;#39;泊&amp;#39;, 0.</description>
     </item>
     
   </channel>

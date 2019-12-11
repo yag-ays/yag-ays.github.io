@@ -1031,38 +1031,21 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    
-
-<p><img src="https://yag-ays.github.io/img/wed_title.png" alt="wed_title https://arxiv.org/abs/1810.10752" /></p>
-
+    <p><img src="https://yag-ays.github.io/img/wed_title.png" alt="wed_title "></p>
 <p><a href="https://anchor.fm/lnlp-ninja">Leading NLP Ninja</a>のep.12で紹介されていた<a href="https://arxiv.org/abs/1810.10752">Word Embedding based Edit Distance</a>を実装してみました。</p>
-
 <h2 id="word-embedding-based-edit-distance">Word Embedding based Edit Distance</h2>
-
 <p>Word Embedding based Edit Distance（WED）は、文字列間の類似度を計算する編集距離（Edit Distance）を拡張して、単語埋め込みの類似度を使うことによって文章間の意味的な距離を編集距離的に計算しようというものです。編集距離では文字の追加/削除/置換のコストが1なのに対し、WEDではそれぞれのコストは以下のように設定しています。問題は単語埋め込みの類似度をどう使うかですが、追加と置換のコストに関しては対応する文中に近い単語があればそっちの類似度分をコスト1から差し引く、置換に関しては単語間の類似度を単純にコストから差し引くといった形で拡張しています。</p>
-
-<p><img src="https://yag-ays.github.io/img/wed_1.png" alt="wed_1 https://arxiv.org/abs/1810.10752" /></p>
-
+<p><img src="https://yag-ays.github.io/img/wed_1.png" alt="wed_1 "></p>
 <p>ここで、単語間の類似度は以下のように計算しています。</p>
-
-<p><img src="https://yag-ays.github.io/img/wed_2.png" alt="wed_2 https://arxiv.org/abs/1810.10752" /></p>
-
-<p>なので、このアルゴリズムに出てくるパラメータは<code>w</code>,<code>b</code>,<code>λ</code>,<code>μ</code>の4つです。</p>
-
+<p><img src="https://yag-ays.github.io/img/wed_2.png" alt="wed_2 "></p>
+<p>なので、このアルゴリズムに出てくるパラメータは<code>w`,`b`,</code>λ<code>,</code>μ`の4つです。</p>
 <p>詳しくは<a href="https://anchor.fm/lnlp-ninja/episodes/ep12-Word-Embedding-based-Edit-Distance-e2g6s1">Leading NLP Ninjaの解説</a>の方を参照ください。</p>
-
-<h2 id="実装">実装</h2>
-
+<h2 id="heading">実装</h2>
 <p><a href="https://github.com/yagays/wed">yagays/wed: Python implementation of Word Embedding based Edit Distance</a></p>
-
 <p>基本的には編集距離の実装に用いる動的計画法をそのままに、コスト部分を論文通りに拡張すればOKです。ただし、実装が合っているかどうかすごく不安なので、あくまで参考適度に……。</p>
-
 <p>注意点として、DPの配列の0行目と0列目では片方の文字列を削除したときのコストが入るので、単純に行/列ごとに1をインクリメントしていくのではなく、上記コストを計算する必要があります。</p>
-
-<h2 id="評価">評価</h2>
-
+<h2 id="heading1">評価</h2>
 <p>流石に論文のような評価はしていませんが、手元で<a href="http://captions.stair.center/">STAIR Captions</a>を対象に類似度計算をした結果、まあまあ妥当そうな結果になりました。ここでは15,000件くらいの文章を対象に、<code>馬が走っている</code>という文章に似た文章を近い順に10件列挙しています。</p>
-
 <pre><code>[['一頭の茶色い馬が走っている', 0.6571005980449359],
  ['芝生の上を人がのった馬が走っている', 1.073464996815989],
  ['黄色いスクールバスが走っている', 1.0986647573718564],
@@ -1073,40 +1056,25 @@ margin-left: -4%;
  ['大きな道路をトラックが走っている', 1.2456263623812807],
  ['フリスビーをくわえた犬が走っている', 1.2533987344007116],
  ['曲がりくねった道をレーサーが走っている', 1.2657003314558781]]
-</code></pre>
-
-<h2 id="感想">感想</h2>
-
+</code></pre><h2 id="heading2">感想</h2>
 <p>実装/評価する上で気になった点を幾つか。</p>
-
-<h3 id="1-追加-削除のコスト">1. 追加／削除のコスト</h3>
-
+<h3 id="1-">1. 追加／削除のコスト</h3>
 <p>まずはじめに気になる点として、WEDの追加/削除のコスト計算がそれで良いのか問題。今回の論文の計算方法では、文章中の全単語の中から最も近い単語の類似度を用いるので、文中でどれだけ離れていても一番意味的に近い単語が採用される点が気になります。文章が長ければ長いほど似た単語が現れやすいでしょうし、編集距離を拡張している意味が何なのかよくわからなくなってきます。一度類似した単語として利用したら以降は使わないとか、前後n単語のみの類似度を使うとか、もう少し改良が必要な気がします。</p>
-
-<h3 id="2-パラメータ調整">2. パラメータ調整</h3>
-
+<h3 id="2-">2. パラメータ調整</h3>
 <p>そもそも最適なパラメータ調整がかなり難しいです。追加/削除と置換のコストがバランス取れていないと一単語置換するより1単語削除して1単語追加したほうが良いみたいになることもあり、この辺ピーキーすぎて調整が難しいところ。単語間類似度を計算するときにcos類似度→[0,1]の類似度に変換している部分も、改良の余地があると思います。</p>
-
-<h3 id="3-文字列間の文章長の影響">3. 文字列間の文章長の影響</h3>
-
+<h3 id="3-">3. 文字列間の文章長の影響</h3>
 <p>また、極端に短い文章を対象にすると、意味的に関係が無くてもトータルのコストが低くなる場合があります。このあたりはコスト周りのパラメータの調整でも限界があると思うので、Quoraの質問ペアのようなある程度整ったデータセットでないと辛い部分でしょう。といってもそこは従来の編集距離でも同じことなので、的外れな意見ではあります。</p>
-
-<h3 id="4-計算コスト">4. 計算コスト</h3>
-
+<h3 id="4-">4. 計算コスト</h3>
 <p>論文中には計算量は編集距離と同じとありますが、追加/削除の類似度計算は比較する文章中の単語数だけ必要です。また、基本的には与えられた文章ペアの類似度を計算する方法なので、ある一つのクエリ文章に対して類似した文章を大量の候補の中から検索するといった用途には活用しにくいと思います。</p>
-
-<h2 id="まとめ">まとめ</h2>
-
+<h2 id="heading3">まとめ</h2>
 <p>単語埋め込みを元にした意味的な近さを編集距離に持ち込んだWord Embedding based Edit Distanceを実装しました。論文自体のやりたいこともわかるし発想は面白いものの、なかなか結果に結びついていないのが難しいところです。これならば単純に単語ベクトルを足し合わせて文章ベクトルを作るやり方の方が、計算コストも軽く類似度計算も高速で良いかなと思ってしまいます。なにか上手い使い方があれば今後使ってみたいですね。</p>
-
-<h2 id="参考">参考</h2>
-
+<h2 id="heading4">参考</h2>
 <ul>
 <li><a href="https://arxiv.org/abs/1810.10752">[1810.10752] Word Embedding based Edit Distance</a>
-
 <ul>
 <li>本記事の図表は、この論文から引用されたものです</li>
-</ul></li>
+</ul>
+</li>
 <li><a href="https://anchor.fm/lnlp-ninja/episodes/ep12-Word-Embedding-based-Edit-Distance-e2g6s1">ep12: Word Embedding based Edit Distance by Leading NLP Ninja • A podcast on Anchor</a></li>
 <li><a href="https://github.com/jojonki/arXivNotes/issues/145">2018: Word Embedding based Edit Distance · Issue #145 · jojonki/arXivNotes</a></li>
 <li><a href="https://ja.wikipedia.org/wiki/%E3%83%AC%E3%83%BC%E3%83%99%E3%83%B3%E3%82%B7%E3%83%A5%E3%82%BF%E3%82%A4%E3%83%B3%E8%B7%9D%E9%9B%A2">レーベンシュタイン距離 - Wikipedia</a></li>
