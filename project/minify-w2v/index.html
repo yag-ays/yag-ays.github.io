@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1031,11 +1035,11 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/minify_w2v_header.png" alt=""></p>
+    <p><img src="https://yag-ays.github.io/img/minify_w2v_header.png" alt="https://www.pexels.com/photo/person-holding-terrestrial-globe-scale-model-taken-1079033/"></p>
 <h2 id="heading">概要</h2>
 <p>最近では単語埋め込みのベクトルをニューラルネットの埋め込み層に利用する手法が多く使われていますが、学習済みの単語埋め込みは多くの語彙を含んでおり、ファイルサイズが大きくロード時間もかかります。再現性のために学習に使う外部データを固定したり、APIのためにDockerコンテナに同梱する際には、こういったリソースはなるべくサイズを減らしたいという場合があります。そこで、必要な語彙に限定することで学習済み単語埋め込みのモデルサイズを小さくするコードを書きました。</p>
 <p><a href="https://github.com/yagays/minify_w2v">yagays/minify_w2v: Minify word2vec model file</a></p>
-<h2 id="heading1">使い方</h2>
+<h2 id="heading-1">使い方</h2>
 <p>動作は至ってシンプルで、読み込んだ学習済み単語ベクトルの中から指定された単語のベクトルのみを抜き出して出力するだけです。</p>
 <ol>
 <li>学習済みモデルを読み込む</li>
@@ -1047,7 +1051,7 @@ margin-left: -4%;
 mw2v<span style="color:#f92672">.</span>load_word2vec(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/model.txt</span><span style="color:#e6db74">&#34;</span>)
 mw2v<span style="color:#f92672">.</span>set_target_vocab(target_vocab<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">cat</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">dog</span><span style="color:#e6db74">&#34;</span>])
 mw2v<span style="color:#f92672">.</span>save_word2vec(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/output.bin</span><span style="color:#e6db74">&#34;</span>, binary<span style="color:#f92672">=</span>True)
-</code></pre></div><h2 id="heading2">ベンチマーク</h2>
+</code></pre></div><h2 id="heading-2">ベンチマーク</h2>
 <p>日本語 Wikipedia エンティティベクトルの単語ベクトルを元に、そこから語彙を10,000に減らしたときのファイルサイズや読み込み時間を比較した結果です。テキストファイルの場合はファイルフォーマットの構造上、語彙を減らせば線形でファイルサイズも小さくなりますし読み込み時間も小さくなります。</p>
 <table>
 <thead>

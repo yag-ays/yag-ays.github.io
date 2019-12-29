@@ -255,7 +255,7 @@ $ curl -X GET --header &amp;#39;Accept: application/json; charset=utf-8&amp;#39;
       <description>Leading NLP Ninjaのep.12で紹介されていたWord Embedding based Edit Distanceを実装してみました。
 Word Embedding based Edit Distance Word Embedding based Edit Distance（WED）は、文字列間の類似度を計算する編集距離（Edit Distance）を拡張して、単語埋め込みの類似度を使うことによって文章間の意味的な距離を編集距離的に計算しようというものです。編集距離では文字の追加/削除/置換のコストが1なのに対し、WEDではそれぞれのコストは以下のように設定しています。問題は単語埋め込みの類似度をどう使うかですが、追加と置換のコストに関しては対応する文中に近い単語があればそっちの類似度分をコスト1から差し引く、置換に関しては単語間の類似度を単純にコストから差し引くといった形で拡張しています。
 ここで、単語間の類似度は以下のように計算しています。
-なので、このアルゴリズムに出てくるパラメータはw`,`b`,λ,μ`の4つです。
+なので、このアルゴリズムに出てくるパラメータはw,b,λ,μの4つです。
 詳しくはLeading NLP Ninjaの解説の方を参照ください。
 実装 yagays/wed: Python implementation of Word Embedding based Edit Distance
 基本的には編集距離の実装に用いる動的計画法をそのままに、コスト部分を論文通りに拡張すればOKです。ただし、実装が合っているかどうかすごく不安なので、あくまで参考適度に……。
@@ -278,7 +278,7 @@ Word Embedding based Edit Distance Word Embedding based Edit Distance（WED）�
 可視化の際に用いられるツールとしては、TensorFlowのツールの一つであるTensorBoardが、豊富な機能とインタラクティブな操作性を備えていて一番使い勝手が良いと思います。ただ、TensorFlowと組み合わせた可視化は容易なのですが、他のツールやパッケージで作成したコードをそのまま読み込めないなど、かゆいところに手が届かないと感じる部分もあります。
 そこで今回は、すでに学習された単語の分散表現を可視化するために、
  gensimを用いてベクトルを読み込み、 PyTorchのTensor形式に変換したうえで、 tensorboardXを用いてTensorBoardが読み込めるログ形式に出力する  ことで、TensorBoard上で分散表現を可視化します。いろいろなステップがあって一見して遠回りに思えますが、コード自体は10行に満たないほどで完結します。個人的には、Tensorflowで学習済み分散表現を読み込むよりも、これらを組み合わせたやり方のほうが簡潔に書くことができて好きです。
- 方法 準備 必要な外部パッケージは、gensim`/pytorch/tensorboardX/tensorflowの4つです。インストールされていない場合はpip`などであらかじめインストールしておきます。
+ 方法 準備 必要な外部パッケージは、gensim/pytorch/tensorboardX/tensorflowの4つです。インストールされていない場合はpipなどであらかじめインストールしておきます。
 $ pip isntall gensim torch tensorboardX tensorflow 分散表現の読み込みからtensorboard形式のログ出力まで TensorBoardで可視化するまでに必要な本体のコードです。これだけ！
 import gensim import torch from tensorboardX import SummaryWriter vec_path = &amp;#34;entity_vector.model.bin&amp;#34; writer = SummaryWriter() model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True) weights = model.vectors labels = model.index2word # DEBUG: visualize vectors up to 1000 weights = weights[:1000] labels = labels[:1000] writer.add_embedding(torch.FloatTensor(weights), metadata=labels) コード内のvec_pathは、任意の学習済みベクトルのファイルに置き換えてください。
 また、途中で差し込まれているDEBUGの部分では、TensorBoardの読み込みスピード等を考慮して対象単語数を1000に絞っています。本来ならばこのような操作は不要ですが、かといってすべてのベクトルをTensorBoardで読み込んだとしても、デフォルトではランダムに10万件しか表示されません。学習済み分散表現の単語数があまりにも多い場合は、自分の可視化したい単語等に限定するなど少し工夫が必要です。</description>

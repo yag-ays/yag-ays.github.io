@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1031,13 +1035,13 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/all_but_the_top_header.png" alt=""></p>
+    <p><img src="https://yag-ays.github.io/img/all_but_the_top_header.png" alt="https://www.pexels.com/photo/green-pine-trees-covered-with-fogs-under-white-sky-during-daytime-167699/"></p>
 <h2 id="heading">概要</h2>
 <p>ICLR2018で発表された<a href="https://arxiv.org/abs/1702.01417">All-but-the-Top: Simple and Effective Postprocessing for Word Representations</a>の後処理を実装し、日本語学習済み分散表現に対して適用し評価を行いました。また、作成した単語ベクトルを配布します。</p>
-<h2 id="allbutthetop">All-but-the-Top</h2>
+<h2 id="all-but-the-top">All-but-the-Top</h2>
 <p>All-but-the-Topは、学習済みの分散表現に対して特定の後処理を加えることにより、分散表現の評価に用いられるタスクにおいて性能向上を達成した手法です。単語ベクトル内に存在する偏りを無くすために、平均で標準化し、主成分分析で幾つかの方向の主成分を引くという処理をするというのものです。たったこれだけという感じですが、SIF Embeddingの研究と同様に理論的な裏付けがあるようです。こういった背景や英語での実験結果は論文を参考ください。日本語での解説は<a href="https://www.slideshare.net/MacotoTachenaca/allbutthetop-simple-and-effective-postprocessing-for-word-representations-98611879">こちらの論文紹介スライド</a>が参考になります。</p>
 <hr>
-<h2 id="heading1">単語ベクトルのダウンロード</h2>
+<h2 id="heading-1">単語ベクトルのダウンロード</h2>
 <p>以下の2つの学習済み分散表現に対してAll-but-the-Topの後処理を適用したファイルです。配布するモデルは、元のファイル名に加えて<code>abtt</code>という名前が付与されています。</p>
 <table>
 <thead>
@@ -1084,12 +1088,12 @@ margin-left: -4%;
 </li>
 </ul>
 <hr>
-<h2 id="heading2">実装</h2>
+<h2 id="heading-2">実装</h2>
 <p>ソースコードは以下のレポジトリにあります。</p>
 <p><a href="https://github.com/yagays/all_but_the_top">yagays/all_but_the_top</a></p>
 <p>ハイパーパラメータであるPCAの次元数は、論文中で経験的に示された<code>d/100</code>を用いています（<code>d</code>は単語ベクトルの次元数）。</p>
 <hr>
-<h2 id="heading3">評価</h2>
+<h2 id="heading-3">評価</h2>
 <p>ここでは、日本語での評価データセットが公開されている「<a href="https://github.com/tmu-nlp/JapaneseWordSimilarityDataset">日本語単語類似度データセット</a>」を用いた単語類似度による評価を行いました。以下の数値はスピアマンの順位相関係数に100を掛けたものです。この数値が高いほど、人間による単語間の類似度の傾向と近いことを表します。</p>
 <table>
 <thead>
@@ -1215,10 +1219,10 @@ margin-left: -4%;
 <p>なお、単語から単語ベクトルへの変換において、分かち書きで2単語以上に分割された単語列に関しては、<a href="http://www.anlp.jp/proceedings/annual_meeting/2016/pdf_dir/P9-8.pdf">堺澤ら</a>と同様に単語の平均ベクトルを用いています。また、どちらかに存在しない語彙が含まれていて単語ベクトルが計算できない場合は、類似度を<code>-1</code>としました。今回の実験が幾つかの既存研究における日本語単語類似度データセットでの結果と異なっているのは、これらの前処理や形態素解析の辞書が異なるからだと考えられるのですが、もし詳しい方がいらっしゃったらご指摘いただければと思います。</p>
 <p>実行した評価スクリプトはレポジトリの<a href="https://github.com/yagays/all_but_the_top/blob/master/src/evaluation.py"><code>evaluation.py</code></a>にあります。</p>
 <hr>
-<h2 id="heading4">ライセンス</h2>
+<h2 id="heading-4">ライセンス</h2>
 <p>本ページで配布しているモデルファイルのライセンスは<a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0.</a>です。</p>
 <hr>
-<h2 id="heading5">参考</h2>
+<h2 id="heading-5">参考</h2>
 <ul>
 <li><a href="https://www.slideshare.net/MacotoTachenaca/allbutthetop-simple-and-effective-postprocessing-for-word-representations-98611879">All-but-the-Top: Simple and Effective Postprocessing for Word Representations</a></li>
 <li><a href="https://ipsj.ixsq.nii.ac.jp/ej/index.php?active_action=repository_view_main_item_detail&amp;page_id=13&amp;block_id=8&amp;item_id=183799&amp;item_no=1">同義語を考慮した日本語の単語分散表現の学習</a></li>

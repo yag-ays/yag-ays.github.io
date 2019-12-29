@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1040,7 +1044,7 @@ margin-left: -4%;
 <p>以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。<code>data/</code>配下にある各種jsonファイルが、データセットの本体です。</p>
 <p><a href="https://github.com/yagays/kanjivg-radical">yagays/kanjivg-radical</a></p>
 <hr>
-<h2 id="heading1">データセットの詳細</h2>
+<h2 id="heading-1">データセットの詳細</h2>
 <p>kanjivg-radicalには4種類のデータが含まれています。</p>
 <ol>
 <li>漢字と部首/偏旁の変換データ</li>
@@ -1118,7 +1122,7 @@ margin-left: -4%;
  '輩': ['非', '車'],
  '雪': ['雨', '⺕'],
  ...
-</code></pre><h2 id="heading2">統計</h2>
+</code></pre><h2 id="heading-2">統計</h2>
 <table>
 <thead>
 <tr>
@@ -1151,7 +1155,7 @@ margin-left: -4%;
 </tbody>
 </table>
 <hr>
-<h2 id="heading3">使い方</h2>
+<h2 id="heading-3">使い方</h2>
 <p>配布しているjsonファイルを、ハッシュ関数や辞書形式など任意のプログラミング言語で読み込んで使用します。</p>
 <p>ここでは、Pythonでの利用方法を例示します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
@@ -1167,7 +1171,7 @@ radical2kanji <span style="color:#f92672">=</span> load_json(<span style="color:
 
 radical2kanji[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">月</span><span style="color:#e6db74">&#34;</span>] <span style="color:#75715e"># radical to kanjis</span>
 </code></pre></div><p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照ください。</p>
-<h2 id="heading4">作成方法</h2>
+<h2 id="heading-4">作成方法</h2>
 <p><a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているすべての漢字に対して、svg内に含まれる<code>g</code>タグの<code>kvg:element</code>属性を抽出しています。抽出方法により、データセットに以下の違いがあります。</p>
 <ul>
 <li><code>kanji2radical.json</code>などの漢字と部首/偏旁の変換データは、対象となる漢字の直下に含まれる<code>kvg:element</code>属性のみを抽出</li>
@@ -1176,10 +1180,10 @@ radical2kanji[<span style="color:#e6db74"></span><span style="color:#e6db74">&#3
 <p>対象としたバージョンは最新版である2016/04/26リリースであり、variantを含まない<code>kanjivg-20160426-main.zip</code>を利用しています。</p>
 <p>ちなみに、このデータセットには含まれていませんが、KanjiVGには他にも一画ごとのストロークの形状を<code>kvg:type</code>として分類し記録しています。そういったより詳細な漢字の図形的情報が必要な場合は、本家のデータセットを参照ください。</p>
 <p><a href="http://kanjivg.tagaini.net/format.html">Format - KanjiVG</a></p>
-<h2 id="heading5">ライセンス</h2>
+<h2 id="heading-5">ライセンス</h2>
 <p>このリソースは<!-- raw HTML omitted -->クリエイティブ・コモンズ 表示 4.0 国際 ライセンス<!-- raw HTML omitted -->の下に提供されています。</p>
 <p>This work is licensed under a <!-- raw HTML omitted -->Creative Commons Attribution-ShareAlike 4.0 International License<!-- raw HTML omitted -->.</p>
-<h2 id="heading6">参考</h2>
+<h2 id="heading-6">参考</h2>
 <ul>
 <li><a href="https://github.com/KanjiVG/kanjivg">KanjiVG/kanjivg: Kanji description and vectorial data in correct stroke order</a>
 <ul>

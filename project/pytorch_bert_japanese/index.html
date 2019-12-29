@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1031,18 +1035,18 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/pytorch_bert_japanese_header.png" alt=""></p>
+    <p><img src="https://yag-ays.github.io/img/pytorch_bert_japanese_header.png" alt="https://www.pexels.com/photo/red-and-white-umbrella-during-night-time-39079/"></p>
 <h2 id="heading">概要</h2>
 <p>BERT (Bidirectional Encoder Representations from Transformers) は、NAACL2019で論文が発表される前から大きな注目を浴びていた強力な言語モデルです。これまで提案されてきたELMoやOpenAI-GPTと比較して、双方向コンテキストを同時に学習するモデルを提案し、大規模コーパスを用いた事前学習とタスク固有のfine-tuningを組み合わせることで、各種タスクでSOTAを達成しました。</p>
 <p>そのように事前学習によって強力な言語モデルを獲得しているBERTですが、今回は日本語の学習済みBERTモデルを利用して、文章埋め込み (Sentence Embedding) を計算してみようと思います。</p>
 <hr>
-<h2 id="heading1">環境</h2>
+<h2 id="heading-1">環境</h2>
 <p>今回は京都大学の黒橋・河原研究室が公開している「BERT日本語Pretrainedモデル」を利用します。</p>
 <ul>
 <li><a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?BERT%E6%97%A5%E6%9C%AC%E8%AA%9EPretrained%E3%83%A2%E3%83%87%E3%83%AB">BERT日本語Pretrainedモデル - KUROHASHI-KAWAHARA LAB</a></li>
 </ul>
 <p>BERTの実装は、pytorchで書かれた<a href="https://github.com/huggingface/pytorch-pretrained-BERT"><code>pytorch-pretrained-BERT</code></a>がベースになります。また形態素解析器は、学習済みモデルに合わせるため<a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?JUMAN++">JUMAN++</a>を利用します。</p>
-<h2 id="heading2">方法</h2>
+<h2 id="heading-2">方法</h2>
 <p>今回は<code>BertWithJumanModel</code>という、トークナイズとBERTによる推論を行うクラスを自作しています。ソースコード自体は下記レポジトリにあり、また各ステップでの計算方法を本記事の後半で解説しています。</p>
 <ul>
 <li><a href="https://github.com/yagays/pytorch_bert_japanese">yagays/pytorch_bert_japanese</a></li>
@@ -1070,9 +1074,9 @@ array([ <span style="color:#ae81ff">1.2089624</span> ,  <span style="color:#ae81
         <span style="color:#ae81ff">0.43929055</span>,  <span style="color:#ae81ff">0.605848</span>  ,  <span style="color:#ae81ff">0.5058241</span> ,  <span style="color:#ae81ff">0.8335829</span> , <span style="color:#f92672">-</span><span style="color:#ae81ff">0.26000524</span>,
 [<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]        
 </code></pre></div><hr>
-<h2 id="heading3">解説</h2>
+<h2 id="heading-3">解説</h2>
 <p>上記の<code>BertWithJumanModel</code>クラスの内部を順に解説していきます。そのまま上から実行しても動作するように記載しているので、途中の動作が気になる方は試してみて下さい。</p>
-<h3 id="1-pytorchpretrainedbert">1. 学習済みモデルを<code>pytorch-pretrained-bert</code>で読み込む</h3>
+<h3 id="1-pytorch-pretrained-bert">1. 学習済みモデルを<code>pytorch-pretrained-bert</code>で読み込む</h3>
 <p>まず始めに配布されている学習済みモデルなどを<code>pytorch-pretrained-BERT</code>から読み込みます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> torch
 <span style="color:#f92672">from</span> pytorch_pretrained_bert <span style="color:#f92672">import</span> BertTokenizer, BertModel
@@ -1101,7 +1105,7 @@ tokens <span style="color:#f92672">=</span> juman_tokenizer<span style="color:#f
 bert_tokens <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>tokenize(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(tokens))
 ids <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>convert_tokens_to_ids([<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[CLS]</span><span style="color:#e6db74">&#34;</span>] <span style="color:#f92672">+</span> bert_tokens[:<span style="color:#ae81ff">126</span>] <span style="color:#f92672">+</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[SEP]</span><span style="color:#e6db74">&#34;</span>])
 tokens_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(ids)<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-</code></pre></div><p>例えば「<code>我輩は猫である。</code>」という文章は、以下のようにトークン化されid列に変換されます。ちなみに<code>我輩</code>という単語は辞書中に存在せずかつサブワードとしても分割できないことから、未知語として<code>id:1`(</code>[UNK]`)に変換されています。</p>
+</code></pre></div><p>例えば「<code>我輩は猫である。</code>」という文章は、以下のようにトークン化されid列に変換されます。ちなみに<code>我輩</code>という単語は辞書中に存在せずかつサブワードとしても分割できないことから、未知語として<code>id:1</code>(<code>[UNK]</code>)に変換されています。</p>
 <pre><code># text
   吾輩は猫である。
 # tokens
@@ -1121,7 +1125,7 @@ tokens_tensor <span style="color:#f92672">=</span> torch<span style="color:#f926
 embedding <span style="color:#f92672">=</span> all_encoder_layers[pooling_layer]<span style="color:#f92672">.</span>numpy()[<span style="color:#ae81ff">0</span>]
 np<span style="color:#f92672">.</span>mean(embedding, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
 </code></pre></div><p>hanxiao/bert-as-serviceでは、この計算方法はいくつか選択できるようになっており、本家に習って<code>BertWithJumanModel</code>のコード内でも<code>REDUCE_MEAN</code>や<code>REDUCE_MAX</code>などの方法を指定できるようにしています。これらの手法は基本的にSWEMの概念と同じですので、詳細は「<a href="https://yag-ays.github.io/project/swem/">SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み</a>」の記事を参考ください。</p>
-<h2 id="heading4">参考</h2>
+<h2 id="heading-4">参考</h2>
 <ul>
 <li><a href="https://github.com/huggingface/pytorch-pretrained-BERT">huggingface/pytorch-pretrained-BERT: 📖The Big-&amp;-Extending-Repository-of-Transformers: Pretrained PyTorch models for Google’s BERT, OpenAI GPT &amp; GPT-2, Google/CMU Transformer-XL.</a></li>
 <li><a href="https://github.com/hanxiao/bert-as-service">hanxiao/bert-as-service: Mapping a variable-length sentence to a fixed-length vector using BERT model</a></li>

@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1031,7 +1035,7 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/cirrus_header.png" alt=""></p>
+    <p><img src="https://yag-ays.github.io/img/cirrus_header.png" alt="https://www.pexels.com/photo/black-and-white-blank-challenge-connect-262488/"></p>
 <p>Wikipediaのデータを容易に利用できる<a href="https://www.mediawiki.org/wiki/Help:CirrusSearch/ja">CirrusSearch</a>のダンプデータについて紹介します。これを利用することにより、Wikipediaの巨大なXMLデータをパースしたり、<a href="http://medialab.di.unipi.it/wiki/Wikipedia_Extractor">Wikipedia Extractor</a>など既存のツールで前処理することなく、直にWikipediaの各種データにアクセスすることができます。</p>
 <h2 id="tldr">tl;dr</h2>
 <p>細かいことは置いておいて、素直にWikipediaの日本語エントリーに書かれているテキストを取得したい場合、</p>
@@ -1072,7 +1076,7 @@ margin-left: -4%;
 <li>jawikisource: <a href="https://ja.wikisource.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8">ウィキソース</a></li>
 <li>jawikiversity: <a href="https://ja.wikiversity.org/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8">ウィキバーシティ</a></li>
 </ul>
-<h2 id="cirrussearch1">CirrusSearchのデータ</h2>
+<h2 id="cirrussearch-1">CirrusSearchのデータ</h2>
 <p>CirrusSearchのダンプデータは、1行が1つのjsonとなっており、2行で1つのエントリーを表しています。</p>
 <h3 id="heading">奇数行</h3>
 <p>奇数行にはエントリーに固有のidが記載されています。この<code>_id</code>から該当のエントリーにアクセスするには、<a href="https://ja.wikipedia.org/?curid=3240437"><code>https://ja.wikipedia.org/?curid=3240437</code></a>のように<code>curid</code>のパラーメータを指定します。</p>
@@ -1082,7 +1086,7 @@ margin-left: -4%;
     <span style="color:#f92672">&#34;_id&#34;</span>: <span style="color:#e6db74">&#34;3240437&#34;</span>
   }
 }
-</code></pre></div><h3 id="heading1">偶数行</h3>
+</code></pre></div><h3 id="heading-1">偶数行</h3>
 <p>偶数行にはエントリーの情報が記載されています。下記の例では、複数の要素が入った配列や長い文字列は<code>...</code>で省略しています。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
   <span style="color:#f92672">&#34;template&#34;</span>: [
@@ -1136,8 +1140,8 @@ margin-left: -4%;
 <li><code>source_text</code>: mediawiki記法の本文（ウェブ画面でレンダリングするためのタグ等が含まれている）</li>
 <li><code>outgoing_link</code>: エントリーのテキストに含まれる外部記事へのリンク</li>
 </ul>
-<h2 id="cirrussearch2">CirrusSearchのデータを扱う</h2>
-<h3 id="heading2">シェルで確認する</h3>
+<h2 id="cirrussearch-2">CirrusSearchのデータを扱う</h2>
+<h3 id="heading-2">シェルで確認する</h3>
 <p>シェルから簡易的にダンプデータの中身を確認するには、以下のように圧縮ファイルの中身を<a href="https://stedolan.github.io/jq/">jq</a>を利用して整形して表示するのが容易です。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># Linuxの場合</span>
 $ zcat jawiki-20171106-cirrussearch-general.json.gz  | jq . | less
@@ -1153,10 +1157,10 @@ $ gzcat jawiki-20171106-cirrussearch-general.json.gz  | jq . | less
         json_line <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(line)
         <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> json_line:
             text <span style="color:#f92672">=</span> json_line[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#34;</span>]
-</code></pre></div><h2 id="heading3">ライセンス</h2>
+</code></pre></div><h2 id="heading-3">ライセンス</h2>
 <p>本ページはCirrusSearchのデータを一部改変して記載しております。本ページもCirrusSearchと同様に、CC-BY-SAにて公開します。</p>
 <p><a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a></p>
-<h2 id="heading4">参考</h2>
+<h2 id="heading-4">参考</h2>
 <ul>
 <li><a href="https://www.mediawiki.org/wiki/Help:CirrusSearch/ja">Help:CirrusSearch - MediaWiki</a></li>
 <li><a href="https://aip.riken.jp/labs/goalorient_tech/lang_inf_access_tech/%e6%a3%ae%e7%be%85%ef%bc%9awikipedia%e6%a7%8b%e9%80%a0%e5%8c%96%e3%83%97%e3%83%ad%e3%82%b8%e3%82%a7%e3%82%af%e3%83%882018/">森羅：Wikipedia構造化プロジェクト2018 | 革新知能統合研究センター</a>

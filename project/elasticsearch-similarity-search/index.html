@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1031,7 +1035,7 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/elasticsearch-similarity-search_header.png" alt=""></p>
+    <p><img src="https://yag-ays.github.io/img/elasticsearch-similarity-search_header.png" alt="https://www.pexels.com/photo/aerial-view-of-house-village-2255938/"></p>
 <h2 id="heading">概要</h2>
 <p>Elasticseachに分散表現のベクトルに対する類似文書検索が実装されたということで、以下のElasticのブログ記事を参考に類似文書検索を試してみました。</p>
 <p><a href="https://www.elastic.co/jp/blog/text-similarity-search-with-vectors-in-elasticsearch">Text similarity search in Elasticsearch using vector fields | Elastic Blog</a></p>
@@ -1045,7 +1049,7 @@ margin-left: -4%;
 <li>Elasticsearchの既存の検索機能と組み合わせることが可能</li>
 </ul>
 <hr>
-<h2 id="heading1">方法</h2>
+<h2 id="heading-1">方法</h2>
 <h3 id="1-elasticsearch">1. Elasticsearchの設定</h3>
 <p>Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、<code>docker.elastic.co</code>で提供されているバージョン7.3.1を利用しました。以下のように<code>docker-compose.yaml</code>を定義して<code>docker-compose up</code>で起動します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># docker-compose.yaml</span>
@@ -1105,11 +1109,11 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
     }
 )
 </code></pre></div><p>ここでは検索スコアの計算に<code>cosineSimilarity</code>関数を利用しています。なお、コサイン類似度自体に<code>+1.0</code>しているのは、Elasticsearchが負のスコアをサポートしていないからとのこと。</p>
-<h2 id="heading2">コード</h2>
+<h2 id="heading-2">コード</h2>
 <ul>
 <li><a href="https://github.com/yagays/wikipedia_es_similarity">yagays/wikipedia_es_similarity</a></li>
 </ul>
-<h2 id="heading3">実験条件</h2>
+<h2 id="heading-3">実験条件</h2>
 <ul>
 <li>データ
 <ul>
@@ -1131,12 +1135,12 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
 <hr>
 <h2 id="-1-">実験 1: 全件対象に類似文書検索</h2>
 <p>まずはシンプルに、すべてのWikipediaのエントリーを対象に類似文書検索を行います。</p>
-<h3 id="heading4">クエリ</h3>
+<h3 id="heading-4">クエリ</h3>
 <blockquote>
 <p>バーレーンの首都マナマ(マナーマとも)で現在開催されているユネスコ(国際連合教育科学文化機関)の第42回世界遺産委員会は日本の推薦していた「長崎と天草地方の潜伏キリシタン関連遺産」 (長崎県、熊本県)を30日、世界遺産に登録することを決定した。文化庁が同日発表した。日本国内の文化財の世界遺産登録は昨年に登録された福岡県の「『神宿る島』宗像・沖ノ島と関連遺産群」に次いで18件目。2013年の「富士山-信仰の対象と芸術の源泉」の文化遺産登録から6年連続となった。</p>
 <p><a href="https://ja.wikinews.org/wiki/%E6%BD%9C%E4%BC%8F%E3%82%AD%E3%83%AA%E3%82%B7%E3%82%BF%E3%83%B3%E9%96%A2%E9%80%A3%E9%81%BA%E7%94%A3%E3%80%81%E4%B8%96%E7%95%8C%E9%81%BA%E7%94%A3%E7%99%BB%E9%8C%B2">潜伏キリシタン関連遺産、世界遺産登録 - ウィキニュース</a></p>
 </blockquote>
-<h3 id="heading5">検索結果</h3>
+<h3 id="heading-5">検索結果</h3>
 <table>
 <thead>
 <tr>
@@ -1201,7 +1205,7 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
 <p>検索結果のWikipediaのエントリー10件を、類似度が高い順に表示しています。</p>
 <p>ざっと見た限りでは世界遺産や日本の文化遺産に関わる記事が上位に来ており、きちんと分散表現をもとに類似文書検索ができていると思います。この類似度算出の精度に関しては文の分散表現を獲得するロジックに依存する部分なので、今回のElasticsearchの機能とはあまり関係ありません。</p>
 <p>ちなみに、1位の「日本遺産」に違和感を感じますが、エントリー内に日本国内の世界遺産が列挙されていることから結果的に類似度が高くなったのではないかと考えられます。</p>
-<h3 id="heading6">検索時間</h3>
+<h3 id="heading-6">検索時間</h3>
 <p>文の分散表現を計算する部分とElasticsearchに検索クエリを投げて結果が返ってくる部分の2つを計測しました。それぞれの結果は以下のようになりました。</p>
 <ul>
 <li>embedding time: <code>0.84 ms</code></li>
@@ -1217,12 +1221,12 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
             &quot;value&quot;: &quot;*川&quot;
         }
     }},
-</code></pre><h3 id="heading7">クエリ</h3>
+</code></pre><h3 id="heading-7">クエリ</h3>
 <blockquote>
 <p>レヒ川（独: Lech）は、オーストリアとドイツを流れる河川。ドナウ川の支流で、長さは264km。水源はオーストリア・フォアアールベルク州のフォルマリン川で、北北東に流れてドイツとの国境で高さ12mのレヒ滝（ドイツ語版）を形成し、その後狭い渓谷となる。ドイツ国内ではフュッセン、アウクスブルクなどを通り、ドナウ川に合流する。</p>
 <p><a href="https://ja.wikipedia.org/wiki/%E3%83%AC%E3%83%92%E5%B7%9D">レヒ川 - Wikipedia</a></p>
 </blockquote>
-<h3 id="heading8">検索結果</h3>
+<h3 id="heading-8">検索結果</h3>
 <table>
 <thead>
 <tr>
@@ -1285,16 +1289,16 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
 </tbody>
 </table>
 <p>検索クエリで指定したとおり「〜川」に関する記事のみを抽出できていることがわかります。また、検索クエリに対して地理的にヨーロッパ近辺の川が類似記事として上位にきており、文章中に登場する地名などの意味的な近さを捉えて類似文書を検索できていそうです。</p>
-<h3 id="heading9">検索時間</h3>
+<h3 id="heading-9">検索時間</h3>
 <p>では検索時間はどうでしょうか？全件を対象にした検索では0.8秒ほどかかっていましたが、条件を指定した状態での検索では約0.04秒と高速に動作しており、絞り込みの効果が発揮されていると言えます。</p>
 <ul>
 <li>embedding time: <code>0.71 ms</code></li>
 <li>search time: <code>40.95 ms</code></li>
 </ul>
-<h2 id="heading10">まとめ</h2>
+<h2 id="heading-10">まとめ</h2>
 <p>今回はElasticsearchを使って分散表現を使った類似文書検索を試してみました。実行速度には課題が残るものの、分散表現のベクトルを特定のフィールドに入れるだけという手軽さはとても良いと思います。</p>
 <p>こうしたベクトル表現を使った類似アイテムの検索では、現在のところ近似最近傍探索のパッケージを利用して独自に検索APIを実装することが多いです。そうしたスクラッチでの開発には専門的な知識が必要であり、また高速化や多重化など運用上のコストが大きくなるため、Elasticsearchという広く使われている検索エンジンをそのまま利用できるというのは、開発と運用ともに多くのメリットがあるのではないかと思います。</p>
-<h2 id="heading11">参考</h2>
+<h2 id="heading-11">参考</h2>
 <ul>
 <li><a href="https://www.elastic.co/jp/blog/text-similarity-search-with-vectors-in-elasticsearch">Text similarity search in Elasticsearch using vector fields | Elastic Blog</a></li>
 <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/dense-vector.html">Dense vector datatype | Elasticsearch Reference [master] | Elastic</a></li>

@@ -780,6 +780,10 @@ div.page-heading .container .date {
   margin: 0 0 0 auto;
 }
 
+div.main .content .markdown .highlight pre{
+  background-color: #f7f7f7 !important;
+}
+
 </style>
 <style media="(min-width: 600px)">
   body {
@@ -1031,13 +1035,13 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/fasttext_language_identification_header.png" alt=""></p>
+    <p><img src="https://yag-ays.github.io/img/fasttext_language_identification_header.png" alt="https://www.pexels.com/photo/yellow-tassel-159581/"></p>
 <p>Facebookが提供するfasttextの<a href="https://fasttext.cc">公式サイト</a>にて、fasttextを用いた言語判定モデルが公開されていたので、実際に利用してみました。</p>
 <h2 id="heading">概要</h2>
 <p>fasttextはFacebookが公開している単語埋め込みの学習方法およびそのフレームワークです。word2vecとは違い、サブワードを利用した手法が特徴となっています。</p>
 <p>こちらの<a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">公式ブログの記事</a>によると、fasttextによる言語判定は軽量でかつ高速に言語予測することができると述べられています。言語判定において広く使われる<code>langid.py</code>との評価実験では、高い精度でかつ計算時間が1/10程度であることが示されています。またモデルファイルはオリジナルのサイズでは126MB、圧縮されたモデルは917kB (0.9MB)と、既存の単語埋め込みの学習済みモデルと比較してもかなり軽量になっています。</p>
 <p>なお「言語判定」(Language Identification)とは、与えられた文章がどの自然言語により書かれているかを判定するタスクを指します。例えば本記事に対して「日本語」(ja)であることを自動で判定するのが、言語判定です。</p>
-<h2 id="heading1">使い方</h2>
+<h2 id="heading-1">使い方</h2>
 <p>まずは公開されているモデルを実際に動かしてみましょう。</p>
 <h3 id="1-">1. モデルのダウンロード</h3>
 <p>fasttextのモデルをダウンロードします。下記ページにて<code>lid.176.bin</code>または<code>lid.176.ftz</code>をダウンロードします。</p>
@@ -1081,7 +1085,7 @@ Out[]: [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</s
 <p>言語判定自体は、もともとfasttextが持っている教師あり学習の枠組みに沿って学習されています。ここではコマンドラインの<code>fasttext</code>を用いて学習されています。ベクトルの次元数は16、サブワードとして文字ngramが2,3,4をすべて利用しています。</p>
 <p>学習データについては実験を再現できる形では記載されていませんが「<a href="https://www.wikipedia.org">Wikipedia</a>, <a href="https://tatoeba.org/eng/">Tatoeba</a> and <a href="http://nlp.ffzg.hr/resources/corpora/setimes/">SETimes</a>」を利用したと書かれています。合計で176言語を対象にしており、それらは<a href="https://ja.wikipedia.org/wiki/ISO_639-1%E3%82%B3%E3%83%BC%E3%83%89%E4%B8%80%E8%A6%A7">ISO 639</a>で定義されたコードが用いられています。ただしサポートされているコードを見ると2文字や3文字が混同していることから、639-1だったり639-2や639-3とバラバラのようです。</p>
 <p>モデルを圧縮する際にはWeight quantizationが用いられており、ベクトル圧縮の際には近似最近傍探索で用いられるProduct quantizationが用いられているようです。まあこのあたりはfasttextのコマンドラインの引数から指定することが可能であり、フレームワーク内に実装されている機能です。</p>
-<h2 id="heading2">言語判定の精度</h2>
+<h2 id="heading-2">言語判定の精度</h2>
 <p>公式ブログではlangid.pyと同精度と記載されいましたが、他の言語判定パッケージと比較したときにはどうでしょうか？こちらのブログ記事では、fasttextとlangid.pyに加えCLDとOpenNLPについて、多言語での言語判定の精度比較を行っています。</p>
 <p><a href="http://alexott.blogspot.com/2017/10/evaluating-fasttexts-models-for.html">Evaluating fastText's models for language detection | Alex Ott's blog</a></p>
 <p>その結果を要約すると、</p>
@@ -1092,9 +1096,9 @@ Out[]: [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</s
 <li>fasttextのモデル間では、圧縮されたモデルでは性能が下がった</li>
 </ul>
 <p>となったようです。また、短文においてはCLDよりfasttextの方がより信頼性が高いことが示されています。</p>
-<h2 id="heading3">まとめ</h2>
+<h2 id="heading-3">まとめ</h2>
 <p>本記事ではfasttextが提供する言語判定を実際に使いつつ、そのモデルの詳細や精度について見てきました。既存の言語判定器と比較しても同程度または高精度であることを考えると、やはり分散表現やニューラルネットの強さを感じます。手軽に利用することができますし、言語判定において利用を検討しても良いのではないかと思います。</p>
-<h2 id="heading4">参考</h2>
+<h2 id="heading-4">参考</h2>
 <ul>
 <li><a href="https://fasttext.cc/docs/en/language-identification.html">Language identification · fastText</a></li>
 <li><a href="https://fasttext.cc/blog/2017/10/02/blog-post.html">Fast and accurate language identification using fastText</a></li>
