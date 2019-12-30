@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/" />
-<meta property="og:title" content="Project" />
-<meta property="twitter:title" content="Project">
+<meta property="og:url" content="https://yag-ays.github.io/project/swem_flair/" />
+<meta property="og:title" content="Flairを使ってSWEMによる文章埋め込みを計算する" />
+<meta property="twitter:title" content="Flairを使ってSWEMによる文章埋め込みを計算する">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Project - Out-of-the-box 
+     Flairを使ってSWEMによる文章埋め込みを計算する - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/">
+<link rel="canonical" href="https://yag-ays.github.io/project/swem_flair/">
 
 
 <style media="screen">
@@ -983,8 +983,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/project/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -992,7 +990,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1019,180 +1017,102 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Project</div>
-                <ul>
-                    
-                        <li class="groupby">Dec, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 30, 2019</span>
-    <a href="https://yag-ays.github.io/project/swem_flair/"><span>Flairを使ってSWEMによる文章埋め込みを計算する</span></a>
-</li>
+            <div class="page-heading">
 
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 11, 2019</span>
-    <a href="https://yag-ays.github.io/project/leakage_pmi/"><span>文書分類においてデータ内に現れる特定のパターンを見つける</span></a>
-</li>
+    Flairを使ってSWEMによる文章埋め込みを計算する
+    <div class="container">
+      <div class="date">
+        2019-12-30
+      </div>
+    </div>
 
-                        
-                    
-                        <li class="groupby">Sep, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Sep 2, 2019</span>
-    <a href="https://yag-ays.github.io/project/elasticsearch-similarity-search/"><span>Elasticsearchで分散表現を使った類似文書検索</span></a>
-</li>
+</div>
 
-                        
-                    
-                        <li class="groupby">Jul, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 26, 2019</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja-update-12/"><span>絵文字の日本語読み辞書をUnicode 12.0対応に更新しました</span></a>
-</li>
+            <div class="markdown">
+                
+    <p><img src="https://yag-ays.github.io/img/swem_flair_header.png" alt="https://www.pexels.com/photo/photo-of-man-holding-orange-smoke-1785298/"></p>
+<h2 id="heading">概要</h2>
+<p><a href="https://github.com/flairNLP/flair">Flair</a>は、Pytorchで書かれた自然言語処理用のフレームワークです。固有表現抽出や品詞タグ付け、文章分類などの機能を提供しているほか、文章埋め込み (Sentence Embedding) も簡単に計算することができます。以前に本ブログで紹介した<a href="https://arxiv.org/abs/1805.09843">SWEM</a>も扱うことができたので、ここで使い方を紹介したいと思います。</p>
+<p>記事：<a href="https://yag-ays.github.io/project/swem/">SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み - Out-of-the-box</a></p>
+<hr>
+<h2 id="heading-1">方法</h2>
+<h3 id="heading-2">単語ベクトルの読み込み</h3>
+<p>まずFlairで学習済みの単語埋め込みベクトルを読み込みます。あらかじめ学習済み単語ベクトルのファイルを用意しておく必要はなく、以下のコードを初めて動かす際に自動でウェブからダウンロードされます。日本語の場合は、fastTextが提供している<a href="https://fasttext.cc/docs/en/pretrained-vectors.html"><code>ja-wiki-fasttext-300d-1M</code></a>が選択されます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> WordEmbeddings, DocumentPoolEmbeddings, Sentence
+ja_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ja</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><p>ここでダウンロードしたファイルは<code>$HOME/.flair/embeddings/</code>に保存されます。</p>
+<h3 id="heading-3">文章埋め込みの選択</h3>
+<p>次に、文章埋め込みの手法を選択します。SWEMは各単語ベクトルに対して各種Poolingの操作を行うことで文章埋め込みを計算するため、<code>DocumentPoolEmbeddings()</code>を利用します。この引数には、さきほど読み込んだ<code>WordEmbeddings</code>のインスタンスを選択します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding])
+</code></pre></div><h3 id="heading-4">文章埋め込みを計算する</h3>
+<p>最後に文章埋め込みを計算します。まず対象となる文章の<code>Sentence</code>オブジェクトを作成し、それを上記で作成した<code>document_embeddings.embed()</code>で埋め込みます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">sentence <span style="color:#f92672">=</span> Sentence(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">吾輩は猫である。名前はまだ無い。</span><span style="color:#e6db74">&#34;</span>,
+                    use_tokenizer<span style="color:#f92672">=</span>build_japanese_tokenizer(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">MeCab</span><span style="color:#e6db74">&#34;</span>))
+document_embeddings<span style="color:#f92672">.</span>embed(sentence)
+</code></pre></div><p>そして、文章埋め込みのベクトルは<code>sentnece.get_embedding()</code>から取得することができます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: sentence<span style="color:#f92672">.</span>get_embedding()
+Out[]:
+tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9450e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9782e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0372e+01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.4274e-01</span>,
+        <span style="color:#f92672">-</span><span style="color:#ae81ff">1.6262e+00</span>,  <span style="color:#ae81ff">2.3832e+00</span>,  <span style="color:#ae81ff">1.3668e+00</span>,  <span style="color:#ae81ff">4.2834e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.4007e+00</span>,
+[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]        
+        <span style="color:#ae81ff">3.6956e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.1554e+00</span>,  <span style="color:#ae81ff">4.7224e+00</span>,  <span style="color:#ae81ff">4.1686e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.3685e+00</span>],
+        grad_fn<span style="color:#f92672">=</span><span style="color:#f92672">&lt;</span>CatBackward<span style="color:#f92672">&gt;</span>)
+</code></pre></div><hr>
+<h2 id="heading-5">カスタマイズ</h2>
+<h3 id="heading-6">指定した学習済みの単語ベクトルを使う</h3>
+<p>Flairがデフォルトで指定している学習済みの単語ベクトルではなく、ローカルにあるファイルを指定することもできます。ファイル形式は<code>gensim</code>のバイナリフォーマットで用意する必要があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">own_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">path/to/own_vector.bin</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><p><a href="https://github.com/flairNLP/flair/blob/master/resources/docs/embeddings/CLASSIC_WORD_EMBEDDINGS.md">flair/CLASSIC_WORD_EMBEDDINGS.md at master · flairNLP/flair</a></p>
+<h3 id="pooling">Poolingの方法を変更する</h3>
+<p>Poolingの方法には、デフォルトのaverage pooling(<code>pooling=&quot;mean&quot;</code>)の他に、max pooling(<code>pooling=&quot;max&quot;</code>)とmin pooling(<code>pooling=&quot;min&quot;</code>)も用意されています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">max</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h3 id="pooling-1">Poolingの方法を組み合わせる</h3>
+<p>SWEMには、average-poolingとmax poolingを組み合わせた<code>SWEM-concat</code>という手法があります。flairでは<code>StackedEmbeddings()</code>を使うことで、複数のEmbeddingを組み合わせることができます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> StackedEmbeddings
 
-                        
-                    
-                        <li class="groupby">Jun, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jun 5, 2019</span>
-    <a href="https://yag-ays.github.io/project/pytorch_bert_japanese/"><span>pytorchでBERTの日本語学習済みモデルを利用する - 文章埋め込み編</span></a>
-</li>
+average_embedding <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">mean</span><span style="color:#e6db74">&#34;</span>)
+max_embedding <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">max</span><span style="color:#e6db74">&#34;</span>)
 
-                        
-                    
-                        <li class="groupby">May, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">May 29, 2019</span>
-    <a href="https://yag-ays.github.io/project/swem/"><span>SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み</span></a>
-</li>
+document_embeddings <span style="color:#f92672">=</span> StackedEmbeddings([average_embedding,
+                                         max_embedding])
+document_embeddings<span style="color:#f92672">.</span>embed(sentence)                                         
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: sentence<span style="color:#f92672">.</span>get_embedding()
+Out[]:
+tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9450e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9782e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0372e+01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.4274e-01</span>,
+        <span style="color:#f92672">-</span><span style="color:#ae81ff">1.6262e+00</span>,  <span style="color:#ae81ff">2.3832e+00</span>,  <span style="color:#ae81ff">1.3668e+00</span>,  <span style="color:#ae81ff">4.2834e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.4007e+00</span>,
+[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
+        <span style="color:#ae81ff">4.5165e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.9375e+00</span>,  <span style="color:#ae81ff">5.7923e+00</span>,  <span style="color:#ae81ff">5.0611e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.1531e+00</span>],
+        grad_fn<span style="color:#f92672">=</span><span style="color:#f92672">&lt;</span>CatBackward<span style="color:#f92672">&gt;</span>)
 
-                        
-                            <li class="post-item">
-    <span class="meta">May 5, 2019</span>
-    <a href="https://yag-ays.github.io/project/language_identification_in_dl_era/"><span>深層学習時代の言語判定の最新動向</span></a>
-</li>
+In []: sentence<span style="color:#f92672">.</span>get_embedding()<span style="color:#f92672">.</span>shape
+Out[]: torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">600</span>])        
+</code></pre></div><h2 id="heading-7">参考</h2>
+<ul>
+<li><a href="https://github.com/flairNLP/flair">flairNLP/flair: A very simple framework for state-of-the-art Natural Language Processing (NLP)</a></li>
+</ul>
 
-                        
-                    
-                        <li class="groupby">Apr, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Apr 21, 2019</span>
-    <a href="https://yag-ays.github.io/project/fasttext_language_identification/"><span>fasttextを用いた言語判定</span></a>
-</li>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Apr 15, 2019</span>
-    <a href="https://yag-ays.github.io/project/mecab_pos_regex/"><span>MeCabの形態素解析の結果から正規表現を使って品詞列を抜き出すmecabpr</span></a>
-</li>
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/swem_flair/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
 
-                        
-                    
-                        <li class="groupby">Feb, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 27, 2019</span>
-    <a href="https://yag-ays.github.io/project/out-of-vocab-magnitude/"><span>単語埋め込みにおけるout-of-vocabularyの対応 - magnitudeの初期化</span></a>
-</li>
 
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 23, 2019</span>
-    <a href="https://yag-ays.github.io/project/all-but-the-top/"><span>後処理のみで単語ベクトルの性能を向上させるALL-BUT-THE-TOPを使った日本語学習済み分散表現</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Feb 19, 2019</span>
-    <a href="https://yag-ays.github.io/project/minify-w2v/"><span>語彙を限定して単語ベクトルのモデルサイズを小さくするminify_w2v</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Jan, 2019</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jan 22, 2019</span>
-    <a href="https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/"><span>日本語Wikipediaで学習したdoc2vecモデル</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Dec, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 16, 2018</span>
-    <a href="https://yag-ays.github.io/project/wikipedia-pageview/"><span>Wikipediaの記事ごとのページビューを取得する</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Dec 7, 2018</span>
-    <a href="https://yag-ays.github.io/project/alacarte/"><span>A La Carte Embeddingの実装</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Nov, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Nov 12, 2018</span>
-    <a href="https://yag-ays.github.io/project/wed/"><span>Word Embedding based Edit Distanceの実装</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Aug, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 28, 2018</span>
-    <a href="https://yag-ays.github.io/project/embedding-visualization/"><span>学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 23, 2018</span>
-    <a href="https://yag-ays.github.io/project/emoji-ja/"><span>📙Unicode絵文字の日本語読み/キーワード/分類辞書📙</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Aug 6, 2018</span>
-    <a href="https://yag-ays.github.io/project/kanjivg-radical/"><span>漢字を構成する部首/偏旁のデータセット</span></a>
-</li>
-
-                        
-                    
-                        <li class="groupby">Jul, 2018</li>
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 30, 2018</span>
-    <a href="https://yag-ays.github.io/project/cirrus/"><span>Wikipedia CirrusSearchのダンプデータを利用する</span></a>
-</li>
-
-                        
-                            <li class="post-item">
-    <span class="meta">Jul 25, 2018</span>
-    <a href="https://yag-ays.github.io/project/char-embedding/"><span>文字の図形的な埋め込み表現 Glyph-aware Character Embedding</span></a>
-</li>
-
-                        
-                    
-                </ul>
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 
