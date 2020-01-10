@@ -1037,10 +1037,10 @@ margin-left: -4%;
                 
     <p><img src="https://yag-ays.github.io/img/swem_01.png" alt="swem_01"></p>
 <p>単語埋め込み (Word Embedding) のみを利用して文章埋め込み (Sentence Embedding) を計算する<strong>SWEM (Simple Word-Embedding-based Methods)</strong> を実装しました。</p>
-<h2 id="heading">概要</h2>
+<h2 id="概要">概要</h2>
 <p>文章に対する固定次元の分散表現を得る手法としては、doc2vecやSkip-thoughts、テキスト間の含意関係を学習することで分散表現を得るinfersent、最近では強力な言語モデルとなったBERTといった方法があります。これらの手法は、単語ベクトルに加えて文章ベクトルを得るためのニューラルネットワーク自体を、大規模コーパスから学習させる必要があります。</p>
 <p>そこで、より単純ながらも後続タスクへの精度がでる文章埋め込みの計算方法として、追加学習やパラメータチューニングを必要とせず単語埋め込みだけを利用するSWEMが提案されました。これはACL2018 <a href="https://arxiv.org/abs/1805.09843">&ldquo;Baseline Needs More Love: On Simple Word-Embedding-Based Models and Associated Pooling Mechanisms&rdquo;</a>にて発表された方法で、複数のデータセットにおける評価において、既存のCNN/RNNモデルと同等またはそれ以上の精度となっています。ロジックは単純ながらもある程度良い性能を示すことから、強力なベースラインとして利用することができると考えられます。</p>
-<h2 id="heading-1">方法</h2>
+<h2 id="方法">方法</h2>
 <p>SWEMでは以下の4つの方法が提案されています。</p>
 <ul>
 <li><code>SWEM-aver</code>：単語の分散表現に対してaverage poolingする</li>
@@ -1050,7 +1050,7 @@ margin-left: -4%;
 </ul>
 <p>これらは基本的に、文章に含まれる単語の分散表現全体に対して、どういう操作で固定時点のベクトルに集約するかといった操作の違いでしかありません。それぞれのaverage poolingやmax poolingは、element-wiseにaverageやmaxを取ります。Out-of-Vocabulary (OOV) な単語に対しては、[-0.01, 0.01]の範囲の一様乱数を用いて初期化します。なお、aver, max, concatに関してはパラメータはありませんが、SWEM-hierはn-gramのウィンドウの幅<code>n</code>を決める必要があります。</p>
 <p>ちなみに、結局のところどれが一番いいの？という話ですが、論文中の評価ではタスク/データ依存という結果になっており、一概にどれが良いかは断定できないようです。</p>
-<h2 id="heading-2">コード</h2>
+<h2 id="コード">コード</h2>
 <ul>
 <li><a href="https://github.com/yagays/swem">https://github.com/yagays/swem</a></li>
 </ul>
@@ -1093,7 +1093,7 @@ Out[]:
 array([ <span style="color:#ae81ff">1.08240175e+00</span>,  <span style="color:#ae81ff">1.80855095e+00</span>,  <span style="color:#ae81ff">2.49545574e-02</span>,  <span style="color:#ae81ff">3.06840777e-01</span>,
         <span style="color:#ae81ff">1.25868618e+00</span>,  <span style="color:#ae81ff">1.97042620e+00</span>,  <span style="color:#ae81ff">1.59599078e+00</span>,  <span style="color:#ae81ff">2.99531865e+00</span>,
 [<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
-</code></pre></div><h2 id="heading-3">参考</h2>
+</code></pre></div><h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://github.com/dinghanshen/SWEM">dinghanshen/SWEM: The Tensorflow code for this ACL 2018 paper: “Baseline Needs More Love: On Simple Word-Embedding-Based Models and Associated Pooling Mechanisms”</a></li>
 <li><a href="https://nykergoto.hatenablog.jp/entry/2019/02/24/%E6%96%87%E7%AB%A0%E3%81%AE%E5%9F%8B%E3%82%81%E8%BE%BC%E3%81%BF%E3%83%A2%E3%83%87%E3%83%AB%3A_Sparse_Composite_Document_Vectors_%E3%81%AE%E5%AE%9F%E8%A3%85">文章の埋め込みモデル: Sparse Composite Document Vectors を読んで実装してみた - nykergoto’s blog</a></li>

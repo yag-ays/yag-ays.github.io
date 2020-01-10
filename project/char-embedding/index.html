@@ -1038,7 +1038,7 @@ margin-left: -4%;
     <p><img src="https://yag-ays.github.io/img/char_emebdding_01.png" alt="char_emebdding_01"></p>
 <p>「文字の図形的な埋め込み表現」は、文字の図形的な情報から埋め込み表現を学習したデータセットです。文字の意味や文章中の文脈などのセマンティクスから構成する分散表現とは違い、文字の形状という視覚的な特徴を学習しています。それぞれの文字に対する埋め込み表現の近さを計算することで、似た形の文字を推定することができます。</p>
 <hr>
-<h2 id="heading">ダウンロード</h2>
+<h2 id="ダウンロード">ダウンロード</h2>
 <p>下記のGitHubレポジトリからダウンロード可能です。以下のURLを開いて「Download」をクリックしてください。</p>
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding/blob/master/convolutional_AE_300.tar.bz2">convolutional_AE_300.tar.bz2</a> (解凍前:88MB, 解凍後:180MB)</p>
 <p>以下の2つのファイルが入っています。フォーマットが異なるだけで、どちらも同じベクトルデータです。</p>
@@ -1048,14 +1048,14 @@ margin-left: -4%;
 </ul>
 <p>その他サンプルコードなどのすべてのファイルは、以下のレポジトリにあります。</p>
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding">yagays/glyph-aware-character-embedding</a></p>
-<h3 id="heading-1">詳細</h3>
+<h3 id="詳細">詳細</h3>
 <ul>
 <li>ベクトル次元：<code>300</code></li>
 <li>文字の種類数：<code>44,637</code></li>
 <li>学習データに用いたフォント：<a href="https://www.google.com/get/noto/">Google Noto Fonts</a> <code>NotoSansCJKjp-Regular</code></li>
 </ul>
 <hr>
-<h2 id="heading-2">使い方</h2>
+<h2 id="使い方">使い方</h2>
 <p>gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には<strong>加法性がありません</strong>。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
 
@@ -1108,31 +1108,31 @@ Out[]:
 </code></pre></div><p>Kerasなどに利用できる埋め込み層の作成方法は、下記サンプルコードを参照下さい。</p>
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding/tree/master/example">glyph-aware-character-embedding/example at master · yagays/glyph-aware-character-embedding</a></p>
 <hr>
-<h2 id="heading-3">手法</h2>
-<h3 id="heading-4">訓練</h3>
+<h2 id="手法">手法</h2>
+<h3 id="訓練">訓練</h3>
 <p>文字の図形的な埋め込み表現を得るために、文字を画像としてデータ化した上でConvolutional AutoEncoderを利用しました。AutoEncoderは入力と出力が同じ値になるようなニューラルネットで、構造として入力層/出力層よりも次元数の少ない中間層を持つことで、低次元での表現を学習することができます。</p>
 <p>学習データの作成においては<a href="https://arxiv.org/abs/1708.04755">[Su and Lee , 2017]</a>を参考に、利用したフォントが図形として描写可能なすべての文字に対して、背景が黒色で文字が白色の60x60の画像を作成しました。学習の際には、画像をグレースケールに変換後に正規化しました。</p>
 <p>Convolutional AutoEncoderの構造は、中間層を300次元として両側を畳み込みと逆畳み込みによって構成しています。中間層の次元数は、なるべく小さい値でかつ学習時のvalidation lossが小さくなるものを実験的に検証して選択しました。最適化にはAdamを、損失関数にはMSEを用いました。epoch数は100に固定した上で、Early-stoppingによりvalidation lossが下がりきった際に学習を終了しています。また、訓練データとテストデータを9:1に分割し、訓練データのみで学習を行いました。</p>
 <p><img src="https://yag-ays.github.io/img/convAE_model.png" alt="convAE_model">
 <em>Fig. Convolutional AutoEncoderの概念図</em></p>
-<h3 id="heading-5">評価</h3>
+<h3 id="評価">評価</h3>
 <p>テストデータの文字をConvolutional AutoEncoderで復元した結果は、以下のようになりました。中国語や韓国語、図形的な丸囲いの文字など、おおよそ文字を再構成できていることがわかります。</p>
 <p><img src="https://yag-ays.github.io/img/model_output.png" alt="model_output">
 <em>Fig. 上段：convAEに入力された画像 下段：convAEで出力された画像</em></p>
-<h3 id="heading-6">可視化</h3>
+<h3 id="可視化">可視化</h3>
 <p>可視化の手法を別記事にて追加しました。TensorBoardを用いてt-SNEによる低次元での可視化の方法を記載しています。</p>
 <p><a href="https://yag-ays.github.io/project/embedding-visualization/">Out-of-the-box - 学習済み分散表現をTensorBoardで可視化する (gensim/PyTorch/tensorboardX)</a></p>
 <hr>
-<h2 id="heading-7">ライセンス</h2>
+<h2 id="ライセンス">ライセンス</h2>
 <p><strong>CC-BY</strong></p>
 <p>このリソースは<!-- raw HTML omitted -->クリエイティブ・コモンズ 表示 4.0 国際 ライセンス<!-- raw HTML omitted -->の下に提供されています。</p>
-<h2 id="heading-8">クレジット</h2>
+<h2 id="クレジット">クレジット</h2>
 <ul>
 <li><a href="https://www.google.com/get/noto/">Google Noto Fonts</a>: <a href="https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&amp;id=OFL">SIL Open Font License, Version 1.1</a></li>
 </ul>
 <hr>
-<h2 id="heading-9">参考</h2>
-<h3 id="heading-10">論文</h3>
+<h2 id="参考">参考</h2>
+<h3 id="論文">論文</h3>
 <ul>
 <li><a href="https://ieeexplore.ieee.org/document/7841067/">Document classification through image-based character embedding and wildcard training - IEEE Conference Publication</a>
 <ul>
@@ -1144,14 +1144,14 @@ Out[]:
 <li><a href="https://link.springer.com/chapter/10.1007/978-3-319-70096-0_39">Deep Clustering with Convolutional Autoencoders | SpringerLink</a></li>
 <li><a href="https://arxiv.org/abs/1704.04859">[1704.04859] Learning Character-level Compositionality with Visual Features</a></li>
 </ul>
-<h3 id="heading-11">ウェブ</h3>
+<h3 id="ウェブ">ウェブ</h3>
 <ul>
 <li><a href="https://elix-tech.github.io/ja/2016/07/17/autoencoder.html">Kerasで学ぶAutoencoder</a></li>
 <li><a href="http://dl-kento.hatenablog.com/entry/2018/02/22/200811">PytorchによるAutoEncoder Familyの実装 - 前に逃げる</a></li>
 <li><a href="http://hironsan.hatenablog.com/entry/learning-character-embeddings">Pythonで日本語の文字分散表現を学習する - 自然言語処理の深遠</a></li>
 <li><a href="https://minimaxir.com/2017/04/char-embeddings/">Pretrained Character Embeddings for Deep Learning and Automatic Text Generation</a></li>
 </ul>
-<h3 id="heading-12">データセット</h3>
+<h3 id="データセット">データセット</h3>
 <ul>
 <li><a href="http://www.jnlp.org/SNOW/D17">SNOW D17: 形の似ている漢字リスト - 長岡技術科学大学 自然言語処理研究室</a></li>
 </ul>

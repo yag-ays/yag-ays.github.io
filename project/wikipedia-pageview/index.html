@@ -1043,12 +1043,12 @@ margin-left: -4%;
 <li>少数の記事についてプログラムから利用したいなら → Pageview API</li>
 <li>大量の記事についてプログラムから利用したいなら → Wikimedia Analytics Datasets</li>
 </ul>
-<h2 id="1-pageviews-analysis">1. Pageviews Analysisを利用する</h2>
+<h2 id="1-pageviews-analysisを利用する">1. Pageviews Analysisを利用する</h2>
 <p>手軽にページビューを確認するには「<a href="https://tools.wmflabs.org/pageviews/">Pageviews Analysis</a>」というウェブサイトがもっとも容易です。</p>
 <p>Pageviews Analysisではグラフによる時系列の可視化、複数記事の比較、編集履歴の回数、csvやjsonによるダウンロードなど、多様な機能を備えています。また現在どのようなページが多く閲覧されているかといった<a href="https://tools.wmflabs.org/topviews/">言語ごとの閲覧数ランキング</a>などの機能もあり、とりあえず何か調べるなら大抵のことはPageviews Analysisで完結すると思います。</p>
 <p><img src="https://yag-ays.github.io/img/wikipedia-pageview_01.png" alt="wikipedia-pageview_01"></p>
 <p>ちなみに日本語の記事を検索する場合は「プロジェクト」を<code>ja.wikipedia.org</code>に指定するのを忘れずに。</p>
-<h2 id="2-pageview-api">2. Pageview APIを利用する</h2>
+<h2 id="2-pageview-apiを利用する">2. Pageview APIを利用する</h2>
 <p>Wikimediaにはページビューを取得する<a href="https://www.mediawiki.org/wiki/REST_API">REST API</a>が用意されています。指定できるパラメータや得られる情報ははPageviews Analysisと大差ありませんが、json形式で取得できるのでプログラムへの連携が簡単になります。幾つかリストアップした記事ごとに手軽にページビューを得たいという場合には最適な方法です。ただし100リクエスト/秒という制限があるので、日本語の記事全部のページビューを得たいといった用途には不向きです。</p>
 <p><a href="https://wikimedia.org/api/rest_v1/">Wikimedia REST APIドキュメント</a></p>
 <p>こちらもREST APIのドキュメントからパラメータを指定してリクエストを送り、ウェブ上で結果を確認する機能があります。同時に<code>curl</code>のコマンドやURLのエンドポイントも自動で生成してくれるので、サンプルで動かす際には便利です。</p>
@@ -1081,7 +1081,7 @@ r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</sp
 <ul>
 <li><a href="https://github.com/petermeissner/wikipediatrend">petermeissner/wikipediatrend: A convenience R package for getting Wikipedia article access statistics (and more).</a></li>
 </ul>
-<h2 id="3-wikimedia-analytics-datasets">3. Wikimedia Analytics Datasetsを利用する</h2>
+<h2 id="3-wikimedia-analytics-datasetsを利用する">3. Wikimedia Analytics Datasetsを利用する</h2>
 <p>最後はWikimediaが配布しているデータを直に見に行く方法です。こちらではすべてのwikipediaのページにおける2015年からの毎時間ごとのページビューのデータがgz圧縮されたファイルで公開されています。2018/12現在で毎時40~60MBほどのデータが吐き出されているので扱うのが少し大変ですが、全記事に対するページビューを計算したいという場合にはこの方法しかありません。</p>
 <p><a href="https://dumps.wikimedia.org/other/pageviews/readme.html">Analytics: Pageviews</a></p>
 <p>ファイル名は<code>pageviews-YYYYMMDD-hhnnss.gz</code>という命名規則になっており、スペース区切りで<code>domain_code page_title count_views total_response_size</code>という内容で保存されています。肝心のページビューは<code>count_views</code>です。</p>
@@ -1093,7 +1093,7 @@ ja 機械可読目録 1 0
 ja 機械学習 33 0
 ja 機械工学 3 0
 [...]
-</code></pre><h2 id="heading">参考</h2>
+</code></pre><h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Wikipedia:Pageview_statistics">Wikipedia:Pageview statistics - Wikipedia</a></li>
 <li><a href="https://stackoverflow.com/questions/5323589/how-to-use-wikipedia-api-to-get-the-page-view-statistics-of-a-particular-page-in">How to use Wikipedia API to get the page view statistics of a particular page in wikipedia? - Stack Overflow</a></li>

@@ -20,7 +20,7 @@
       <description>概要 Flairは、Pytorchで書かれた自然言語処理用のフレームワークです。固有表現抽出や品詞タグ付け、文章分類などの機能を提供しているほか、文章埋め込み (Sentence Embedding) も簡単に計算することができます。以前に本ブログで紹介したSWEMも扱うことができたので、ここで使い方を紹介したいと思います。
 記事：SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み - Out-of-the-box
  方法 単語ベクトルの読み込み まずFlairで学習済みの単語埋め込みベクトルを読み込みます。あらかじめ学習済み単語ベクトルのファイルを用意しておく必要はなく、以下のコードを初めて動かす際に自動でウェブからダウンロードされます。日本語の場合は、fastTextが提供しているja-wiki-fasttext-300d-1Mが選択されます。
-from flair.embeddings import WordEmbeddings, DocumentPoolEmbeddings, Sentence ja_embedding = WordEmbeddings(&amp;#34;ja&amp;#34;) ここでダウンロードしたファイルは$HOME/.flair/embeddings/に保存されます。
+from flair.embeddings import WordEmbeddings, DocumentPoolEmbeddings, Sentence from flair.data import build_japanese_tokenizer ja_embedding = WordEmbeddings(&amp;#34;ja&amp;#34;) ここでダウンロードしたファイルは$HOME/.flair/embeddings/に保存されます。
 文章埋め込みの選択 次に、文章埋め込みの手法を選択します。SWEMは各単語ベクトルに対して各種Poolingの操作を行うことで文章埋め込みを計算するため、DocumentPoolEmbeddings()を利用します。この引数には、さきほど読み込んだWordEmbeddingsのインスタンスを選択します。
 document_embeddings = DocumentPoolEmbeddings([ja_embedding]) 文章埋め込みを計算する 最後に文章埋め込みを計算します。まず対象となる文章のSentenceオブジェクトを作成し、それを上記で作成したdocument_embeddings.embed()で埋め込みます。
 sentence = Sentence(&amp;#34;吾輩は猫である。名前はまだ無い。&amp;#34;, use_tokenizer=build_japanese_tokenizer(&amp;#34;MeCab&amp;#34;)) document_embeddings.embed(sentence) そして、文章埋め込みのベクトルはsentnece.get_embedding()から取得することができます。

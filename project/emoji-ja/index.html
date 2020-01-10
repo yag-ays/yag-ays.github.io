@@ -1042,18 +1042,18 @@ margin-left: -4%;
 <p>そのため、日本語で容易に使えるリソースとして<code>emoji_ja</code>を作成しました。</p>
 <p>(追記:2019/07/26) <a href="https://yag-ays.github.io/project/emoji-ja-update-12/">絵文字の日本語読み辞書をUnicode 12.0対応に更新しました - Out-of-the-box</a></p>
 <hr>
-<h2 id="-">💻 ダウンロード</h2>
+<h2 id="-ダウンロード">💻 ダウンロード</h2>
 <p>以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。<code>data/</code>配下にある各種jsonファイルが、データセットの本体です。</p>
 <p><a href="https://github.com/yagays/emoji-ja">yagays/emoji-ja: 📙UNICODE絵文字の日本語読み/キーワード/分類辞書📙</a></p>
 <hr>
-<h2 id="--1">📁 データセット</h2>
+<h2 id="-データセット">📁 データセット</h2>
 <p><a href="https://github.com/yagays/emoji-ja"><code>emoji-ja</code></a>には下記の3種類のデータが含まれています。</p>
 <ul>
 <li><a href="https://github.com/yagays/emoji-ja/blob/master/data/emoji_ja.json"><code>emoji_ja.json</code></a>: 絵文字に対応するキーワードやメタ情報</li>
 <li><a href="https://github.com/yagays/emoji-ja/blob/master/data/group2emoji_ja.json"><code>group2emoji_ja.json</code></a>: 絵文字のグループ/サブグループに対応した絵文字のリスト</li>
 <li><a href="https://github.com/yagays/emoji-ja/blob/master/data/keyword2emoji_ja.json"><code>keyword2emoji_ja.json</code></a>: 絵文字のキーワードに対応した絵文字のリスト</li>
 </ul>
-<h3 id="1-emoji-jajson">1️⃣ <code>emoji_ja.json</code>データ</h3>
+<h3 id="1-emoji_jajsonデータ">1️⃣ <code>emoji_ja.json</code>データ</h3>
 <p><code>emoji_ja.json</code>には、絵文字に対応する以下のメタデータが含まれています。</p>
 <table>
 <thead>
@@ -1110,7 +1110,7 @@ margin-left: -4%;
         &quot;subgroup&quot;: &quot;その他 シンボル&quot;
     },
 ...    
-</code></pre><h3 id="2-group2emoji-jajson">2️⃣ <code>group2emoji_ja.json</code>データ</h3>
+</code></pre><h3 id="2-group2emoji_jajsonデータ">2️⃣ <code>group2emoji_ja.json</code>データ</h3>
 <p><code>group2emoji_ja.json</code>には、<code>group</code>と<code>subgroup</code>が含まれており、それらのグループ/サブグループに対応する絵文字がリスト形式で列挙されています。これらの分類は<a href="http://www.unicode.org/emoji/charts-11.0/emoji-list.html">Emoji List, v11.0</a>に準拠します。</p>
 <pre><code>{
     &quot;group&quot;: {
@@ -1126,7 +1126,7 @@ margin-left: -4%;
             &quot;😁&quot;,
             &quot;😂&quot;,            
 ...
-</code></pre><h3 id="3-keyword2emoji-jajson">3️⃣ <code>keyword2emoji_ja.json</code>データ</h3>
+</code></pre><h3 id="3-keyword2emoji_jajsonデータ">3️⃣ <code>keyword2emoji_ja.json</code>データ</h3>
 <p><code>keyword2emoji_ja.json</code>には、キーワードに対応する絵文字のリストがリスト形式で列挙されています。<code>emoji_ja.json</code>から自動的に作成しているので、キーワードは<a href="https://unicode.org/cldr/charts/latest/annotations/cjk.html">CJK Annotations</a>に登録されている日本語アノテーションに準拠します。</p>
 <pre><code>{
 ...
@@ -1146,7 +1146,7 @@ margin-left: -4%;
 ...
 }
 </code></pre><hr>
-<h2 id="--2">💬 翻訳について</h2>
+<h2 id="-翻訳について">💬 翻訳について</h2>
 <p>本データセットは基本的にUnicodeにて定められた名前やキーワードを改変せず利用していますが、以下の項目は本辞書の作者が対訳を作成しております。</p>
 <ul>
 <li>グループ/サブグループ</li>
@@ -1156,11 +1156,11 @@ margin-left: -4%;
 <p><a href="https://github.com/yagays/emoji-ja/wiki/Translation-Guideline">Translation Guideline · yagays/emoji-ja Wiki</a></p>
 <p>また、これらの翻訳された文字列は、上記の理由またはUnicodeによる公式のCJK Annotationが付与された場合には更新されることがあります。</p>
 <hr>
-<h2 id="--3">⚖️ ライセンス</h2>
+<h2 id="-ライセンス">⚖️ ライセンス</h2>
 <p><a href="https://github.com/yagays/emoji-ja/blob/master/LICENSE.md">MITライセンス （MIT）</a></p>
 <hr>
-<h2 id="--4">📝 参考</h2>
-<h3 id="heading">コーパス・記事</h3>
+<h2 id="-参考">📝 参考</h2>
+<h3 id="コーパス記事">コーパス・記事</h3>
 <ul>
 <li>佐藤,2015 : <a href="https://www.slideshare.net/overlast/mecab-ipadicneologdpydatatokyo05pub-48560060">🍻(Beer Mug)の読み方を考える(mecab-ipadic-NEologdのUnicode 絵文字対応)</a></li>
 <li><a href="https://qiita.com/risacan/items/7d80f7d53e3fb954a8fa">日絵翻訳😍 with emojilib - Qiita</a>
@@ -1173,7 +1173,7 @@ margin-left: -4%;
 <li><a href="http://unicode.org/emoji/charts/full-emoji-list.html">Full Emoji List, v11.0</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Miscellaneous_Symbols_and_Pictographs#Emoji_modifiers">Miscellaneous Symbols and Pictographs - Wikipedia</a></li>
 </ul>
-<h3 id="heading-1">対訳</h3>
+<h3 id="対訳">対訳</h3>
 <ul>
 <li><a href="http://sunpillar.jf.land.to/bekkan/data/character/utf-8-emoji.html">Unicodeの絵文字 [SUNPILLAR情報舘]</a></li>
 <li><a href="https://lets-emoji.com/">Let's EMOJI｜絵文字一覧と絵文字検索🎉</a></li>

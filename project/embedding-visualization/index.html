@@ -1046,11 +1046,11 @@ margin-left: -4%;
 </ol>
 <p>ことで、TensorBoard上で分散表現を可視化します。いろいろなステップがあって一見して遠回りに思えますが、コード自体は10行に満たないほどで完結します。個人的には、Tensorflowで学習済み分散表現を読み込むよりも、これらを組み合わせたやり方のほうが簡潔に書くことができて好きです。</p>
 <hr>
-<h2 id="heading">方法</h2>
-<h3 id="heading-1">準備</h3>
+<h2 id="方法">方法</h2>
+<h3 id="準備">準備</h3>
 <p>必要な外部パッケージは、<code>gensim</code>/<code>pytorch</code>/<code>tensorboardX</code>/<code>tensorflow</code>の4つです。インストールされていない場合は<code>pip</code>などであらかじめインストールしておきます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip isntall gensim torch tensorboardX tensorflow
-</code></pre></div><h3 id="tensorboard">分散表現の読み込みからtensorboard形式のログ出力まで</h3>
+</code></pre></div><h3 id="分散表現の読み込みからtensorboard形式のログ出力まで">分散表現の読み込みからtensorboard形式のログ出力まで</h3>
 <p>TensorBoardで可視化するまでに必要な本体のコードです。これだけ！</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> gensim
 <span style="color:#f92672">import</span> torch
@@ -1071,24 +1071,24 @@ writer<span style="color:#f92672">.</span>add_embedding(torch<span style="color:
 </code></pre></div><p>コード内の<code>vec_path</code>は、任意の学習済みベクトルのファイルに置き換えてください。</p>
 <p>また、途中で差し込まれている<code>DEBUG</code>の部分では、TensorBoardの読み込みスピード等を考慮して対象単語数を1000に絞っています。本来ならばこのような操作は不要ですが、かといってすべてのベクトルをTensorBoardで読み込んだとしても、デフォルトではランダムに10万件しか表示されません。学習済み分散表現の単語数があまりにも多い場合は、自分の可視化したい単語等に限定するなど少し工夫が必要です。</p>
 <p><a href="https://github.com/tensorflow/tensorboard/issues/773">Embedding projector only loads first 100,000 vectors · Issue #773 · tensorflow/tensorboard</a></p>
-<h3 id="tensorboard-1">TensorBoardで可視化</h3>
+<h3 id="tensorboardで可視化">TensorBoardで可視化</h3>
 <p>上記スクリプトを実行すると、実行されたディレクトリに<code>runs/</code>が作成されます。TensorBoardの起動時に<code>runs</code>ディレクトリを指定することで、変換した単語の分散表現が可視化できます。</p>
 <pre><code>$ tensorboard --logdir=runs
 </code></pre><p>上記コマンドを実行した状態で http://localhost:6006/ にアクセスすると、PROJECTORのページにてグラフが確認できます。</p>
 <hr>
-<h2 id="heading-2">可視化の事例</h2>
-<h3 id="-wikipedia-">日本語 Wikipedia エンティティベクトル</h3>
+<h2 id="可視化の事例">可視化の事例</h2>
+<h3 id="日本語-wikipedia-エンティティベクトル">日本語 Wikipedia エンティティベクトル</h3>
 <p>可視化の具体例として、<a href="http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/">日本語 Wikipedia エンティティベクトル</a>を可視化してみます。</p>
 <p><img src="https://yag-ays.github.io/img/embedding-visualization_01.png" alt="embedding-visualization_01"></p>
 <p>これはPCAでの可視化の事例です。3次元上の点をクリックすると、その単語の情報とともに、類似した点のラベル情報も同時に確認することができます。ここでは「路線」という点をクリックしており、それに対応する類似単語が中央の3次元グラフ上でも右側のリストでも表示されています。</p>
 <p>3次元グラフ上ではまとまりがあまり無いように見えますが、これはPCAで3次元に圧縮したものを可視化しているためです。TensorBoardに用意されているもう一つの次元圧縮の手法であるT-SNEを使うことで、より類似した単語が3次元空間上で近い位置に配置されるように可視化されます。</p>
-<h3 id="heading-3">文字の図形的な埋め込み表現</h3>
+<h3 id="文字の図形的な埋め込み表現">文字の図形的な埋め込み表現</h3>
 <p>また、画像を含めた可視化も可能です。本サイトで公開している<a href="https://yag-ays.github.io/project/char-embedding/">文字の図形的な埋め込み表現</a>でも同様に可視化をしてみます。画面上で黒い四角の文字が表示されていますが、これはあらかじめ用意してあった画像を読み込んでいるためです。</p>
 <p><img src="https://yag-ays.github.io/img/embedding-visualization_02.png" alt="embedding-visualization_02"></p>
 <p>ここで使用しているTensorBoardの変換のためのコードは、以下から取得可能です。</p>
 <p><a href="https://github.com/yagays/glyph-aware-character-embedding/blob/master/src/make_tbx_visualize.py">glyph-aware-character-embedding/make_tbx_visualize.py at master · yagays/glyph-aware-character-embedding</a></p>
 <hr>
-<h2 id="heading-4">応用：分散表現以外にも利用する</h2>
+<h2 id="応用分散表現以外にも利用する">応用：分散表現以外にも利用する</h2>
 <p>この可視化は単語の分散表現以外にも、ユニークなIDやラベルに対して固定長のベクトルが割り当てられていれば、一般的な特徴量やベクトル表現にも応用できます。</p>
 <p>gensimでロードできるファイルは、オリジナルのword2vecで扱われるファイルフォーマットです。gensimでは<a href="https://radimrehurek.com/gensim/models/word2vec.html"><code>word2vec C format</code></a>と呼ばれています。</p>
 <p>構造的には単純で、1行目にメタデータ、2行目からベクトル情報が列挙されます。1行目の始めにはベクトルの数と次元数（MxN行列のMとN）を記述します。2行目からは、行頭に対応する単語なりIDなどのユニークな名前、以降はスペース区切りで数値が並びます。</p>
@@ -1099,7 +1099,7 @@ id_3 0.033804 0.005422 -0.172256 ...
 ...
 id_40000 0.190483 0.077391 -0.139530 ...
 </code></pre></div><hr>
-<h2 id="heading-5">参考</h2>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://github.com/lanpa/tensorboardX">lanpa/tensorboardX: tensorboard for pytorch (and chainer, mxnet, numpy, ...)</a></li>
 <li><a href="https://qiita.com/ciela/items/ae1737bf6cb357cda900">PyTorch から tensorboardX で画像データの Embedding をとってみたら結構楽だなと感じたお話 - Qiita</a></li>

@@ -1036,20 +1036,21 @@ margin-left: -4%;
             <div class="markdown">
                 
     <p><img src="https://yag-ays.github.io/img/swem_flair_header.png" alt="https://www.pexels.com/photo/photo-of-man-holding-orange-smoke-1785298/"></p>
-<h2 id="heading">概要</h2>
+<h2 id="概要">概要</h2>
 <p><a href="https://github.com/flairNLP/flair">Flair</a>は、Pytorchで書かれた自然言語処理用のフレームワークです。固有表現抽出や品詞タグ付け、文章分類などの機能を提供しているほか、文章埋め込み (Sentence Embedding) も簡単に計算することができます。以前に本ブログで紹介した<a href="https://arxiv.org/abs/1805.09843">SWEM</a>も扱うことができたので、ここで使い方を紹介したいと思います。</p>
 <p>記事：<a href="https://yag-ays.github.io/project/swem/">SWEM: 単語埋め込みのみを使うシンプルな文章埋め込み - Out-of-the-box</a></p>
 <hr>
-<h2 id="heading-1">方法</h2>
-<h3 id="heading-2">単語ベクトルの読み込み</h3>
+<h2 id="方法">方法</h2>
+<h3 id="単語ベクトルの読み込み">単語ベクトルの読み込み</h3>
 <p>まずFlairで学習済みの単語埋め込みベクトルを読み込みます。あらかじめ学習済み単語ベクトルのファイルを用意しておく必要はなく、以下のコードを初めて動かす際に自動でウェブからダウンロードされます。日本語の場合は、fastTextが提供している<a href="https://fasttext.cc/docs/en/pretrained-vectors.html"><code>ja-wiki-fasttext-300d-1M</code></a>が選択されます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> WordEmbeddings, DocumentPoolEmbeddings, Sentence
+<span style="color:#f92672">from</span> flair.data <span style="color:#f92672">import</span> build_japanese_tokenizer
 ja_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ja</span><span style="color:#e6db74">&#34;</span>)
 </code></pre></div><p>ここでダウンロードしたファイルは<code>$HOME/.flair/embeddings/</code>に保存されます。</p>
-<h3 id="heading-3">文章埋め込みの選択</h3>
+<h3 id="文章埋め込みの選択">文章埋め込みの選択</h3>
 <p>次に、文章埋め込みの手法を選択します。SWEMは各単語ベクトルに対して各種Poolingの操作を行うことで文章埋め込みを計算するため、<code>DocumentPoolEmbeddings()</code>を利用します。この引数には、さきほど読み込んだ<code>WordEmbeddings</code>のインスタンスを選択します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding])
-</code></pre></div><h3 id="heading-4">文章埋め込みを計算する</h3>
+</code></pre></div><h3 id="文章埋め込みを計算する">文章埋め込みを計算する</h3>
 <p>最後に文章埋め込みを計算します。まず対象となる文章の<code>Sentence</code>オブジェクトを作成し、それを上記で作成した<code>document_embeddings.embed()</code>で埋め込みます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">sentence <span style="color:#f92672">=</span> Sentence(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">吾輩は猫である。名前はまだ無い。</span><span style="color:#e6db74">&#34;</span>,
                     use_tokenizer<span style="color:#f92672">=</span>build_japanese_tokenizer(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">MeCab</span><span style="color:#e6db74">&#34;</span>))
@@ -1063,15 +1064,15 @@ tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f926
         <span style="color:#ae81ff">3.6956e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.1554e+00</span>,  <span style="color:#ae81ff">4.7224e+00</span>,  <span style="color:#ae81ff">4.1686e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.3685e+00</span>],
         grad_fn<span style="color:#f92672">=</span><span style="color:#f92672">&lt;</span>CatBackward<span style="color:#f92672">&gt;</span>)
 </code></pre></div><hr>
-<h2 id="heading-5">カスタマイズ</h2>
-<h3 id="heading-6">指定した学習済みの単語ベクトルを使う</h3>
+<h2 id="カスタマイズ">カスタマイズ</h2>
+<h3 id="指定した学習済みの単語ベクトルを使う">指定した学習済みの単語ベクトルを使う</h3>
 <p>Flairがデフォルトで指定している学習済みの単語ベクトルではなく、ローカルにあるファイルを指定することもできます。ファイル形式は<code>gensim</code>のバイナリフォーマットで用意する必要があります。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">own_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">path/to/own_vector.bin</span><span style="color:#e6db74">&#34;</span>)
 </code></pre></div><p><a href="https://github.com/flairNLP/flair/blob/master/resources/docs/embeddings/CLASSIC_WORD_EMBEDDINGS.md">flair/CLASSIC_WORD_EMBEDDINGS.md at master · flairNLP/flair</a></p>
-<h3 id="pooling">Poolingの方法を変更する</h3>
+<h3 id="poolingの方法を変更する">Poolingの方法を変更する</h3>
 <p>Poolingの方法には、デフォルトのaverage pooling(<code>pooling=&quot;mean&quot;</code>)の他に、max pooling(<code>pooling=&quot;max&quot;</code>)とmin pooling(<code>pooling=&quot;min&quot;</code>)も用意されています。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">max</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h3 id="pooling-1">Poolingの方法を組み合わせる</h3>
+</code></pre></div><h3 id="poolingの方法を組み合わせる">Poolingの方法を組み合わせる</h3>
 <p>SWEMには、average-poolingとmax poolingを組み合わせた<code>SWEM-concat</code>という手法があります。flairでは<code>StackedEmbeddings()</code>を使うことで、複数のEmbeddingを組み合わせることができます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> StackedEmbeddings
 
@@ -1091,7 +1092,7 @@ tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f926
 
 In []: sentence<span style="color:#f92672">.</span>get_embedding()<span style="color:#f92672">.</span>shape
 Out[]: torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">600</span>])        
-</code></pre></div><h2 id="heading-7">参考</h2>
+</code></pre></div><h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://github.com/flairNLP/flair">flairNLP/flair: A very simple framework for state-of-the-art Natural Language Processing (NLP)</a></li>
 </ul>

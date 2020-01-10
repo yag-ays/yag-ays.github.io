@@ -1038,10 +1038,10 @@ margin-left: -4%;
     <p><img src="https://yag-ays.github.io/img/alacarte_header.png" alt="https://www.pexels.com/photo/donuts-and-bagel-display-205961/"></p>
 <p>ACL2018にて発表された<a href="https://arxiv.org/abs/1805.05388">&ldquo;A La Carte Embedding: Cheap but Effective Induction of Semantic Feature Vectors&rdquo;</a>を実装しました。未知語やngramなどの単語埋め込みを既知の学習済みベクトルから計算する手法です。</p>
 <p>この記事は<a href="https://adventar.org/calendars/3423">Sansan Advent Calendar 2018</a> の8日目の記事です。</p>
-<h2 id="heading">概要</h2>
+<h2 id="概要">概要</h2>
 <p>&ldquo;A La Carte Embedding&quot;は、文脈における周囲の単語埋め込みを平均したものが学習済みの単語埋め込みと一致するように線形変換を学習することで、未知語に関しても単語埋め込みのベクトルを推定する手法です。これにより、通常の単語埋め込みでは学習が難しいような低頻度語であったり、複合名詞などの複数の単語からなる語においても、分散表現を得ることができます。</p>
 <p>本論文の著者らは、これまでに<a href="https://openreview.net/forum?id=SyK00v5xx">SIF Embedding</a>など理論寄りな方面から単語埋め込みや文章のベクトル表現を研究しているプリンストン大学の<a href="http://unsupervised.cs.princeton.edu/index.html">Sanjeev Aroraのグループ</a>です。</p>
-<h2 id="heading-1">ロジック</h2>
+<h2 id="ロジック">ロジック</h2>
 <p>A La Carte Embeddingに必要なのは、大規模コーパスと学習済みの単語ベクトルです。</p>
 <p>学習の流れとしては、</p>
 <ol>
@@ -1053,15 +1053,15 @@ margin-left: -4%;
 <p>という感じです。</p>
 <p><img src="https://yag-ays.github.io/img/alacarte_02.png" alt="alacarte_02"></p>
 <p>例えば<code>(&quot;単語&quot;,&quot;埋め込み&quot;)</code>というbigramのベクトル表現を得たいと思ったとしたら、コーパス内でこのbigramの周囲の単語埋め込みのベクトルを足し合わせてその出現頻度で割ることで、2.の文脈埋め込みが得られます。なお、ここで言う文脈はword2vecと同じく、特定のウィンドウ幅に含まれる単語の集合のようなものです。それをコーパス内で先頭から順に、すべての語彙で行います。線形変換の学習には、既知の単語埋め込みにある単語ベクトル（上図でいう<code>吾輩</code>のような既知の単語など）と、今回作成した文脈埋め込みが等しくなるように学習させます。あとはこの線形変換をbigramの文脈埋め込みに掛けることによって目的とするベクトル表現が得られます。</p>
-<h2 id="heading-2">ソースコード</h2>
+<h2 id="ソースコード">ソースコード</h2>
 <p><a href="https://github.com/yagays/alacarte_embedding">yagays/alacarte_embedding: Python implementation of A La Carte Embedding</a></p>
 <p>なお、本ソースコードで精度評価やオリジナル実装との比較は行っていません。バグや細部の実装の違いが含まれている場合がありますのでご注意ください。</p>
-<h3 id="heading-3">オリジナルの実装</h3>
+<h3 id="オリジナルの実装">オリジナルの実装</h3>
 <p>著者らがオリジナルの実装を公開しています。こちらは(当然ながら)スペースで単語が分割できる英語などの言語を対象にしています。</p>
 <ul>
 <li><a href="https://github.com/NLPrinceton/ALaCarte">NLPrinceton/ALaCarte</a></li>
 </ul>
-<h3 id="heading-4">使い方</h3>
+<h3 id="使い方">使い方</h3>
 <p><code>ALaCarteEmbedding</code>を作成し、コーパスに対して実行します。パラメータは以下の通りです。</p>
 <ul>
 <li>word2vec: 学習済み単語埋め込み
@@ -1083,7 +1083,7 @@ alc<span style="color:#f92672">.</span>build(documents)
 alc<span style="color:#f92672">.</span>most_similar((<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bigram</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">query</span><span style="color:#e6db74">&#34;</span>), topn<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
 </code></pre></div><p>学習したA La Carte Embeddingを<code>save()</code>で保存します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">alc<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">path/to/model.txt</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h2 id="heading-5">結果</h2>
+</code></pre></div><h2 id="結果">結果</h2>
 <p>実際にwikipedia(ja)のデータで学習させ、幾つかの単語に類似する単語を表示した結果です。</p>
 <table>
 <thead>
@@ -1121,11 +1121,11 @@ alc<span style="color:#f92672">.</span>most_similar((<span style="color:#e6db74"
 </table>
 <p>かなりいい感じになっているのではないでしょうか。上の表記ではngramの単語列について結合して表示しているので少しわかりにくいですが、「人口減少」「増加傾向」「衛星通信」「通信システム」「スコアアタック」「後継作品」などbigram由来のものも含まれています。</p>
 <p>今回の実験条件として、Wikipediaのコーパス（計算量の都合上10万文章ほど）における頻度が10以上のunigramおよびbigramすべてを対象に、A La Carte Embeddingを計算しました。形態素解析にはMeCabおよびmecab-ipadicを利用しました（NEologdは利用していません）。類似する単語の列挙の際には、句読点や接続詞、記号などが含まれるbigramは除去し、名詞などから構成される単語列を利用しました。</p>
-<h2 id="heading-6">まとめ</h2>
+<h2 id="まとめ">まとめ</h2>
 <p>今回はACL2018で発表されたA La Carte Embeddingを実装して簡単な実験を行いました。ngramなどの任意の単語の組み合わせに対して埋め込み表現を学習できる点がとても興味深いです。ある程度のコーパスが必要になりますが、非常に強力な手法なのではないかと思います。</p>
 <p>意味のあるまとまり単位で特定のキーワードのような単語や単語列を抜き出したいというケースは往々にしてあるので、そういった際に使える手法かと思います。あとは言い換えやデータ拡張などにも適用できそうです。</p>
 <p>まだあまりちゃんとした実験できていないのですが、深掘りするといろいろと応用が見つかりそうです。あらかじめ頻出するbigram/trigramを網羅的に学習させておいて、それを学習済み分散表現として利用するというのも面白い気がします。</p>
-<h2 id="heading-7">参考</h2>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="http://www.offconvex.org/2018/09/18/alacarte/">Simple and efficient semantic embeddings for rare words, n-grams, and language features – Off the convex path</a></li>
 <li><a href="https://github.com/NLPrinceton/ALaCarte">NLPrinceton/ALaCarte</a></li>
