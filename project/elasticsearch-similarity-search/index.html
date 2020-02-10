@@ -1053,20 +1053,20 @@ margin-left: -4%;
 <h3 id="1-elasticsearchの設定">1. Elasticsearchの設定</h3>
 <p>Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、<code>docker.elastic.co</code>で提供されているバージョン7.3.1を利用しました。以下のように<code>docker-compose.yaml</code>を定義して<code>docker-compose up</code>で起動します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># docker-compose.yaml</span>
-version: <span style="color:#e6db74">&#39;3.3&#39;</span>
-services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.3</span><span style="color:#ae81ff">.1</span>
-    ports:
+<span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;3.3&#39;</span>
+<span style="color:#66d9ef">services</span>:
+  <span style="color:#66d9ef">elasticsearch</span>:
+    <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.3</span><span style="color:#ae81ff">.1</span>
+    <span style="color:#66d9ef">ports</span>:
       - <span style="color:#e6db74">&#34;9200:9200&#34;</span>
-    volumes:
+    <span style="color:#66d9ef">volumes</span>:
       - es-data:/usr/share/elasticsearch/data
-    tty: <span style="color:#66d9ef">true</span>
-    environment:
-      discovery.type: single-node
-volumes:
-  es-data:
-    driver: local
+    <span style="color:#66d9ef">tty</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">environment</span>:
+      <span style="color:#66d9ef">discovery.type</span>: single-node
+<span style="color:#66d9ef">volumes</span>:
+  <span style="color:#66d9ef">es-data</span>:
+    <span style="color:#66d9ef">driver</span>: local
 </code></pre></div><p>立ち上がった後は<code>curl http://127.0.0.1:9200/_cat/health</code>で結果が帰ってくればOKです。</p>
 <h3 id="2-wikipediaの本文を文ベクトルに変換してelasticsearchに投入する">2. Wikipediaの本文を文ベクトルに変換してElasticsearchに投入する</h3>
 <p>今回はある程度現実的な状況を再現するため、データセットはWikipediaの日本語のすべてのエントリーを使用しました。Wikipediaのエントリーに含まれるテキストをダンプデータから抽出し、分散表現を計算するとともにElasticsearchにインポートします。文書の分散表現の計算には、SWEMのaverage-poolingを利用します。手法の詳細は<a href="https://yag-ays.github.io/project/swem/">こちらの記事</a>を参考ください。</p>
