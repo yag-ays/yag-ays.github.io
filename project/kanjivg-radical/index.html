@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1165,11 +1171,11 @@ margin-left: -4%;
         d <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
     <span style="color:#66d9ef">return</span> d
 
-kanji2radical <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">kanji2radical.json</span><span style="color:#e6db74">&#34;</span>)
-radical2kanji <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">radical2kanji.json</span><span style="color:#e6db74">&#34;</span>)    
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">kanji2radical[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">脳</span><span style="color:#e6db74">&#34;</span>] <span style="color:#75715e"># kanji to radicals</span>
+kanji2radical <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74">&#34;kanji2radical.json&#34;</span>)
+radical2kanji <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74">&#34;radical2kanji.json&#34;</span>)    
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">kanji2radical[<span style="color:#e6db74">&#34;脳&#34;</span>] <span style="color:#75715e"># kanji to radicals</span>
 
-radical2kanji[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">月</span><span style="color:#e6db74">&#34;</span>] <span style="color:#75715e"># radical to kanjis</span>
+radical2kanji[<span style="color:#e6db74">&#34;月&#34;</span>] <span style="color:#75715e"># radical to kanjis</span>
 </code></pre></div><p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照ください。</p>
 <h2 id="作成方法">作成方法</h2>
 <p><a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているすべての漢字に対して、svg内に含まれる<code>g</code>タグの<code>kvg:element</code>属性を抽出しています。抽出方法により、データセットに以下の違いがあります。</p>

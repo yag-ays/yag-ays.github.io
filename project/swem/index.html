@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1059,40 +1065,40 @@ margin-left: -4%;
 <span style="color:#f92672">from</span> swem <span style="color:#f92672">import</span> MeCabTokenizer
 <span style="color:#f92672">from</span> swem <span style="color:#f92672">import</span> SWEM
 
-w2v_path <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/word_embedding.bin</span><span style="color:#e6db74">&#34;</span>
+w2v_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/path/to/word_embedding.bin&#34;</span>
 w2v <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(w2v_path, binary<span style="color:#f92672">=</span>True)
-tokenizer <span style="color:#f92672">=</span> MeCabTokenizer(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">-O wakati</span><span style="color:#e6db74">&#34;</span>)
+tokenizer <span style="color:#f92672">=</span> MeCabTokenizer(<span style="color:#e6db74">&#34;-O wakati&#34;</span>)
 
 swem <span style="color:#f92672">=</span> SWEM(w2v, tokenizer)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: text <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">吾輩は猫である。名前はまだ無い。</span><span style="color:#e6db74">&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;吾輩は猫である。名前はまだ無い。&#34;</span>
 
 <span style="color:#75715e"># SWEM-aver</span>
 In []: swem<span style="color:#f92672">.</span>average_pooling(text)
 Out[]:
 array([ <span style="color:#ae81ff">2.31595367e-01</span>,  <span style="color:#ae81ff">5.31529129e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6.28219426e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.73212969e-01</span>,
         <span style="color:#ae81ff">5.56734562e-01</span>,  <span style="color:#ae81ff">5.50618172e-01</span>,  <span style="color:#ae81ff">7.96405852e-01</span>,  <span style="color:#ae81ff">1.65987098e+00</span>,
-[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
+[<span style="color:#f92672">...</span>]
 
 <span style="color:#75715e"># SWEM-max</span>
 In []: swem<span style="color:#f92672">.</span>max_pooling(text)
 Out[]:
 array([ <span style="color:#ae81ff">1.4522485e+00</span>,  <span style="color:#ae81ff">2.1016493e+00</span>,  <span style="color:#ae81ff">9.1187710e-01</span>,  <span style="color:#ae81ff">6.2075871e-01</span>,
         <span style="color:#ae81ff">2.7146432e+00</span>,  <span style="color:#ae81ff">2.6316767e+00</span>,  <span style="color:#ae81ff">2.3899646e+00</span>,  <span style="color:#ae81ff">3.0643713e+00</span>,
-[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
+[<span style="color:#f92672">...</span>]
 
 <span style="color:#75715e"># SWEM-concat</span>
 In []: swem<span style="color:#f92672">.</span>concat_average_max_pooling(text)
 Out[]:
 array([ <span style="color:#ae81ff">2.31595367e-01</span>,  <span style="color:#ae81ff">5.31529129e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6.28219426e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.73212969e-01</span>,
         <span style="color:#ae81ff">5.56734562e-01</span>,  <span style="color:#ae81ff">5.50618172e-01</span>,  <span style="color:#ae81ff">7.96405852e-01</span>,  <span style="color:#ae81ff">1.65987098e+00</span>,
-[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
+[<span style="color:#f92672">...</span>]
 
 <span style="color:#75715e"># SWEM-hier</span>
 In []: swem<span style="color:#f92672">.</span>hierarchical_pooling(text, n<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
 Out[]:
 array([ <span style="color:#ae81ff">1.08240175e+00</span>,  <span style="color:#ae81ff">1.80855095e+00</span>,  <span style="color:#ae81ff">2.49545574e-02</span>,  <span style="color:#ae81ff">3.06840777e-01</span>,
         <span style="color:#ae81ff">1.25868618e+00</span>,  <span style="color:#ae81ff">1.97042620e+00</span>,  <span style="color:#ae81ff">1.59599078e+00</span>,  <span style="color:#ae81ff">2.99531865e+00</span>,
-[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
+[<span style="color:#f92672">...</span>]
 </code></pre></div><h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://github.com/dinghanshen/SWEM">dinghanshen/SWEM: The Tensorflow code for this ACL 2018 paper: “Baseline Needs More Love: On Simple Word-Embedding-Based Models and Associated Pooling Mechanisms”</a></li>

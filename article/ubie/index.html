@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/wed/" />
-<meta property="og:title" content="Word Embedding based Edit Distanceの実装" />
-<meta property="twitter:title" content="Word Embedding based Edit Distanceの実装">
+<meta property="og:url" content="https://yag-ays.github.io/article/ubie/" />
+<meta property="og:title" content="Sansanを退職してUbieに入社します" />
+<meta property="twitter:title" content="Sansanを退職してUbieに入社します">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Word Embedding based Edit Distanceの実装 - Out-of-the-box 
+     Sansanを退職してUbieに入社します - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/wed/">
+<link rel="canonical" href="https://yag-ays.github.io/article/ubie/">
 
 
 <style media="screen">
@@ -1030,10 +1030,10 @@ margin-left: -4%;
         <div class="content">
             <div class="page-heading">
 
-    Word Embedding based Edit Distanceの実装
+    Sansanを退職してUbieに入社します
     <div class="container">
       <div class="date">
-        2018-11-12
+        2020-05-24
       </div>
     </div>
 
@@ -1041,59 +1041,84 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/wed_title.png" alt="wed_title https://arxiv.org/abs/1810.10752"></p>
-<p><a href="https://anchor.fm/lnlp-ninja">Leading NLP Ninja</a>のep.12で紹介されていた<a href="https://arxiv.org/abs/1810.10752">Word Embedding based Edit Distance</a>を実装してみました。</p>
-<h2 id="word-embedding-based-edit-distance">Word Embedding based Edit Distance</h2>
-<p>Word Embedding based Edit Distance（WED）は、文字列間の類似度を計算する編集距離（Edit Distance）を拡張して、単語埋め込みの類似度を使うことによって文章間の意味的な距離を編集距離的に計算しようというものです。編集距離では文字の追加/削除/置換のコストが1なのに対し、WEDではそれぞれのコストは以下のように設定しています。問題は単語埋め込みの類似度をどう使うかですが、追加と置換のコストに関しては対応する文中に近い単語があればそっちの類似度分をコスト1から差し引く、置換に関しては単語間の類似度を単純にコストから差し引くといった形で拡張しています。</p>
-<p><img src="https://yag-ays.github.io/img/wed_1.png" alt="wed_1 https://arxiv.org/abs/1810.10752"></p>
-<p>ここで、単語間の類似度は以下のように計算しています。</p>
-<p><img src="https://yag-ays.github.io/img/wed_2.png" alt="wed_2 https://arxiv.org/abs/1810.10752"></p>
-<p>なので、このアルゴリズムに出てくるパラメータは<code>w</code>,<code>b</code>,<code>λ</code>,<code>μ</code>の4つです。</p>
-<p>詳しくは<a href="https://anchor.fm/lnlp-ninja/episodes/ep12-Word-Embedding-based-Edit-Distance-e2g6s1">Leading NLP Ninjaの解説</a>の方を参照ください。</p>
-<h2 id="実装">実装</h2>
-<p><a href="https://github.com/yagays/wed">yagays/wed: Python implementation of Word Embedding based Edit Distance</a></p>
-<p>基本的には編集距離の実装に用いる動的計画法をそのままに、コスト部分を論文通りに拡張すればOKです。ただし、実装が合っているかどうかすごく不安なので、あくまで参考適度に……。</p>
-<p>注意点として、DPの配列の0行目と0列目では片方の文字列を削除したときのコストが入るので、単純に行/列ごとに1をインクリメントしていくのではなく、上記コストを計算する必要があります。</p>
-<h2 id="評価">評価</h2>
-<p>流石に論文のような評価はしていませんが、手元で<a href="http://captions.stair.center/">STAIR Captions</a>を対象に類似度計算をした結果、まあまあ妥当そうな結果になりました。ここでは15,000件くらいの文章を対象に、<code>馬が走っている</code>という文章に似た文章を近い順に10件列挙しています。</p>
-<pre><code>[['一頭の茶色い馬が走っている', 0.6571005980449359],
- ['芝生の上を人がのった馬が走っている', 1.073464996815989],
- ['黄色いスクールバスが走っている', 1.0986647573718564],
- ['道路を首輪をした白い馬が走っている', 1.1281587567774887],
- ['尻尾の長い茶色の馬が歩いている', 1.1786151622459524],
- ['汽車のミニチュアが走っている', 1.2233853716174816],
- ['車の外を白や茶色の馬が走っている', 1.2432452098145987],
- ['大きな道路をトラックが走っている', 1.2456263623812807],
- ['フリスビーをくわえた犬が走っている', 1.2533987344007116],
- ['曲がりくねった道をレーサーが走っている', 1.2657003314558781]]
-</code></pre><h2 id="感想">感想</h2>
-<p>実装/評価する上で気になった点を幾つか。</p>
-<h3 id="1-追加削除のコスト">1. 追加／削除のコスト</h3>
-<p>まずはじめに気になる点として、WEDの追加/削除のコスト計算がそれで良いのか問題。今回の論文の計算方法では、文章中の全単語の中から最も近い単語の類似度を用いるので、文中でどれだけ離れていても一番意味的に近い単語が採用される点が気になります。文章が長ければ長いほど似た単語が現れやすいでしょうし、編集距離を拡張している意味が何なのかよくわからなくなってきます。一度類似した単語として利用したら以降は使わないとか、前後n単語のみの類似度を使うとか、もう少し改良が必要な気がします。</p>
-<h3 id="2-パラメータ調整">2. パラメータ調整</h3>
-<p>そもそも最適なパラメータ調整がかなり難しいです。追加/削除と置換のコストがバランス取れていないと一単語置換するより1単語削除して1単語追加したほうが良いみたいになることもあり、この辺ピーキーすぎて調整が難しいところ。単語間類似度を計算するときにcos類似度→[0,1]の類似度に変換している部分も、改良の余地があると思います。</p>
-<h3 id="3-文字列間の文章長の影響">3. 文字列間の文章長の影響</h3>
-<p>また、極端に短い文章を対象にすると、意味的に関係が無くてもトータルのコストが低くなる場合があります。このあたりはコスト周りのパラメータの調整でも限界があると思うので、Quoraの質問ペアのようなある程度整ったデータセットでないと辛い部分でしょう。といってもそこは従来の編集距離でも同じことなので、的外れな意見ではあります。</p>
-<h3 id="4-計算コスト">4. 計算コスト</h3>
-<p>論文中には計算量は編集距離と同じとありますが、追加/削除の類似度計算は比較する文章中の単語数だけ必要です。また、基本的には与えられた文章ペアの類似度を計算する方法なので、ある一つのクエリ文章に対して類似した文章を大量の候補の中から検索するといった用途には活用しにくいと思います。</p>
-<h2 id="まとめ">まとめ</h2>
-<p>単語埋め込みを元にした意味的な近さを編集距離に持ち込んだWord Embedding based Edit Distanceを実装しました。論文自体のやりたいこともわかるし発想は面白いものの、なかなか結果に結びついていないのが難しいところです。これならば単純に単語ベクトルを足し合わせて文章ベクトルを作るやり方の方が、計算コストも軽く類似度計算も高速で良いかなと思ってしまいます。なにか上手い使い方があれば今後使ってみたいですね。</p>
-<h2 id="参考">参考</h2>
+    <p>2018年1月より2年半勤めた<strong>Sansan株式会社</strong>を退社して、2020年7月より<strong>Ubie株式会社</strong>に入社します。現在は現職の有給消化中で少し気が早いですが、退職エントリを書きたいと思います。<a href="https://wolfin.hatenablog.com/entry/2018/01/04/214403">前回の転職エントリ</a>は手短だったので、今回は自分の仕事内容と絡めつつ互いの会社のことやデータサイエンスのキャリアのことについて長めに書きます。ちなみに、私のプロフィールは <a href="https://yag.xyz/">https://yag.xyz/</a> をご覧ください。</p>
+<h2 id="これまでの仕事">これまでの仕事</h2>
+<p><a href="https://jp.sansan.com/">Sansan</a>は法人/個人向けのクラウド名刺管理を提供している会社で、名刺のデータ化に関わる開発やデータ活用を推進している<a href="https://sansan-dsoc.com/">DSOC</a> (Data Strategy &amp; Operation Center)という部署に入りました。Sansanに中途入社する前に在籍していたリクルートテクノロジーズでは機械学習のプロダクト開発を担当しており、Sansanでも引き続き機械学習でサービスに貢献するような技術開発を行っていました。特に、自然言語処理に関する機械学習に携わらせていただきました。</p>
+<p>名刺管理のSaaSという特殊なサービスの性質上、自然言語処理や機械学習のタスクにおいても他社ではあまり取り組まれない特殊なタスクが多かったと思います。下記のような仕事をしていました。</p>
 <ul>
-<li><a href="https://arxiv.org/abs/1810.10752">[1810.10752] Word Embedding based Edit Distance</a>
+<li><a href="https://speakerdeck.com/sansanbuildersbox/company-name-extraction-by-deep-neural-network">名刺とニュースを紐付ける - 深層学習を用いた記事文章からの企業名抽出</a></li>
+<li><a href="https://speakerdeck.com/sansanbuildersbox/building-search-for-people-and-businesses-beyond-business-cards">名刺を超えて人や企業を検索する - Sansanにおける検索システムへの取り組み</a></li>
+<li><a href="https://speakerdeck.com/sansanbuildersbox/how-to-handle-orthographical-variants">文字のゆらぎをどう扱うか？ - Sansanにおける自然言語処理の活用</a></li>
+</ul>
+<p>これらの中でも特に惹かれたのは「名寄せ」と「情報抽出」です。具体的なタスクとしては、様々な表記ゆれがある単語を正規化するものであったり、文章中から企業名や日付など特定の概念(エンティティ)を抽出するものだったりするのですが、少量のデータしかなかったり、一般常識や固有の知識が必要だったり、正解が厳密に定義できないようなタスクなど、ビジネスの現場で遭遇するものは特に難しいと感じます。</p>
+<p>Sansanの中でこうした困難なタスクにどっしりと向き合えたのは、とても貴重な経験でした。一方で、ビジネス上高い精度が求められるがために機械学習の機能を導入できなかったりと、周囲の期待に答えられないもどかしさもありました。こうした経験を通じて、これらのテーマは私の中で人生をかけて向き合うタスクになったと思います。</p>
+<p>また、アカデミックとの接点では、Wikipedia構造化プロジェクトである<a href="http://shinra-project.info/">森羅</a>に参加させてもらったり、NLPやIBISにポスターを出したり、DEIMやCCSEで講演する機会もいただきました。部署的にも対外的な発信を推奨されている文化であり、かつ社内チェックなどの体制もしっかりしているので、安心して発表しつつ資料をパブリックに公開することができました。</p>
+<p>あと、気がつけば新卒/中途採用を任されたり、長期インターンのメンターを受け持ったりしました。2年半しかいなかったのですが、チームの中で中堅社員くらいの立ち位置&amp;役割だったと思います。</p>
+<h2 id="sansan-dsocの環境">Sansan DSOCの環境</h2>
+<h3 id="rdチームとして">R&amp;Dチームとして</h3>
+<p>SansanのR&amp;Dには数多くの優秀なメンバーがいて刺激になりました。この規模の会社で、画像処理から機械学習、自然言語処理、そして社会科学に至る多様なメンバーが在籍している組織は、周りを見渡してもそうそう無いのではないかと思います。博士号を持つ人間も多く、社会人博士に通いながら仕事をしている人がいるのもレベルの高さを感じさせます。他にわかりやすい例としては、Kaggle Grandmasterの方だったり、東大の助教からSansanに入社した方もいらっしゃいます。</p>
+<p>特に、同僚で一緒に自然言語処理のタスクに取り組んだ<a href="https://twitter.com/kanji250tr">@kanji250tr</a>は、エンジニアリングも出来て研究もできるというフルスタック人材でした。自然言語処理タスクに関して議論したり、一緒にプロダクトを作ったり、NLPにポスターを出したりと、彼と一緒に仕事が出来て本当に良かったと思います。</p>
+<p>このR&amp;D組織が特にユニークだと思うのは、社会科学系の方々がめざましい活躍をしているところです。名刺交換の先にある「人と人との出会い」というデータに対して、科学的アプローチで構造を理解したり、サービスの価値向上のための分析を行ったりと、Sansanにしかないデータで研究し価値を出しているのは素晴らしいと思います。コンピューターサイエンス側からするとあまり想像がつかないと思いますので、私が面白いと感じた活動を貼っておきます。</p>
 <ul>
-<li>本記事の図表は、この論文から引用されたものです</li>
+<li><a href="https://bizhint.jp/report/417074">Sansanの名刺ネットワーク分析からみえてきた「成功するビジネスの出会い」の要件 | BizHint（ビズヒント）- 事業の課題にヒントを届けるビジネスメディア</a></li>
+<li><a href="https://buildersbox.corp-sansan.com/entry/2019/01/15/110000">「SocSci Meetup～社会科学をブートする～」イベントレポート - Sansan Builders Box</a></li>
+</ul>
+<p>また、私が入社したときには中途採用の人間の割合が多かったのですが、ここ数年で優秀な新卒も続々入社してきており、年齢的にも若い組織になってきていると思います。</p>
+<h3 id="dsoc全体として">DSOC全体として</h3>
+<p>所属していた部署全体としても恵まれた環境でした。DSOCの中には、先に紹介したR&amp;Dチームの他にも、開発やインフラ、運用などサービス全体に関わるチームが所属していま。そのため、データサイエンティストは分析だけするみたいな閉じた状態にならず、様々な方と接する中で仕事のバランスが取れたと思います。</p>
+<p>機械学習エンジニアとして一番ありがたかったのは、社内でデータのアノテーションが完了するところでしょうか。Sansanは名刺をデータ化する上でクラウドソーシング先を多く抱えており、DSOCにはデータ化体制を運用するチームがいます。機械学習タスクの学習データを大規模に作れる体制が整っているということです。以前そのチームと仕事をしていたときは、学習データを用意する必要がありますねと言った瞬間にはそれ作ろうという話が進み、数日するとアノテーションガイドラインと対象データの準備が完了し、数週間する頃には学習データが完成していました。機械学習エンジニア側はデータセットの内容にだけ注力し、その他の発注作業や取りまとめ、クオリティコントロール等は専属チームに任せられたので、本当に仕事がやりやすかったです。</p>
+<p>まだまだ紹介したいのですが最後に一つだけ。私がいた部署にはクリエイティブグループという部署全体のブランディングやデザインを担当するチームがあり、私が作ったポンチ絵とゴミスライドを投げると、統一感あるハイクオリティな資料に仕上げてくれました。これは思った以上に感動的な体験だったので、いろんな会社で普及するといいんじゃないかと真面目に思います。</p>
+<h3 id="福利厚生">福利厚生</h3>
+<p>あとはこんな福利厚生が良かったです。</p>
+<ul>
+<li>フルスペックMacBook Pro &amp; 昇降机 &amp; 曲面ディスプレイ
+<ul>
+<li>PCはWindows/macOS、ディスプレイは複数/42inch/曲面など選択できます</li>
 </ul>
 </li>
-<li><a href="https://anchor.fm/lnlp-ninja/episodes/ep12-Word-Embedding-based-Edit-Distance-e2g6s1">ep12: Word Embedding based Edit Distance by Leading NLP Ninja • A podcast on Anchor</a></li>
-<li><a href="https://github.com/jojonki/arXivNotes/issues/145">2018: Word Embedding based Edit Distance · Issue #145 · jojonki/arXivNotes</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%AC%E3%83%BC%E3%83%99%E3%83%B3%E3%82%B7%E3%83%A5%E3%82%BF%E3%82%A4%E3%83%B3%E8%B7%9D%E9%9B%A2">レーベンシュタイン距離 - Wikipedia</a></li>
-<li><a href="https://takuti.me/note/levenshtein-distance/">いまさら編集距離 (Levenshtein Distance) を実装するぜ | takuti.me</a></li>
+<li>本や学習に年6万円、ハードウェアに年3万円、ソフトウェアに年2万円の支給
+<ul>
+<li>書籍は躊躇なく買えましたし、AirPods Proやリモートワーク用の<a href="https://buildersbox.corp-sansan.com/entry/2019/07/02/110000">良いマイク</a>を買いました</li>
+</ul>
+</li>
+<li>土日出勤して休みを平日に振り替える制度
+<ul>
+<li>振替休日と土日と繋げて、国内/海外旅行に行けました</li>
+</ul>
+</li>
+<li>リファラル採用に関する諸々の支援
+<ul>
+<li>紹介する側もされる側もインセンティブがあります</li>
+</ul>
+</li>
+</ul>
+<h2 id="転職活動">転職活動</h2>
+<p>このような業務や環境でわりかし自由に仕事させてもらっていたのですが、自身の成長を客観視したり、界隈の機械学習人材の凄さみたいなものを知れば知るほど、今の自分はコンフォートゾーンに入ってしまいっているのではという不安が常にありました。つい2,3年前に最先端だった技術が今では新しいものに置き換わってしまうこの分野においては、安定すればするほど不安になるというのは仕方がないことかもしれません。</p>
+<p>また、自分の年齢的にもライフプラン的にも大きな挑戦ができるのはここ数年しかないという焦りみたいなものもあり、より技術的にも人材的にもチャレンジできる環境で仕事ができる機会があれば挑戦しようと思っていました。</p>
+<p>一方で、あんまりネガティブな転職理由は無いのですが、強いて挙げるとするならフレックスタイム制ではないというところでしょうか。最近犬を飼い始めたのですが、あまり家を空けたくなかったり朝夕の散歩に行かなければいけなかったりと、勤務に融通が効けばいいのになと思っていました。あとは細かな不満はあれど、どこの業界/会社でも起こりうることなので、ここでは挙げません。</p>
+<p>そんな折、たまたまLinkedinでお声がけいただいた会社があり、せっかくなので自分の市場価値を知るという意味でも転職活動を開始しました。この業界のことはある程度知っていたつもりでしたので、主に自分が気になっていた会社に絞って募集要項を見たり、他にはBizreachで来る案件を眺めたりFindyやLaprasでのダイレクトオファー等から気になる企業に連絡を取ったりしました。新型コロナウィルスの社会的影響もありあまりアクティブに動くことはできず、結局は3,4社ほどとカジュアル面談し、2社選考を受ける中でUbieに内定をいただき、現職に残るかUbieに転職するかを悩んだ末、転職することに決めました。ちなみにもう1社は最終選考まで進んだものの、2,3週間待った挙げ句落ちました。おそらく新型コロナの影響で採用が一時ストップしたからだと思われます（そう思いたい）。</p>
+<p>あらためて、カジュアル面談や面接に応じてくださった会社様、そして社員の皆様、本当にありがとうございました。</p>
+<h2 id="ubie">Ubie</h2>
+<p><a href="https://ubie.life/">Ubie</a>は医療分野のITベンチャー企業で、医療機関向けの問診サービスや、一般向けの受診相談アプリなどを作っています。社員は50人ほどの、まだまだ小さな会社です。</p>
+<p>実はUbieのデータサイエンスチームの<a href="https://twitter.com/masa_kazama">@masa_kazama</a>は私が新卒で入ったリクルートテクノロジーズの同期で、彼から誘いを受けたのが始まりでした。また、<a href="https://twitter.com/smochi_pub">@smochi_pub</a>も配属こそ違えど同じリクルート時代のデータ分析採用の同期で、お互い退職後も一緒に勉強会をしたりしていた仲でした。機械学習の解釈性の勉強会をしていたのですが、その帰り道の電車の中でUbieのプロダクトに解釈性を取り込んだ話を聞いて、その応用の速さに驚いたのを覚えています。加えて、以前からTwitterや勉強会等で度々見かけていた元Cookpadの<a href="https://twitter.com/yohei_kikuta">@yohei_kikuta</a>が入社されたことも個人的には衝撃でした。</p>
+<p>またUbieの医療という面では、私が大学院時代にバイオインフォマティクスを研究していたということも要因の一つとしてあります。医療に関する研究ではありませんでしたが、アカデミックのトップを走る医療分野からの研究を目にすることが多くありました。大学院を出てからは完全にウェブの世界で仕事してきましたが、改めて思い返したときに&quot;Connecting the dots&quot;が出来たのかなと、しみじみ感じます。</p>
+<p>ただ、これ自体はきっかけでしかなく、正直なところ知り合いの会社を受けることに対しての恥ずかしさや気後れのようなものはありました。しかし、選考を受けるなかでUbieに関する共感や期待値があがっていき、最終的には信頼できる会社にまで自分の中で大きくなったと思います。もちろん事業内容やサービス、ビジネスモデルなど惹かれるものはたくさんありましたが、最後はやっぱり人でした。</p>
+<h2 id="選考">選考</h2>
+<p>選考のことを少し書いておこうと思います。というのも、Ubieを信頼するに至る一番の要因は<strong>選考のプロセス</strong>だったからです。選考というのは自分が評価されると同時に、自分もその会社を評価する機会になります。知り合いから誘われたという大きなバイアスが掛かっている状態で、結局のところ面接官と一緒に働きたいかどうかを見定められたのは大きかったと思います。</p>
+<p>内容は詳しくは話せませんが、これまでの自身の仕事の課題や取り組み方、成果や事業インパクト対して徹底的に質疑応答を重ねたり、模擬的に設定された業務内容を元にタスクへのアプローチの仕方を問われたりと、どこの会社よりも真摯に自分を評価してくださったと思います。私自身も現職で採用選考に関係することが多かったのですが、そのときに思い描いていた理想に最も近い形の面接だったと思います。</p>
+<h2 id="今後">今後</h2>
+<p>Ubieでは引き続き自然言語処理に関する機械学習プロダクトの開発をやっていく予定です。これまで通りブログやTwitterでの活動も行っていきますので、引き続きどうぞよろしくお願い致します。</p>
+<p>まだまだ採用募集しているということなので、（まだ入社していない私が言うのもなんですが）、ぜひ一緒に働きませんか！？</p>
+<p><a href="https://note.com/ubie/n/n454a0d04a1eb">Ubieデータサイエンスチームの紹介資料を公開しました｜Ubie｜note</a></p>
+<h2 id="参考同僚の転職エントリ">参考：同僚の転職エントリ</h2>
+<ul>
+<li><a href="https://note.com/masa_kazama/n/n2ae17f220f83">Indeedを退職してUbieに入社します｜masa_kazama｜note</a></li>
+<li><a href="https://yoheikikuta.github.io/joinning_ubie/">Ubie 株式会社に入社します – 原理的には可能 – データ分析界隈の人のブログ、もとい雑記帳</a></li>
 </ul>
 
 
 <div style="text-align: right">
-  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/wed/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/article/ubie/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
       alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
   <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>

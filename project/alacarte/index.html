@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1079,10 +1085,10 @@ margin-left: -4%;
                         ngram<span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
 alc<span style="color:#f92672">.</span>build(documents)
 </code></pre></div><p>類似する単語を推定するには<code>most_similar()</code>を利用します。ngramの場合はタプルで入力します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">alc<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">query</span><span style="color:#e6db74">&#34;</span>)
-alc<span style="color:#f92672">.</span>most_similar((<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bigram</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">query</span><span style="color:#e6db74">&#34;</span>), topn<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">alc<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74">&#34;query&#34;</span>)
+alc<span style="color:#f92672">.</span>most_similar((<span style="color:#e6db74">&#34;bigram&#34;</span>, <span style="color:#e6db74">&#34;query&#34;</span>), topn<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
 </code></pre></div><p>学習したA La Carte Embeddingを<code>save()</code>で保存します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">alc<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">path/to/model.txt</span><span style="color:#e6db74">&#34;</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">alc<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;path/to/model.txt&#34;</span>)
 </code></pre></div><h2 id="結果">結果</h2>
 <p>実際にwikipedia(ja)のデータで学習させ、幾つかの単語に類似する単語を表示した結果です。</p>
 <table>

@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1066,14 +1072,14 @@ margin-left: -4%;
       <span style="color:#f92672">&#34;agent&#34;</span>: <span style="color:#e6db74">&#34;all-agents&#34;</span>,
       <span style="color:#f92672">&#34;views&#34;</span>: <span style="color:#ae81ff">210</span>
     },
-[<span style="color:#960050;background-color:#1e0010">.</span><span style="color:#960050;background-color:#1e0010">.</span><span style="color:#960050;background-color:#1e0010">.</span>]
+[<span style="color:#960050;background-color:#1e0010">...</span>]
   ]
 }
 </code></pre></div><p>なお、ドキュメントにも記載されていますが、複数のクエリを機械的にリクエストするときには<code>User-Agent</code>や<code>Api-User-Agent</code>をヘッダに含めてリクエスト送り元がわかるようにしましょう。Pythonの<code>requests</code>パッケージで実行する場合は以下のようにヘッダで情報を付与します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 
-url <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">6</span><span style="color:#e6db74">%</span><span style="color:#e6db74">A9</span><span style="color:#e6db74">%9F</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">6</span><span style="color:#e6db74">%</span><span style="color:#e6db74">A2</span><span style="color:#e6db74">%</span><span style="color:#e6db74">B0</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">5</span><span style="color:#e6db74">%</span><span style="color:#e6db74">AD</span><span style="color:#e6db74">%</span><span style="color:#e6db74">A6</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">7</span><span style="color:#e6db74">%</span><span style="color:#e6db74">BF</span><span style="color:#e6db74">%</span><span style="color:#e6db74">92/daily/20181201/20181203</span><span style="color:#e6db74">&#34;</span>
-headers <span style="color:#f92672">=</span> {<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">User-Agent</span><span style="color:#e6db74">&#34;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">your-email@example.com</span><span style="color:#e6db74">&#34;</span>}
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/ja.wikipedia.org/all-access/all-agents/</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">6%A9</span><span style="color:#e6db74">%9F%E</span><span style="color:#e6db74">6%A2%B0</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">5%AD%A6</span><span style="color:#e6db74">%E</span><span style="color:#e6db74">7%BF%92/daily/20181201/20181203&#34;</span>
+headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;User-Agent&#34;</span>: <span style="color:#e6db74">&#34;your-email@example.com&#34;</span>}
 
 r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers)
 <span style="color:#66d9ef">print</span>(r<span style="color:#f92672">.</span>json())

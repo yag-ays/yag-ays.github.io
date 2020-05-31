@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1141,65 +1147,65 @@ margin-left: -4%;
 <h2 id="使い方">使い方</h2>
 <h3 id="モデルファイルの読み込み">モデルファイルの読み込み</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> gensim.models.doc2vec <span style="color:#f92672">import</span> Doc2Vec
-model <span style="color:#f92672">=</span> Doc2Vec<span style="color:#f92672">.</span>load(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">jawiki.doc2vec.dbow300d.model</span><span style="color:#e6db74">&#34;</span>)
+model <span style="color:#f92672">=</span> Doc2Vec<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#34;jawiki.doc2vec.dbow300d.model&#34;</span>)
 </code></pre></div><h3 id="類似するドキュメントを表示する">類似するドキュメントを表示する</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>docvecs<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">アリストテレス</span><span style="color:#e6db74">&#34;</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>docvecs<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74">&#34;アリストテレス&#34;</span>)
 Out[]:
-[(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">オルガノン</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5950535535812378</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">善のイデア</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5811843872070312</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">スペウシッポス</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5756123065948486</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">プラトン</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5733123421669006</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ジークムント・フロイト</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5668295621871948</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">カルキディウス</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5634585618972778</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">アンモニオス・サッカス</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5591270923614502</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">メリッソス、クセノパネス、ゴルギアスについて</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5568180084228516</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ピレボス</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5543898940086365</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">睡眠と覚醒について</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5480767488479614</span>)]
+[(<span style="color:#e6db74">&#39;オルガノン&#39;</span>, <span style="color:#ae81ff">0.5950535535812378</span>),
+ (<span style="color:#e6db74">&#39;善のイデア&#39;</span>, <span style="color:#ae81ff">0.5811843872070312</span>),
+ (<span style="color:#e6db74">&#39;スペウシッポス&#39;</span>, <span style="color:#ae81ff">0.5756123065948486</span>),
+ (<span style="color:#e6db74">&#39;プラトン&#39;</span>, <span style="color:#ae81ff">0.5733123421669006</span>),
+ (<span style="color:#e6db74">&#39;ジークムント・フロイト&#39;</span>, <span style="color:#ae81ff">0.5668295621871948</span>),
+ (<span style="color:#e6db74">&#39;カルキディウス&#39;</span>, <span style="color:#ae81ff">0.5634585618972778</span>),
+ (<span style="color:#e6db74">&#39;アンモニオス・サッカス&#39;</span>, <span style="color:#ae81ff">0.5591270923614502</span>),
+ (<span style="color:#e6db74">&#39;メリッソス、クセノパネス、ゴルギアスについて&#39;</span>, <span style="color:#ae81ff">0.5568180084228516</span>),
+ (<span style="color:#e6db74">&#39;ピレボス&#39;</span>, <span style="color:#ae81ff">0.5543898940086365</span>),
+ (<span style="color:#e6db74">&#39;睡眠と覚醒について&#39;</span>, <span style="color:#ae81ff">0.5480767488479614</span>)]
 </code></pre></div><h3 id="未知の入力文に対する埋め込み表現を得る">未知の入力文に対する埋め込み表現を得る</h3>
 <p><code>model.infer_vector()</code>には分かち書き済みの単語リストを入力する必要があります。そのため、ここではMeCabを用いた<code>tokenize()</code>を定義しています。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> MeCab
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tokenize</span>(text):
-    wakati <span style="color:#f92672">=</span> MeCab<span style="color:#f92672">.</span>Tagger(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">-O wakati</span><span style="color:#e6db74">&#34;</span>)
-    wakati<span style="color:#f92672">.</span>parse(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
+    wakati <span style="color:#f92672">=</span> MeCab<span style="color:#f92672">.</span>Tagger(<span style="color:#e6db74">&#34;-O wakati&#34;</span>)
+    wakati<span style="color:#f92672">.</span>parse(<span style="color:#e6db74">&#34;&#34;</span>)
     <span style="color:#66d9ef">return</span> wakati<span style="color:#f92672">.</span>parse(text)<span style="color:#f92672">.</span>strip()<span style="color:#f92672">.</span>split()
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: text <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">バーレーンの首都マナマ(マナーマとも)で現在開催されている</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">ユネスコ(国際連合教育科学文化機関)の第42回世界遺産委員会は日本の推薦していた</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">「長崎と天草地方の潜伏キリシタン関連遺産」 (長崎県、熊本県)を30日、</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">世界遺産に登録することを決定した。文化庁が同日発表した。</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">日本国内の文化財の世界遺産登録は昨年に登録された福岡県の</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">「『神宿る島』宗像・沖ノ島と関連遺産群」に次いで18件目。</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">2013年の「富士山-信仰の対象と芸術の源泉」の文化遺産登録から6年連続となった。</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;バーレーンの首都マナマ(マナーマとも)で現在開催されている
+</span><span style="color:#e6db74">ユネスコ(国際連合教育科学文化機関)の第42回世界遺産委員会は日本の推薦していた
+</span><span style="color:#e6db74">「長崎と天草地方の潜伏キリシタン関連遺産」 (長崎県、熊本県)を30日、
+</span><span style="color:#e6db74">世界遺産に登録することを決定した。文化庁が同日発表した。
+</span><span style="color:#e6db74">日本国内の文化財の世界遺産登録は昨年に登録された福岡県の
+</span><span style="color:#e6db74">「『神宿る島』宗像・沖ノ島と関連遺産群」に次いで18件目。
+</span><span style="color:#e6db74">2013年の「富士山-信仰の対象と芸術の源泉」の文化遺産登録から6年連続となった。&#34;&#34;&#34;</span>
 
 In []: model<span style="color:#f92672">.</span>infer_vector(tokenize(text))
 Out[]:
 array([<span style="color:#f92672">-</span><span style="color:#ae81ff">4.52421233e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.60310102e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.35630572e-01</span>,  <span style="color:#ae81ff">1.16688378e-01</span>,
         <span style="color:#ae81ff">1.12721687e-02</span>,  <span style="color:#ae81ff">1.63637593e-01</span>,  <span style="color:#ae81ff">1.46670029e-01</span>,  <span style="color:#ae81ff">6.90088957e-04</span>,
        <span style="color:#f92672">-</span><span style="color:#ae81ff">1.66465431e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.73131120e-01</span>,  <span style="color:#ae81ff">3.96440744e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.61171484e-01</span>,
-       [<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]
+       [<span style="color:#f92672">...</span>]
        <span style="color:#ae81ff">2.84847170e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.92884701e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.23438710e-01</span>,  <span style="color:#ae81ff">1.59409940e-01</span>],
      dtype<span style="color:#f92672">=</span>float32)       
 </code></pre></div><p>（出典：<a href="https://ja.wikinews.org/wiki/%E6%BD%9C%E4%BC%8F%E3%82%AD%E3%83%AA%E3%82%B7%E3%82%BF%E3%83%B3%E9%96%A2%E9%80%A3%E9%81%BA%E7%94%A3%E3%80%81%E4%B8%96%E7%95%8C%E9%81%BA%E7%94%A3%E7%99%BB%E9%8C%B2">潜伏キリシタン関連遺産、世界遺産登録 - ウィキニュース</a>）</p>
 <h3 id="任意の入力文に対して類似するドキュメントを表示する">任意の入力文に対して類似するドキュメントを表示する</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>docvecs<span style="color:#f92672">.</span>most_similar([model<span style="color:#f92672">.</span>infer_vector(tokenize(text))])
 Out[]:
-[(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">イタリアの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.599028468132019</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">海の道むなかた館</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5562682151794434</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">タジキスタンの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5554744005203247</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ウクライナの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5542891621589661</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">バーレーンの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.552284836769104</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">世界遺産センター (曖昧さ回避)</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.540568470954895</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">アラブ首長国連邦の世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5372575521469116</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">アイスランドの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5366297960281372</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">マレーシアの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5362405776977539</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ラトビアの世界遺産</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.5351229906082153</span>)]
+[(<span style="color:#e6db74">&#39;イタリアの世界遺産&#39;</span>, <span style="color:#ae81ff">0.599028468132019</span>),
+ (<span style="color:#e6db74">&#39;海の道むなかた館&#39;</span>, <span style="color:#ae81ff">0.5562682151794434</span>),
+ (<span style="color:#e6db74">&#39;タジキスタンの世界遺産&#39;</span>, <span style="color:#ae81ff">0.5554744005203247</span>),
+ (<span style="color:#e6db74">&#39;ウクライナの世界遺産&#39;</span>, <span style="color:#ae81ff">0.5542891621589661</span>),
+ (<span style="color:#e6db74">&#39;バーレーンの世界遺産&#39;</span>, <span style="color:#ae81ff">0.552284836769104</span>),
+ (<span style="color:#e6db74">&#39;世界遺産センター (曖昧さ回避)&#39;</span>, <span style="color:#ae81ff">0.540568470954895</span>),
+ (<span style="color:#e6db74">&#39;アラブ首長国連邦の世界遺産&#39;</span>, <span style="color:#ae81ff">0.5372575521469116</span>),
+ (<span style="color:#e6db74">&#39;アイスランドの世界遺産&#39;</span>, <span style="color:#ae81ff">0.5366297960281372</span>),
+ (<span style="color:#e6db74">&#39;マレーシアの世界遺産&#39;</span>, <span style="color:#ae81ff">0.5362405776977539</span>),
+ (<span style="color:#e6db74">&#39;ラトビアの世界遺産&#39;</span>, <span style="color:#ae81ff">0.5351229906082153</span>)]
 </code></pre></div><h3 id="類似する単語を表示する">類似する単語を表示する</h3>
 <p>なお、doc2vecでもword2vecと同様に、任意の単語に対して類似する単語を表示することもできますが、単語間の類似度を知りたいだけならword2vecの学習済みモデルである<a href="http://www.cl.ecei.tohoku.ac.jp/~m-suzuki/jawiki_vector/">日本語 Wikipedia エンティティベクトル</a>を使った方が良いでしょう。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">一揆</span><span style="color:#e6db74">&#34;</span>, topn<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74">&#34;一揆&#34;</span>, topn<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
 Out[]:
-[(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">百姓一揆</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.717296302318573</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">国人衆</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.7110892534255981</span>),
- (<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">国人一揆</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">0.7016592025756836</span>)]
+[(<span style="color:#e6db74">&#39;百姓一揆&#39;</span>, <span style="color:#ae81ff">0.717296302318573</span>),
+ (<span style="color:#e6db74">&#39;国人衆&#39;</span>, <span style="color:#ae81ff">0.7110892534255981</span>),
+ (<span style="color:#e6db74">&#39;国人一揆&#39;</span>, <span style="color:#ae81ff">0.7016592025756836</span>)]
 </code></pre></div><hr>
 <h2 id="ライセンス">ライセンス</h2>
 <p>CC-BY-SA: <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a></p>

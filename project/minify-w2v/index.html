@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1048,9 +1054,9 @@ margin-left: -4%;
 </ol>
 <p><code>load_word2vec</code>と<code>save_word2vec</code>にはそれぞれ<code>binary</code>オプションがあり、入力および出力をバイナリフォーマットかテキストフォーマットか選択できます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">mw2v <span style="color:#f92672">=</span> MinifyW2V()
-mw2v<span style="color:#f92672">.</span>load_word2vec(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/model.txt</span><span style="color:#e6db74">&#34;</span>)
-mw2v<span style="color:#f92672">.</span>set_target_vocab(target_vocab<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">cat</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">dog</span><span style="color:#e6db74">&#34;</span>])
-mw2v<span style="color:#f92672">.</span>save_word2vec(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/output.bin</span><span style="color:#e6db74">&#34;</span>, binary<span style="color:#f92672">=</span>True)
+mw2v<span style="color:#f92672">.</span>load_word2vec(<span style="color:#e6db74">&#34;/path/to/model.txt&#34;</span>)
+mw2v<span style="color:#f92672">.</span>set_target_vocab(target_vocab<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;dog&#34;</span>])
+mw2v<span style="color:#f92672">.</span>save_word2vec(<span style="color:#e6db74">&#34;/path/to/output.bin&#34;</span>, binary<span style="color:#f92672">=</span>True)
 </code></pre></div><h2 id="ベンチマーク">ベンチマーク</h2>
 <p>日本語 Wikipedia エンティティベクトルの単語ベクトルを元に、そこから語彙を10,000に減らしたときのファイルサイズや読み込み時間を比較した結果です。テキストファイルの場合はファイルフォーマットの構造上、語彙を減らせば線形でファイルサイズも小さくなりますし読み込み時間も小さくなります。</p>
 <table>

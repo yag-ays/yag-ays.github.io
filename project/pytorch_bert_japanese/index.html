@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1053,26 +1059,26 @@ margin-left: -4%;
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: <span style="color:#f92672">from</span> bert_juman <span style="color:#f92672">import</span> BertWithJumanModel
 
-In []: bert <span style="color:#f92672">=</span> BertWithJumanModel(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/Japanese_L-12_H-768_A-12_E-30_BPE</span><span style="color:#e6db74">&#34;</span>)
+In []: bert <span style="color:#f92672">=</span> BertWithJumanModel(<span style="color:#e6db74">&#34;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE&#34;</span>)
 
-In []: bert<span style="color:#f92672">.</span>get_sentence_embedding(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">吾輩は猫である。</span><span style="color:#e6db74">&#34;</span>)
+In []: bert<span style="color:#f92672">.</span>get_sentence_embedding(<span style="color:#e6db74">&#34;吾輩は猫である。&#34;</span>)
 Out[]:
 array([ <span style="color:#ae81ff">2.22642735e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.40221739e-01</span>,  <span style="color:#ae81ff">1.09303640e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.02307117e+00</span>,
         <span style="color:#ae81ff">1.78834641e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.73566216e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.57942638e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.98571169e-01</span>,
        <span style="color:#f92672">-</span><span style="color:#ae81ff">2.77438164e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8.05811465e-01</span>,  <span style="color:#ae81ff">3.46736580e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.20409870e-01</span>,
         <span style="color:#ae81ff">1.03382647e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5.33944130e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.25344890e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.02880754e-01</span>,
         <span style="color:#ae81ff">2.26500735e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8.97880018e-01</span>,  <span style="color:#ae81ff">2.52314955e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.09809303e-01</span>,
-[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]        
+[<span style="color:#f92672">...</span>]        
 </code></pre></div><p>これでBERTによる文章埋め込みのベクトルが得られました。あとは、後続のタスクに利用したり、文章ベクトルとして類似度計算などに利用できます。</p>
 <p>また、BERTの隠れ層の位置や、プーリングの計算方法も選択できるようにしています。このあたりの設計は<a href="https://github.com/hanxiao/bert-as-service">hanxiao/bert-as-service</a> を参考にしています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: bert<span style="color:#f92672">.</span>get_sentence_embedding(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">吾輩は猫である。</span><span style="color:#e6db74">&#34;</span>,
-   <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>:                             pooling_layer<span style="color:#f92672">=</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,
-   <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>:                             pooling_strategy<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">REDUCE_MAX</span><span style="color:#e6db74">&#34;</span>)
-   <span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: bert<span style="color:#f92672">.</span>get_sentence_embedding(<span style="color:#e6db74">&#34;吾輩は猫である。&#34;</span>,
+   <span style="color:#f92672">...</span>:                             pooling_layer<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>,
+   <span style="color:#f92672">...</span>:                             pooling_strategy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;REDUCE_MAX&#34;</span>)
+   <span style="color:#f92672">...</span>:
 Out[]:
 array([ <span style="color:#ae81ff">1.2089624</span> ,  <span style="color:#ae81ff">0.6267309</span> ,  <span style="color:#ae81ff">0.7243419</span> , <span style="color:#f92672">-</span><span style="color:#ae81ff">0.12712255</span>,  <span style="color:#ae81ff">1.8050476</span> ,
         <span style="color:#ae81ff">0.43929055</span>,  <span style="color:#ae81ff">0.605848</span>  ,  <span style="color:#ae81ff">0.5058241</span> ,  <span style="color:#ae81ff">0.8335829</span> , <span style="color:#f92672">-</span><span style="color:#ae81ff">0.26000524</span>,
-[<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>]        
+[<span style="color:#f92672">...</span>]        
 </code></pre></div><hr>
 <h2 id="解説">解説</h2>
 <p>上記の<code>BertWithJumanModel</code>クラスの内部を順に解説していきます。そのまま上から実行しても動作するように記載しているので、途中の動作が気になる方は試してみて下さい。</p>
@@ -1081,8 +1087,8 @@ array([ <span style="color:#ae81ff">1.2089624</span> ,  <span style="color:#ae81
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> torch
 <span style="color:#f92672">from</span> pytorch_pretrained_bert <span style="color:#f92672">import</span> BertTokenizer, BertModel
 
-model <span style="color:#f92672">=</span> BertModel<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/</span><span style="color:#e6db74">&#34;</span>)
-bert_tokenizer <span style="color:#f92672">=</span> BertTokenizer(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/vocab.txt</span><span style="color:#e6db74">&#34;</span>,
+model <span style="color:#f92672">=</span> BertModel<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/&#34;</span>)
+bert_tokenizer <span style="color:#f92672">=</span> BertTokenizer(<span style="color:#e6db74">&#34;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/vocab.txt&#34;</span>,
                                do_lower_case<span style="color:#f92672">=</span>False, do_basic_tokenize<span style="color:#f92672">=</span>False)
 </code></pre></div><p>モデルは<a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?BERT%E6%97%A5%E6%9C%AC%E8%AA%9EPretrained%E3%83%A2%E3%83%87%E3%83%AB">黒橋・河原研究室の配布サイト</a>からダウンロードし解凍します。<code>BertModel</code>の<code>from_pretrained()</code>で解凍先のパスを指定することで、モデルをロードすることができます。必要なファイルは<code>pytorch_model.bin</code>と<code>vocab.txt</code>のみです。</p>
 <p>なお、モデル配布ページでは<code>pytorch-pretrained-BERT</code>内の<code>tokenization.py</code>の特定行をコメントアウトするように指示されていますが、<code>BertTokenizer()</code>で引数を<code>do_basic_tokenize=False</code>とすれば対応は不要です。 </p>
@@ -1102,8 +1108,8 @@ bert_tokenizer <span style="color:#f92672">=</span> BertTokenizer(<span style="c
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">juman_tokenizer <span style="color:#f92672">=</span> JumanTokenizer()
 
 tokens <span style="color:#f92672">=</span> juman_tokenizer<span style="color:#f92672">.</span>tokenize(text)
-bert_tokens <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>tokenize(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(tokens))
-ids <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>convert_tokens_to_ids([<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[CLS]</span><span style="color:#e6db74">&#34;</span>] <span style="color:#f92672">+</span> bert_tokens[:<span style="color:#ae81ff">126</span>] <span style="color:#f92672">+</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[SEP]</span><span style="color:#e6db74">&#34;</span>])
+bert_tokens <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>tokenize(<span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">.</span>join(tokens))
+ids <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>convert_tokens_to_ids([<span style="color:#e6db74">&#34;[CLS]&#34;</span>] <span style="color:#f92672">+</span> bert_tokens[:<span style="color:#ae81ff">126</span>] <span style="color:#f92672">+</span> [<span style="color:#e6db74">&#34;[SEP]&#34;</span>])
 tokens_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(ids)<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
 </code></pre></div><p>例えば「<code>我輩は猫である。</code>」という文章は、以下のようにトークン化されid列に変換されます。ちなみに<code>我輩</code>という単語は辞書中に存在せずかつサブワードとしても分割できないことから、未知語として<code>id:1</code>(<code>[UNK]</code>)に変換されています。</p>
 <pre><code># text

@@ -1004,6 +1004,12 @@ margin-left: -4%;
                     
                         
                             
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            
+                        
+                    
+                        
+                            
                             <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
@@ -1056,7 +1062,7 @@ margin-left: -4%;
 <span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;3.3&#39;</span>
 <span style="color:#66d9ef">services</span>:
   <span style="color:#66d9ef">elasticsearch</span>:
-    <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.3</span><span style="color:#ae81ff">.1</span>
+    <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.3.1</span>
     <span style="color:#66d9ef">ports</span>:
       - <span style="color:#e6db74">&#34;9200:9200&#34;</span>
     <span style="color:#66d9ef">volumes</span>:
@@ -1071,7 +1077,7 @@ margin-left: -4%;
 <h3 id="2-wikipediaの本文を文ベクトルに変換してelasticsearchに投入する">2. Wikipediaの本文を文ベクトルに変換してElasticsearchに投入する</h3>
 <p>今回はある程度現実的な状況を再現するため、データセットはWikipediaの日本語のすべてのエントリーを使用しました。Wikipediaのエントリーに含まれるテキストをダンプデータから抽出し、分散表現を計算するとともにElasticsearchにインポートします。文書の分散表現の計算には、SWEMのaverage-poolingを利用します。手法の詳細は<a href="https://yag-ays.github.io/project/swem/">こちらの記事</a>を参考ください。</p>
 <p>まず <code>index.json</code>でインデックスのマッピングタイプを指定します。文書ベクトルには<code>&quot;type&quot;: &quot;dense_vector&quot;</code>、次元数を<code>&quot;dims&quot;: 200</code>で指定します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">i</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#960050;background-color:#1e0010">d</span><span style="color:#960050;background-color:#1e0010">e</span><span style="color:#960050;background-color:#1e0010">x</span><span style="color:#960050;background-color:#1e0010">.</span><span style="color:#960050;background-color:#1e0010">j</span><span style="color:#960050;background-color:#1e0010">s</span><span style="color:#960050;background-color:#1e0010">o</span><span style="color:#960050;background-color:#1e0010">n</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">index.json</span>
 <span style="color:#e6db74">&#34;properties&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
   <span style="color:#f92672">&#34;title&#34;</span>: {
     <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>
@@ -1091,11 +1097,11 @@ margin-left: -4%;
 query_vector <span style="color:#f92672">=</span> swem<span style="color:#f92672">.</span>average_pooling(query)<span style="color:#f92672">.</span>tolist()
 
 script_query <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">script_score</span><span style="color:#e6db74">&#34;</span>: {
-        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">query</span><span style="color:#e6db74">&#34;</span>: {<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">match_all</span><span style="color:#e6db74">&#34;</span>: {}},
-        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">script</span><span style="color:#e6db74">&#34;</span>: {
-            <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">source</span><span style="color:#e6db74">&#34;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">cosineSimilarity(params.query_vector, doc[</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">text_vector</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">]) + 1.0</span><span style="color:#e6db74">&#34;</span>,
-            <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">params</span><span style="color:#e6db74">&#34;</span>: {<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">query_vector</span><span style="color:#e6db74">&#34;</span>: query_vector}
+    <span style="color:#e6db74">&#34;script_score&#34;</span>: {
+        <span style="color:#e6db74">&#34;query&#34;</span>: {<span style="color:#e6db74">&#34;match_all&#34;</span>: {}},
+        <span style="color:#e6db74">&#34;script&#34;</span>: {
+            <span style="color:#e6db74">&#34;source&#34;</span>: <span style="color:#e6db74">&#34;cosineSimilarity(params.query_vector, doc[&#39;text_vector&#39;]) + 1.0&#34;</span>,
+            <span style="color:#e6db74">&#34;params&#34;</span>: {<span style="color:#e6db74">&#34;query_vector&#34;</span>: query_vector}
         }
     }
 }
@@ -1103,9 +1109,9 @@ script_query <span style="color:#f92672">=</span> {
 response <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>search(
     index<span style="color:#f92672">=</span>INDEX_NAME,
     body<span style="color:#f92672">=</span>{
-        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">size</span><span style="color:#e6db74">&#34;</span>: SEARCH_SIZE,
-        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">query</span><span style="color:#e6db74">&#34;</span>: script_query,
-        <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">_source</span><span style="color:#e6db74">&#34;</span>: {<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">includes</span><span style="color:#e6db74">&#34;</span>: [<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">title</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">text</span><span style="color:#e6db74">&#34;</span>]}
+        <span style="color:#e6db74">&#34;size&#34;</span>: SEARCH_SIZE,
+        <span style="color:#e6db74">&#34;query&#34;</span>: script_query,
+        <span style="color:#e6db74">&#34;_source&#34;</span>: {<span style="color:#e6db74">&#34;includes&#34;</span>: [<span style="color:#e6db74">&#34;title&#34;</span>, <span style="color:#e6db74">&#34;text&#34;</span>]}
     }
 )
 </code></pre></div><p>ここでは検索スコアの計算に<code>cosineSimilarity</code>関数を利用しています。なお、コサイン類似度自体に<code>+1.0</code>しているのは、Elasticsearchが負のスコアをサポートしていないからとのこと。</p>
