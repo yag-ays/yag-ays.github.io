@@ -6,10 +6,20 @@
     <description>Recent content on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 05 Aug 2020 20:23:39 +0900</lastBuildDate>
-    
-	<atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sat, 07 Nov 2020 21:01:50 +0900</lastBuildDate><atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>絵文字の日本語読み辞書をUNICODE 13.0対応に更新しました</title>
+      <link>https://yag-ays.github.io/project/emoji-ja-update-13/</link>
+      <pubDate>Sat, 07 Nov 2020 21:01:50 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/emoji-ja-update-13/</guid>
+      <description>Unicode絵文字の日本語読み/キーワード/分類辞書を、Unicode 13.0に更新しました。
+今回は@HeroadZにPull Requestを送っていただきました。ありがとうございます（PR放置してごめんなさい🙏）。
+ 前回の記事：絵文字の日本語読み辞書をUnicode 12.0対応に更新しました 前々回の記事：📙Unicode絵文字の日本語読み/キーワード/分類辞書📙   🔖 リリース Githubレポジトリの20201107リリースからダウンロードするか、現在masterブランチに含まれている各種ファイルを利用ください。
+ Release 20201107 · yagays/emoji-ja  前回からのアップデートは、Unicode 13.0で追加された新規絵文字の対応のみです。
+➡ 括弧やコンマといった記号の読みの追加 今回のリリースから記号の読みが追加されており、これは辞書が参照しているUnicode CLDRのリストに追加されたためです。はたして記号は絵文字なのかという疑問が湧きますが、特に区別する必要性も感じられなかったので、元のソースに従ってすべて辞書に追加しています。
+&amp;quot;«&amp;quot;: { &amp;quot;keywords&amp;quot;: [ &amp;quot;カッコ&amp;quot;, &amp;quot;二重ギュメ&amp;quot;, &amp;quot;山パーレン&amp;quot;, &amp;quot;左ギュメ&amp;quot;, &amp;quot;左山括弧&amp;quot;, &amp;quot;引用符&amp;quot; ], &amp;quot;short_name&amp;quot;: &amp;quot;左山括弧&amp;quot;, &amp;quot;group&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;subgroup&amp;quot;: &amp;quot;&amp;quot; }, 📝 参考  Unicode 13.0.0 Unicode 13.0 Emoji List  </description>
+    </item>
     
     <item>
       <title>医療分野の大規模テキストデータで学習した分散表現から、疾患の類似度を求める</title>

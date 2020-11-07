@@ -1059,20 +1059,20 @@ margin-left: -4%;
 <h3 id="1-elasticsearchの設定">1. Elasticsearchの設定</h3>
 <p>Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、<code>docker.elastic.co</code>で提供されているバージョン7.3.1を利用しました。以下のように<code>docker-compose.yaml</code>を定義して<code>docker-compose up</code>で起動します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># docker-compose.yaml</span>
-<span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;3.3&#39;</span>
-<span style="color:#66d9ef">services</span>:
-  <span style="color:#66d9ef">elasticsearch</span>:
-    <span style="color:#66d9ef">image</span>: docker.elastic.co/elasticsearch/elasticsearch:<span style="color:#ae81ff">7.3.1</span>
-    <span style="color:#66d9ef">ports</span>:
+<span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.3&#39;</span>
+<span style="color:#f92672">services</span>:
+  <span style="color:#f92672">elasticsearch</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.elastic.co/elasticsearch/elasticsearch:7.3.1</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#e6db74">&#34;9200:9200&#34;</span>
-    <span style="color:#66d9ef">volumes</span>:
-      - es-data:/usr/share/elasticsearch/data
-    <span style="color:#66d9ef">tty</span>: <span style="color:#66d9ef">true</span>
-    <span style="color:#66d9ef">environment</span>:
-      <span style="color:#66d9ef">discovery.type</span>: single-node
-<span style="color:#66d9ef">volumes</span>:
-  <span style="color:#66d9ef">es-data</span>:
-    <span style="color:#66d9ef">driver</span>: local
+    <span style="color:#f92672">volumes</span>:
+      - <span style="color:#ae81ff">es-data:/usr/share/elasticsearch/data</span>
+    <span style="color:#f92672">tty</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#f92672">environment</span>:
+      <span style="color:#f92672">discovery.type</span>: <span style="color:#ae81ff">single-node</span>
+<span style="color:#f92672">volumes</span>:
+  <span style="color:#f92672">es-data</span>:
+    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">local</span>
 </code></pre></div><p>立ち上がった後は<code>curl http://127.0.0.1:9200/_cat/health</code>で結果が帰ってくればOKです。</p>
 <h3 id="2-wikipediaの本文を文ベクトルに変換してelasticsearchに投入する">2. Wikipediaの本文を文ベクトルに変換してElasticsearchに投入する</h3>
 <p>今回はある程度現実的な状況を再現するため、データセットはWikipediaの日本語のすべてのエントリーを使用しました。Wikipediaのエントリーに含まれるテキストをダンプデータから抽出し、分散表現を計算するとともにElasticsearchにインポートします。文書の分散表現の計算には、SWEMのaverage-poolingを利用します。手法の詳細は<a href="https://yag-ays.github.io/project/swem/">こちらの記事</a>を参考ください。</p>
@@ -1150,61 +1150,61 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
 <table>
 <thead>
 <tr>
-<th align="left">順位</th>
-<th align="left">記事タイトル 　　　　　　　　　　　　　</th>
-<th align="left">記事本文(冒頭)</th>
+<th style="text-align:left">順位</th>
+<th style="text-align:left">記事タイトル 　　　　　　　　　　　　　</th>
+<th style="text-align:left">記事本文(冒頭)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">1</td>
-<td align="left">日本遺産</td>
-<td align="left">日本遺産（にほんいさん、Japan Heritage）は、文化庁が認定した、地域の歴史的魅力や特色を通じて日本の文化・伝統を語るストーリーである。</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">日本遺産</td>
+<td style="text-align:left">日本遺産（にほんいさん、Japan Heritage）は、文化庁が認定した、地域の歴史的魅力や特色を通じて日本の文化・伝統を語るストーリーである。</td>
 </tr>
 <tr>
-<td align="left">2</td>
-<td align="left">武家の古都・鎌倉</td>
-<td align="left">「武家の古都・鎌倉」（ぶけのこと・かまくら、英語: Kamakura, Home of the SAMURAI）とは、神奈川県鎌倉市・横浜市・逗子市に残る歴史的建造物群を対象とする世界遺産暫定リスト掲載物件である。</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">武家の古都・鎌倉</td>
+<td style="text-align:left">「武家の古都・鎌倉」（ぶけのこと・かまくら、英語: Kamakura, Home of the SAMURAI）とは、神奈川県鎌倉市・横浜市・逗子市に残る歴史的建造物群を対象とする世界遺産暫定リスト掲載物件である。</td>
 </tr>
 <tr>
-<td align="left">3</td>
-<td align="left">「神宿る島」宗像・沖ノ島と関連遺産群</td>
-<td align="left">「神宿る島」宗像・沖ノ島と関連遺産群（「かみやどるしま」むなかた・おきのしまとかんれんいさんぐん）は、ユネスコの世界遺産リスト登録物件で、日本の世界遺産の中では21番目に登録された。</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">「神宿る島」宗像・沖ノ島と関連遺産群</td>
+<td style="text-align:left">「神宿る島」宗像・沖ノ島と関連遺産群（「かみやどるしま」むなかた・おきのしまとかんれんいさんぐん）は、ユネスコの世界遺産リスト登録物件で、日本の世界遺産の中では21番目に登録された。</td>
 </tr>
 <tr>
-<td align="left">4</td>
-<td align="left">世界遺産委員会</td>
-<td align="left">世界遺産委員会（せかいいさんいいんかい）は、世界遺産に関して話し合うための国際連合教育科学文化機関の委員会。</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">世界遺産委員会</td>
+<td style="text-align:left">世界遺産委員会（せかいいさんいいんかい）は、世界遺産に関して話し合うための国際連合教育科学文化機関の委員会。</td>
 </tr>
 <tr>
-<td align="left">5</td>
-<td align="left">百舌鳥・古市古墳群</td>
-<td align="left">百舌鳥・古市古墳群 -古代日本の墳墓群-（もず・ふるいちこふんぐん -こだいにほんのふんぼぐん-）は、大阪府堺市、羽曳野市、藤井寺市にある45件49基の古墳群の総称。</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">百舌鳥・古市古墳群</td>
+<td style="text-align:left">百舌鳥・古市古墳群 -古代日本の墳墓群-（もず・ふるいちこふんぐん -こだいにほんのふんぼぐん-）は、大阪府堺市、羽曳野市、藤井寺市にある45件49基の古墳群の総称。</td>
 </tr>
 <tr>
-<td align="left">6</td>
-<td align="left">近世高岡の文化遺産群</td>
-<td align="left">近世高岡の文化遺産群（きんせいたかおかのぶんかいさんぐん）とは、富山県高岡市にある、同県と同市がユネスコの世界遺産への登録を目指している文化財の総称。</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">近世高岡の文化遺産群</td>
+<td style="text-align:left">近世高岡の文化遺産群（きんせいたかおかのぶんかいさんぐん）とは、富山県高岡市にある、同県と同市がユネスコの世界遺産への登録を目指している文化財の総称。</td>
 </tr>
 <tr>
-<td align="left">7</td>
-<td align="left">明治日本の産業革命遺産 製鉄・製鋼、造船、石炭産業</td>
-<td align="left">明治日本の産業革命遺産 製鉄・製鋼、造船、石炭産業（めいじにほんのさんぎょうかくめいいさん せいてつ・せいこう、ぞうせん、せきたんさんぎょう）は、2015年の第39回世界遺産委員会でUNESCOの世界遺産リストに登録された日本の世界遺産の一つであり、山口・福岡・佐賀・長崎・熊本・鹿児島・岩手・静岡の8県に点在する。</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">明治日本の産業革命遺産 製鉄・製鋼、造船、石炭産業</td>
+<td style="text-align:left">明治日本の産業革命遺産 製鉄・製鋼、造船、石炭産業（めいじにほんのさんぎょうかくめいいさん せいてつ・せいこう、ぞうせん、せきたんさんぎょう）は、2015年の第39回世界遺産委員会でUNESCOの世界遺産リストに登録された日本の世界遺産の一つであり、山口・福岡・佐賀・長崎・熊本・鹿児島・岩手・静岡の8県に点在する。</td>
 </tr>
 <tr>
-<td align="left">8</td>
-<td align="left">紀伊山地の霊場と参詣道</td>
-<td align="left">紀伊山地の霊場と参詣道（きいさんちのれいじょうとさんけいみち）は、和歌山県・奈良県・三重県にまたがる3つの霊場（吉野・大峰、熊野三山、高野山）と参詣道（熊野参詣道、大峯奥駈道、高野山町石道）を登録対象とする世界遺産（文化遺産）。</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">紀伊山地の霊場と参詣道</td>
+<td style="text-align:left">紀伊山地の霊場と参詣道（きいさんちのれいじょうとさんけいみち）は、和歌山県・奈良県・三重県にまたがる3つの霊場（吉野・大峰、熊野三山、高野山）と参詣道（熊野参詣道、大峯奥駈道、高野山町石道）を登録対象とする世界遺産（文化遺産）。</td>
 </tr>
 <tr>
-<td align="left">9</td>
-<td align="left">静岡県富士山世界遺産センター</td>
-<td align="left">静岡県富士山世界遺産センター（しずおかけんふじさんせかいいさんセンター）は、静岡県富士宮市にある博物館。</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">静岡県富士山世界遺産センター</td>
+<td style="text-align:left">静岡県富士山世界遺産センター（しずおかけんふじさんせかいいさんセンター）は、静岡県富士宮市にある博物館。</td>
 </tr>
 <tr>
-<td align="left">10</td>
-<td align="left">ドレスデン・エルベ渓谷</td>
-<td align="left">ドレスデン・エルベ渓谷（ドレスデン・エルベけいこく、ドイツ語: Dresdner Elbtal）とは、かつてユネスコの世界遺産に登録されていた物件である。</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">ドレスデン・エルベ渓谷</td>
+<td style="text-align:left">ドレスデン・エルベ渓谷（ドレスデン・エルベけいこく、ドイツ語: Dresdner Elbtal）とは、かつてユネスコの世界遺産に登録されていた物件である。</td>
 </tr>
 </tbody>
 </table>
@@ -1236,61 +1236,61 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
 <table>
 <thead>
 <tr>
-<th align="left">順位</th>
-<th align="left">記事タイトル 　　　　　　　　　　　　　</th>
-<th align="left">記事本文(冒頭)</th>
+<th style="text-align:left">順位</th>
+<th style="text-align:left">記事タイトル 　　　　　　　　　　　　　</th>
+<th style="text-align:left">記事本文(冒頭)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">1</td>
-<td align="left">レヒ川</td>
-<td align="left">レヒ川（独: Lech）は、オーストリアとドイツを流れる河川。</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">レヒ川</td>
+<td style="text-align:left">レヒ川（独: Lech）は、オーストリアとドイツを流れる河川。</td>
 </tr>
 <tr>
-<td align="left">2</td>
-<td align="left">イン川</td>
-<td align="left">「イン川（インがわ、英語: Inn river）は、スイス・オーストリア・ドイツの3ヶ国にわたって流れる川で、ドナウ川の支川のひとつ。</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">イン川</td>
+<td style="text-align:left">「イン川（インがわ、英語: Inn river）は、スイス・オーストリア・ドイツの3ヶ国にわたって流れる川で、ドナウ川の支川のひとつ。</td>
 </tr>
 <tr>
-<td align="left">3</td>
-<td align="left">オーデル川</td>
-<td align="left">オーデル川（独: Oder, 波: Odra）は、中央ヨーロッパを流れる河川である。</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">オーデル川</td>
+<td style="text-align:left">オーデル川（独: Oder, 波: Odra）は、中央ヨーロッパを流れる河川である。</td>
 </tr>
 <tr>
-<td align="left">4</td>
-<td align="left">イルメナウ川</td>
-<td align="left">イルメナウ川（独: Ilmenau）は、ドイツのニーダーザクセン州を流れる川で、エルベ川の支流である。</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">イルメナウ川</td>
+<td style="text-align:left">イルメナウ川（独: Ilmenau）は、ドイツのニーダーザクセン州を流れる川で、エルベ川の支流である。</td>
 </tr>
 <tr>
-<td align="left">5</td>
-<td align="left">ライネ川</td>
-<td align="left">ライネ川（ライネがわ、ドイツ語: Leine）は、ドイツのテューリンゲン州やニーダーザクセン州などを流れる長さ281kmの河川で、アラー川の支流である。</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">ライネ川</td>
+<td style="text-align:left">ライネ川（ライネがわ、ドイツ語: Leine）は、ドイツのテューリンゲン州やニーダーザクセン州などを流れる長さ281kmの河川で、アラー川の支流である。</td>
 </tr>
 <tr>
-<td align="left">6</td>
-<td align="left">ナイセ川</td>
-<td align="left">ナイセ川（ドイツ語：Neiße）はオーデル川の支流。チェコ北部に源流を発し、第二次世界大戦後に設定されたドイツとポーランドの国境であるオーデル・ナイセ線の一部を成す。</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">ナイセ川</td>
+<td style="text-align:left">ナイセ川（ドイツ語：Neiße）はオーデル川の支流。チェコ北部に源流を発し、第二次世界大戦後に設定されたドイツとポーランドの国境であるオーデル・ナイセ線の一部を成す。</td>
 </tr>
 <tr>
-<td align="left">7</td>
-<td align="left">ザーレ川</td>
-<td align="left">ザーレ川（ザーレがわ、Saale）は、ザクセンのザーレ川（Sächsische Saale）、あるいはテューリンゲンのザーレ川（Thüringische Saale）とも呼ばれ、バイエルン州、テューリンゲン州、ザクセン＝アンハルト州を流れる全長413kmの河川で、モルダウ川に次いでエルベ川第2の支流である。</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">ザーレ川</td>
+<td style="text-align:left">ザーレ川（ザーレがわ、Saale）は、ザクセンのザーレ川（Sächsische Saale）、あるいはテューリンゲンのザーレ川（Thüringische Saale）とも呼ばれ、バイエルン州、テューリンゲン州、ザクセン＝アンハルト州を流れる全長413kmの河川で、モルダウ川に次いでエルベ川第2の支流である。</td>
 </tr>
 <tr>
-<td align="left">8</td>
-<td align="left">フレンキシェ・レーツァト川</td>
-<td align="left">フレンキシェ・レーツァト川（Fränkische Rezat、フランケンのレーツァト川）は、全長65km。レドニッツ川左岸、すなわち西側の源流で、ドイツ、バイエルン州ミッテルフランケンを流れる川。</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">フレンキシェ・レーツァト川</td>
+<td style="text-align:left">フレンキシェ・レーツァト川（Fränkische Rezat、フランケンのレーツァト川）は、全長65km。レドニッツ川左岸、すなわち西側の源流で、ドイツ、バイエルン州ミッテルフランケンを流れる川。</td>
 </tr>
 <tr>
-<td align="left">9</td>
-<td align="left">アディジェ川</td>
-<td align="left">アディジェ川（イタリア語: Adige）は、イタリア北部を流れアドリア海に注ぐ、イタリアで2番目に長い川である。</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">アディジェ川</td>
+<td style="text-align:left">アディジェ川（イタリア語: Adige）は、イタリア北部を流れアドリア海に注ぐ、イタリアで2番目に長い川である。</td>
 </tr>
 <tr>
-<td align="left">10</td>
-<td align="left">ムール川</td>
-<td align="left">ムール川（Mura）は、ヨーロッパ中央部、主にオーストリアを流れる河川。ドナウ川支流のドラーヴァ川の支流である。</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">ムール川</td>
+<td style="text-align:left">ムール川（Mura）は、ヨーロッパ中央部、主にオーストリアを流れる河川。ドナウ川支流のドラーヴァ川の支流である。</td>
 </tr>
 </tbody>
 </table>
