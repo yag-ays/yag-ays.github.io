@@ -1041,7 +1041,9 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <!-- raw HTML omitted -->
+    <video autoplay loop width="680" poster="/img/embedding-visualization_02.png">
+　　<source src="https://yag-ays.github.io/img/embedding-visualization_02.webm">
+</video>
 <p>word2vecや系列モデル等で学習した分散表現の埋め込みベクトル（word embeddings）は、単語の意味をベクトル空間上で表現することが可能です。最も有名な例では「King - Man + Woman = Queen」のように意味としての加算や減算がベクトル計算で類推可能なこともあり、ベクトル空間の解釈として低次元へ写像する形で分散表現の可視化が行われています。</p>
 <p>可視化の際に用いられるツールとしては、<a href="https://www.tensorflow.org/">TensorFlow</a>のツールの一つである<a href="https://www.tensorflow.org/guide/summaries_and_tensorboard">TensorBoard</a>が、豊富な機能とインタラクティブな操作性を備えていて一番使い勝手が良いと思います。ただ、TensorFlowと組み合わせた可視化は容易なのですが、他のツールやパッケージで作成したコードをそのまま読み込めないなど、かゆいところに手が届かないと感じる部分もあります。</p>
 <p>そこで今回は、すでに学習された単語の分散表現を可視化するために、</p>

@@ -2,7 +2,6 @@
 <html lang="ja">
 
 <head>
-	<meta name="generator" content="Hugo 0.78.2" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/" />
-<meta property="og:title" content="Out-of-the-box" />
-<meta property="twitter:title" content="Out-of-the-box">
+<meta property="og:url" content="https://yag-ays.github.io/project/drug-name-ambiguity/" />
+<meta property="og:title" content="つい言い間違えてしまうような薬剤名を(半)自動で探しだす" />
+<meta property="twitter:title" content="つい言い間違えてしまうような薬剤名を(半)自動で探しだす">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:image" content="https://yag-ays.github.io/img/banner.png">
 
-<meta property="og:description" content="yag_ays&#39;s blog">
-<meta property="twitter:description" content="yag_ays&#39;s blog">
+<meta property="og:description" content="">
+<meta property="twitter:description" content="">
 
 <title>
 
 
-    Out-of-the-box
+     つい言い間違えてしまうような薬剤名を(半)自動で探しだす - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/">
+<link rel="canonical" href="https://yag-ays.github.io/project/drug-name-ambiguity/">
 
 
 <style media="screen">
@@ -984,8 +983,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -993,7 +990,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1026,32 +1023,152 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                <p>yag_aysの資材置き場。out-of-the-boxなデータセット/コーパス/ノウハウを公開していきたい。</p>
-<p>記事一覧はこちら→ <a href="https://yag-ays.github.io/project/">PROJECT</a></p>
-<p>プロフィール→ <a href="https://yag.xyz/">Yuki Okuda</a></p>
+            <div class="page-heading">
 
-                </div>
-            
+    つい言い間違えてしまうような薬剤名を(半)自動で探しだす
+    <div class="container">
+      <div class="date">
+        2020-12-14
+      </div>
+    </div>
 
-            
-                <div class="posts">
+</div>
+
+            <div class="markdown">
                 
-                
-                </div>
-            
+    <p><img src="https://yag-ays.github.io/img/drug-name_header.png" alt="drug-name_header"></p>
+<p>この記事は<a href="https://adventar.org/calendars/5648">Ubie Advent Calendar 2020</a>の15日目の記事です。</p>
+<p>昨日の記事はshigedoさんの<a href="https://note.com/yukishigedo/n/n24a475937019">これからのDXを社会実装するスタートアップに必要な「パブリック・アフェアーズ」とは｜yukishigedo｜note</a>でした。</p>
+<hr>
+<h2 id="言い間違えを探す">言い間違えを探す</h2>
+<p>みなさんはこのツイートを見たことがありますか？</p>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">薬剤師の日常<a href="https://twitter.com/hashtag/%E4%BB%8A%E5%B9%B4%E3%82%82%E3%81%82%E3%81%A8%E5%B0%91%E3%81%97%E3%81%AA%E3%81%AE%E3%81%A7%E8%A4%92%E3%82%81%E3%81%A6%E3%81%BB%E3%81%97%E3%81%84?src=hash&amp;ref_src=twsrc%5Etfw">#今年もあと少しなので褒めてほしい</a> <a href="https://t.co/LaSfRnM3NY">pic.twitter.com/LaSfRnM3NY</a></p>&mdash; 鮫島うさぎ (@usagi_samejima) <a href="https://twitter.com/usagi_samejima/status/1210508234991095810?ref_src=twsrc%5Etfw">December 27, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>患者さんがお薬の名前を言い間違えてしまうという薬剤師あるあるな話ですが、間違え方が独特で面白いですね。特に薬剤名は普段馴染みがなく横文字で覚えづらいので、記憶の中にある近い名称に引っ張られてしまうのかもしれません。このツイートのリプライ欄でも他の人が別の事例を紹介してくださっていますが、色々な言い間違えのパターンがあるみたいですね。</p>
+<p>さて、今回はこのような言い間違えをしそうな単語とその薬剤名を自動で抽出してみようと思います。自然言語処理の力を使ってなかば総当り的に探していけば、まだ広く知られていない言い間違えが見つかるかも……？</p>
+<h2 id="言い間違えの問題">言い間違えの問題</h2>
+<p>薬剤の言い間違いについてはこうした笑い話になる一方で、別の薬剤と間違えてしまうことによる医療事故にも繋がりかねない問題でもあります。薬局での薬剤の取り違えの約3割は名称類似によって起こることが報告されているほか、類似名称による医療事故が発生したことから薬剤名が変更される事例もあります。こうした医薬品の言い間違えや認識違いについては、医療事故の原因分析や予防の面で研究されているようです。</p>
+<ul>
+<li><a href="https://gemmed.ghc-j.com/?p=6000">薬局での「薬剤取り違え」や「数量間違い」が5399件―日本医療機能評価機構2014年度調査 | GemMed | データが拓く新時代医療</a></li>
+<li><a href="https://medical.nikkeibp.co.jp/leaf/mem/pub/blog/takenaka/200908/511945.html">「サクシン」が「スキサメトニウム注」に改名―薬の取り違え事故をどうなくすか：日経メディカル</a></li>
+<li><a href="https://www.pmda.go.jp/safety/info-services/medical-safety-info/0178.html">製薬企業からの医薬品の安全使用（取り違え等）に関するお知らせ | 独立行政法人 医薬品医療機器総合機構</a></li>
+<li><a href="http://www.rukurai.jp/med/">薬名類似度検索サービス</a></li>
+</ul>
+<hr>
+<h2 id="方法">方法</h2>
+<p>今回は、以下の方法で薬剤名とその言い間違い候補を抽出しました。</p>
+<ol>
+<li>候補となる薬剤名およびWikipediaの記事タイトルの一覧を取得する</li>
+<li>編集距離などのフィルタリングを元に候補を絞り込む</li>
+<li>最後は目検で確認する</li>
+</ol>
+<h3 id="1-候補の名称の抽出">1. 候補の名称の抽出</h3>
+<p>対象とする薬剤名の一覧を取得します。<a href="https://drug.difff.jp/">くすりのリスト</a>にて公開されているPMDAから取得した「医療用医薬品リスト」の中から、<code>xx錠</code>といったカタカナから始まり錠で終わる薬剤名を取得します。今回は一つの単語のまとまりとしての言い間違いを探したいため、薬剤名にありがちな<code>xx酸yy錠</code>といった漢字が含まれている名称は除外しました。その結果、887件の薬剤の名称が抽出できました。</p>
+<p>次に、Wikipediaから言い間違え候補の一覧を取得します。<a href="https://ja.wikipedia.org/wiki/Wikipedia:%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89">Wikipedia:データベースダウンロード</a>から日本語の全タイトルの一覧が含まれるダンプされたデータをダウンロードします。その結果、約200万件の言い間違え候補が抽出できました。</p>
+<h3 id="2-候補を絞り込む">2. 候補を絞り込む</h3>
+<p>ここから薬剤名と言い間違え候補の中で、お互いに似通った文字列を探し出します。ナイーブに実行すると(1000 × 200万)ペアの組に対して探索する必要があり計算コストが大きいため、薬剤名ごとに編集距離を用いて候補を絞り込み、その絞り込んだ候補に対して類似判定を行います。</p>
+<h4 id="2-1-編集距離">2-1. 編集距離</h4>
+<p>まず最初の絞り込みですが、任意の薬剤名に対して編集距離が2以下の言い間違え候補を列挙しました。編集距離とは、ある文字列から別の文字列に変形するときに必要となる追加/削除/置換のステップの最小回数のことです。例えば「バルトレックス」と「バトルレックス」の編集距離は、<code>2文字目のルを削除する</code>→<code>2文字目のトの後ろルを追加する</code>の合計2ステップとなり、編集距離は2です。</p>
+<p>編集距離の計算には<a href="https://github.com/wolfgarbe/SymSpell">SymSpell</a>を利用しました。事前に検索インデックスを計算することで薬剤ごとに探索する時の計算時間を抑えています。</p>
+<h4 id="2-2-間違えやすさを測る">2-2. 間違えやすさを測る</h4>
+<p>ここから、より言い間違えやすい候補に絞り込んでいきます。編集距離による絞り込みでは文字列として近い候補は列挙できますが、実際に見てみると間違えないような事例が多数含まれます。そういった事例を弾くために文字列同士の言い間違えやすさを評価し、より現実的な候補を見つけます。今回は以下のサイトでまとめられている間違いパターンを利用しました。</p>
+<p><a href="http://www.medsafe.net/specialist/10yamaguchi.html">第10回：「言語学からみた間違いやすい薬剤名」 - 医療安全推進者ネットワーク</a></p>
+<p>利用したパターンは以下の2つです。</p>
+<ul>
+<li>2字目と3字目は「転倒」がおきやすい</li>
+<li>1字目と2字目が同じ、末尾が同じ、長さが同じ位</li>
+</ul>
+<p>1つ目のパターンはバルトレックス/バトルレックスの事例、2つ目のパターンはエビリファイ/エビフリャイの事例そのものですね。ちなみに2つ目のパターンは、人間が文章を読む際に単語の先頭と末尾さえあっていれば自然と読めてしまう<a href="https://ja.wikipedia.org/wiki/%E3%82%BF%E3%82%A4%E3%83%9D%E3%82%B0%E3%83%AA%E3%82%BB%E3%83%9F%E3%82%A2">
+タイポグリセミア</a>としても有名です。</p>
+<p>ここではその他にも、単語を構成する文字の種類に大幅な乖離がないなど、いくつかのヒューリスティックな絞り込みを含めています。</p>
+<h3 id="3-目視で確認">3. 目視で確認</h3>
+<p>こうして抽出した候補ですが、今回の言い間違い候補の辞書として利用したのはWikipediaですので、全く知らない単語も多く含まれています。また、間違えやすいパターンに合致しても人間が見たときに納得度合いの低いペアも含まれるため、最後は力技で人間(私)が目視で確認し、知ってそうな単語を見つけるとともに、その言い間違えやすさを主観で判断しました。</p>
+<p>このあたりは、WikipediaのPV数などを使って単語の認知度合い(popularity)を計算したりすればよかったかもしれません。</p>
+<hr>
+<h2 id="結果">結果</h2>
+<p>それでは結果をいくつか見ていきましょう。ここではあくまで言い間違えやすさと候補単語の認知度等を加味して私の独断で選別しています。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>薬剤名</strong></th>
+<th style="text-align:left"><strong>言い間違え候補</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">スルピリド</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%82%B9%E3%83%94%E3%83%AB%E3%83%AA%E3%83%8A">スピルリナ</a></td>
+</tr>
+<tr>
+<td style="text-align:left">カルデミン</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AB%E3%83%80%E3%83%A2%E3%83%B3">カルダモン</a></td>
+</tr>
+<tr>
+<td style="text-align:left">ランドセン</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%83%B3%E3%83%89%E3%82%BB%E3%83%AB">ランドセル</a></td>
+</tr>
+<tr>
+<td style="text-align:left">ギャバロン</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%82%AE%E3%83%A3%E3%83%AB%E3%82%BD%E3%83%B3">ギャルソン</a></td>
+</tr>
+<tr>
+<td style="text-align:left">モンテルカスト</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%83%A2%E3%83%B3%E3%83%86%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88">モンテクリスト</a></td>
+</tr>
+<tr>
+<td style="text-align:left">アーチスト</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%BC%E3%83%86%E3%82%A3%E3%82%B9%E3%83%88">アーティスト</a></td>
+</tr>
+<tr>
+<td style="text-align:left">ワイパックス</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%83%99%E3%82%A4%E3%83%9E%E3%83%83%E3%82%AF%E3%82%B9">ベイマックス</a></td>
+</tr>
+<tr>
+<td style="text-align:left">プラミール</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%83%97%E3%83%A9%E3%83%AC%E3%83%BC%E3%83%AB">プラレール</a></td>
+</tr>
+<tr>
+<td style="text-align:left">ボンゾール</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%83%9C%E3%83%B3%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB">ボンジュール</a></td>
+</tr>
+<tr>
+<td style="text-align:left">トランサミン</td>
+<td style="text-align:left"><a href="https://ja.wikipedia.org/wiki/%E3%83%88%E3%83%A9%E3%83%B3%E3%83%9D%E3%83%AA%E3%83%B3">トランポリン</a></td>
+</tr>
+</tbody>
+</table>
+<p>薬剤名に関しては全く知識がないのでピンとくるものが無いのですが、わりと間違いやすい事例が抽出できたのではないでしょうか。Twitterで2つの単語を検索すると、ランドセン/ランドセルやモンテルカスト/モンテクリスト、ワイパックス/ベイマックスあたりは、似ていると指摘するtweetや言い間違えた経験談が出てきます。</p>
+<p>ちなみに冒頭に出したTiwtterの事例で言うと、<code>バトルレックス</code>はWikipediaの単独での記事が存在しなかったため検出できませんでしたが、<a href="https://ja.wikipedia.org/wiki/%E6%88%A6%E6%96%A7"><code>バトルアックス</code></a>は検出できていました。</p>
+<h2 id="まとめ">まとめ</h2>
+<p>今回は言い間違えてしまう薬剤名とその名称を、Wikipediaの記事一覧をもとに半自動で抽出してみました。Advent Calendarの話題作りのために思いつきで始めたタスクでしたが、いざやってみると候補を絞り込む作業がなかなかに難しく、人間の認識能力の高さや間違い傾向の複雑さを実感しました。発音するときの語感やアクセントであったり、文字の字形などの類似度を組み込めると、より間違えやすさが定量的に測れそうです。</p>
+<p>また、今回は1つの単語を言い間違い候補として限定しましたが、複数単語での言い間違いもあるようです。例えば、</p>
+<ul>
+<li>レスタミン → レタス民</li>
+<li>アトモキセチン → 後乗せチキン</li>
+</ul>
+<p>など、こうした2つ以上の単語が組み合わさった検出ができると、より人間の言語的な認識を上手くトレースした形での自動検知ができると思われます。</p>
 
-            <div class="best-posts">
-            
-            
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/drug-name-ambiguity/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

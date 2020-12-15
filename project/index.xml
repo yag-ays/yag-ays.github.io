@@ -6,7 +6,34 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 07 Nov 2020 21:01:50 +0900</lastBuildDate><atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Dec 2020 21:16:20 +0900</lastBuildDate><atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>つい言い間違えてしまうような薬剤名を(半)自動で探しだす</title>
+      <link>https://yag-ays.github.io/project/drug-name-ambiguity/</link>
+      <pubDate>Mon, 14 Dec 2020 21:16:20 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/drug-name-ambiguity/</guid>
+      <description>この記事はUbie Advent Calendar 2020の15日目の記事です。
+昨日の記事はshigedoさんのこれからのDXを社会実装するスタートアップに必要な「パブリック・アフェアーズ」とは｜yukishigedo｜noteでした。
+ 言い間違えを探す みなさんはこのツイートを見たことがありますか？
+薬剤師の日常#今年もあと少しなので褒めてほしい pic.twitter.com/LaSfRnM3NY
+&amp;mdash; 鮫島うさぎ (@usagi_samejima) December 27, 2019  患者さんがお薬の名前を言い間違えてしまうという薬剤師あるあるな話ですが、間違え方が独特で面白いですね。特に薬剤名は普段馴染みがなく横文字で覚えづらいので、記憶の中にある近い名称に引っ張られてしまうのかもしれません。このツイートのリプライ欄でも他の人が別の事例を紹介してくださっていますが、色々な言い間違えのパターンがあるみたいですね。
+さて、今回はこのような言い間違えをしそうな単語とその薬剤名を自動で抽出してみようと思います。自然言語処理の力を使ってなかば総当り的に探していけば、まだ広く知られていない言い間違えが見つかるかも……？
+言い間違えの問題 薬剤の言い間違いについてはこうした笑い話になる一方で、別の薬剤と間違えてしまうことによる医療事故にも繋がりかねない問題でもあります。薬局での薬剤の取り違えの約3割は名称類似によって起こることが報告されているほか、類似名称による医療事故が発生したことから薬剤名が変更される事例もあります。こうした医薬品の言い間違えや認識違いについては、医療事故の原因分析や予防の面で研究されているようです。
+ 薬局での「薬剤取り違え」や「数量間違い」が5399件―日本医療機能評価機構2014年度調査 | GemMed | データが拓く新時代医療 「サクシン」が「スキサメトニウム注」に改名―薬の取り違え事故をどうなくすか：日経メディカル 製薬企業からの医薬品の安全使用（取り違え等）に関するお知らせ | 独立行政法人 医薬品医療機器総合機構 薬名類似度検索サービス   方法 今回は、以下の方法で薬剤名とその言い間違い候補を抽出しました。
+ 候補となる薬剤名およびWikipediaの記事タイトルの一覧を取得する 編集距離などのフィルタリングを元に候補を絞り込む 最後は目検で確認する  1. 候補の名称の抽出 対象とする薬剤名の一覧を取得します。くすりのリストにて公開されているPMDAから取得した「医療用医薬品リスト」の中から、xx錠といったカタカナから始まり錠で終わる薬剤名を取得します。今回は一つの単語のまとまりとしての言い間違いを探したいため、薬剤名にありがちなxx酸yy錠といった漢字が含まれている名称は除外しました。その結果、887件の薬剤の名称が抽出できました。
+次に、Wikipediaから言い間違え候補の一覧を取得します。Wikipedia:データベースダウンロードから日本語の全タイトルの一覧が含まれるダンプされたデータをダウンロードします。その結果、約200万件の言い間違え候補が抽出できました。
+2. 候補を絞り込む ここから薬剤名と言い間違え候補の中で、お互いに似通った文字列を探し出します。ナイーブに実行すると(1000 × 200万)ペアの組に対して探索する必要があり計算コストが大きいため、薬剤名ごとに編集距離を用いて候補を絞り込み、その絞り込んだ候補に対して類似判定を行います。
+2-1. 編集距離 まず最初の絞り込みですが、任意の薬剤名に対して編集距離が2以下の言い間違え候補を列挙しました。編集距離とは、ある文字列から別の文字列に変形するときに必要となる追加/削除/置換のステップの最小回数のことです。例えば「バルトレックス」と「バトルレックス」の編集距離は、2文字目のルを削除する→2文字目のトの後ろルを追加するの合計2ステップとなり、編集距離は2です。
+編集距離の計算にはSymSpellを利用しました。事前に検索インデックスを計算することで薬剤ごとに探索する時の計算時間を抑えています。
+2-2. 間違えやすさを測る ここから、より言い間違えやすい候補に絞り込んでいきます。編集距離による絞り込みでは文字列として近い候補は列挙できますが、実際に見てみると間違えないような事例が多数含まれます。そういった事例を弾くために文字列同士の言い間違えやすさを評価し、より現実的な候補を見つけます。今回は以下のサイトでまとめられている間違いパターンを利用しました。
+第10回：「言語学からみた間違いやすい薬剤名」 - 医療安全推進者ネットワーク
+利用したパターンは以下の2つです。
+ 2字目と3字目は「転倒」がおきやすい 1字目と2字目が同じ、末尾が同じ、長さが同じ位  1つ目のパターンはバルトレックス/バトルレックスの事例、2つ目のパターンはエビリファイ/エビフリャイの事例そのものですね。ちなみに2つ目のパターンは、人間が文章を読む際に単語の先頭と末尾さえあっていれば自然と読めてしまうタイポグリセミアとしても有名です。
+ここではその他にも、単語を構成する文字の種類に大幅な乖離がないなど、いくつかのヒューリスティックな絞り込みを含めています。
+3. 目視で確認 こうして抽出した候補ですが、今回の言い間違い候補の辞書として利用したのはWikipediaですので、全く知らない単語も多く含まれています。また、間違えやすいパターンに合致しても人間が見たときに納得度合いの低いペアも含まれるため、最後は力技で人間(私)が目視で確認し、知ってそうな単語を見つけるとともに、その言い間違えやすさを主観で判断しました。</description>
+    </item>
+    
     <item>
       <title>絵文字の日本語読み辞書をUNICODE 13.0対応に更新しました</title>
       <link>https://yag-ays.github.io/project/emoji-ja-update-13/</link>
@@ -159,18 +186,10 @@ In []: bert.get_sentence_embedding(&amp;#34;吾輩は猫である。&amp;#34;, .
  複数の言語が混ざった文章の言語判定 A Fast, Compact, Accurate Model for Language Identification of Codemixed Text
 まずは冒頭でも紹介したEMNLP 2018のGoogleの論文です。論文タイトルにあるように複数言語が混ざった文章を対象にした言語判定は、既存の言語判定モデルでは無視されてきた領域でした。特にユーザが投稿するようなサービスにおいては同じメッセージを複数言語で記載することが多く、そのような言語判定に対応するため、より粒度の細かい単位で言語判定することが必要となります。
 例えば、以下のようなTweetはその代表例でしょう。
-この論文で提案している手法CMXは、まずトークン(単語)単位で言語判定をしたのちに、貪欲法を用いて文章全体での言語判定を行うというものです。前半の言語判定には文字特徴量とトークンの特徴量の両方を用いたシンプルなニューラルネットワークを用いています。
-文字特徴量は従来の言語判定と同じように文字n-gramを用いており、n=[1,4]を計算したのちにfeature hashingで語彙数をコントロールしています。これは、n-gramのnを増やすごとに生成される文字列のパターン数が指数的に増加することから、計算コストやモデルサイズを削減するためです。その他にも、ひらがなやハングルのように特定文字に対応する言語の特徴量や、辞書ベースの特徴量などを加えたモデルになっています。
-単語や文字単位での言語判定 LanideNN: Multilingual Language Identification on Character Window
-単一文章に対して複数言語を判定できるようになれば、次に知りたくなるのは文章中での言語の出現位置や、どこで言語が変わったかといった文章内の情報です。さきほどのGoogleの論文ではトークン単位で推定しつつ全体の文章の言語判定をしていましたが、EACL 2017で発表されたLanideNNでは入力文を文字単位で言語判定するモデルを提案しています。
-提案モデルは文字を入力にしたBidirectional RNNを構成し、それぞれの文字に対して言語を予測するモデルになっています。長い文章の場合は、特定のwindow sizeごとにモデルから予測を出力し、windowをずらしながら文章全体をカバーするよう予測していきます。
-LanideNN は実装や学習済みモデル、データセットも公開されています。
- tomkocmi/LanideNN LanideNN | ÚFAL  より多様な言語に対応した言語判定 Incorporating Dialectal Variability for Socially Equitable Language Identification
-これまでの言語判定は複数言語に対応しつつもモデルの精度を下げないことが目標でしたが、ACL 2017のEquilidではより社会的に公平性を保つよう、マイナーな言語や方言に対応できる言語判定モデルを作成しています。
-既存の言語判定モデルがコーパスを作成する際には、研究の主流であるヨーロッパ系の言語が主体となっていたり、Wikipediaなどのウェブソースでは人口が多い言語で書かれた文章が手に入りやすい環境であることにより、どうしても主要な言語で精度が出せることが重要でした。この論文では、地理的であったり社会的な多様性を考慮したコーパスを作成し、かつモデルもそうした細かな差異を認識できるよう工夫しています。
-モデルはLanideNN と同様に文字ベースのニューラルネットを採用しており、綴りや音韻といった要素をモデルに組み込むことを意図していると論文では述べられています。言語判定はトークン単位で行われます。ニューラルネットについてはAttention付きのencode-decoderモデルで、encoderとdecoderはそれぞれ3-layerのRNNです。
-Equilidは実装や学習済みモデルも公開されており、配布されている学習済みモデルでは70言語に対応しているようです。
- davidjurgens/equilid: Socially-Equitable Language Identification   まとめ これまで最新の深層学習を用いた言語判定をいくつか見てきました。これらに共通する特徴としては、単語や文字単位で言語判定を行い、より複雑な言語特徴が得られるようなモデルを作成するように変化していることが分かります。</description>
+新しい御代の幕開けに心からお祝い申し上げます。『令和』が日本の国に平和と繁栄をもたらす祝福された時代となるよう祈念致しております。🇯🇵 Congratulations on the beginning of the new era! We hope 令和 will be blessed with peace and prosperity for everyone in Japan.
+&amp;mdash; Tim Cook (@tim_cook) April 30, 2019  この論文で提案している手法CMXは、まずトークン(単語)単位で言語判定をしたのちに、貪欲法を用いて文章全体での言語判定を行うというものです。前半の言語判定には文字特徴量とトークンの特徴量の両方を用いたシンプルなニューラルネットワークを用いています。
+ ![language_identification_01](/img/language_identification_01.png)  (Ref. [https://arxiv.org/abs/1810.04142](https://arxiv.org/abs/1810.04142)) 文字特徴量は従来の言語判定と同じように文字n-gramを用いており、n=[1,4]を計算したのちにfeature hashingで語彙数をコントロールしています。これは、n-gramのnを増やすごとに生成される文字列のパターン数が指数的に増加することから、計算コストやモデルサイズを削減するためです。その他にも、ひらがなやハングルのように特定文字に対応する言語の特徴量や、辞書ベースの特徴量などを加えたモデルになっています。
+単語や文字単位での言語判定 LanideNN: Multilingual Language Identification on Character Window</description>
     </item>
     
     <item>
@@ -213,8 +232,9 @@ In [42]: mpr.</description>
       
       <guid>https://yag-ays.github.io/project/out-of-vocab-magnitude/</guid>
       <description>概要 magnitudeという単語埋め込みを扱うライブラリには、単語を構成する文字列を考慮したout-of-vocabularyの初期化の方法が実装されています。EMNLP 2018の論文と実際のコードを元に、その初期化の方法を実装して試してみました。
- 背景 KaggleのQuora Insincere Questionsコンペを終えて KaggleのNLPコンペであるQuora Insincere Questions Classificationが終わって上位陣の解法を眺めていたのですが、その中で目に止まったのがout-of-vocabulary（以降OOVと表記）の対応です。今回のコンペでは主催側が定めた幾つかの学習済み単語埋め込みしか使うことができないので、大規模コーパスから新しく学習することができません。そのため、データセットには含まれているが学習済み単語ベクトルには含まれていない単語であるout-of-vocabularyをどう扱うかが、前処理の重要な要素だったようです。それぞれの解法には以下のようなコメントが記載されています。
- &amp;ldquo;The most important thing now is to find as many embeddings as possible for our vocabulary. (中略) For public test data we had around 50k of vocab tokens we did not find in the embeddings afterwards. &amp;quot; (1st place solution) &amp;ldquo;I applied spell correction to OOV words.&amp;rdquo; (2nd place solution) &amp;ldquo;Try stemmer, lemmatizer, spell correcter, etc. to find word vectors&amp;rdquo; (3rd place kernel)  興味深いのが3位のkernelのこの部分のコードで、単語ベクトルが見つからなかった場合にひたすら単語の表記をあれこれ変えて辞書に当てる努力をしています。</description>
+ 背景 KaggleのQuora Insincere Questionsコンペを終えて KaggleのQuora Insecure QuestionsのコンペではOOVの対応が重要だったっぽいけど、magnitudeはランダムベクトルの付与とかミススペルの対応とかしてくれるみたいだ。ロジック確認しないと何してるのかわからないけど……　https://t.co/d8tteqwwCp
+&amp;mdash; やぐ (@yag_ays) February 26, 2019  KaggleのNLPコンペであるQuora Insincere Questions Classificationが終わって上位陣の解法を眺めていたのですが、その中で目に止まったのがout-of-vocabulary（以降OOVと表記）の対応です。今回のコンペでは主催側が定めた幾つかの学習済み単語埋め込みしか使うことができないので、大規模コーパスから新しく学習することができません。そのため、データセットには含まれているが学習済み単語ベクトルには含まれていない単語であるout-of-vocabularyをどう扱うかが、前処理の重要な要素だったようです。それぞれの解法には以下のようなコメントが記載されています。
+ &amp;ldquo;The most important thing now is to find as many embeddings as possible for our vocabulary. (中略) For public test data we had around 50k of vocab tokens we did not find in the embeddings afterwards. &amp;quot; (1st place solution) &amp;ldquo;I applied spell correction to OOV words.</description>
     </item>
     
     <item>
@@ -329,8 +349,7 @@ Word Embedding based Edit Distance Word Embedding based Edit Distance（WED）�
  gensimを用いてベクトルを読み込み、 PyTorchのTensor形式に変換したうえで、 tensorboardXを用いてTensorBoardが読み込めるログ形式に出力する  ことで、TensorBoard上で分散表現を可視化します。いろいろなステップがあって一見して遠回りに思えますが、コード自体は10行に満たないほどで完結します。個人的には、Tensorflowで学習済み分散表現を読み込むよりも、これらを組み合わせたやり方のほうが簡潔に書くことができて好きです。
  方法 準備 必要な外部パッケージは、gensim/pytorch/tensorboardX/tensorflowの4つです。インストールされていない場合はpipなどであらかじめインストールしておきます。
 $ pip isntall gensim torch tensorboardX tensorflow 分散表現の読み込みからtensorboard形式のログ出力まで TensorBoardで可視化するまでに必要な本体のコードです。これだけ！
-import gensim import torch from tensorboardX import SummaryWriter vec_path = &amp;#34;entity_vector.model.bin&amp;#34; writer = SummaryWriter() model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True) weights = model.vectors labels = model.index2word # DEBUG: visualize vectors up to 1000 weights = weights[:1000] labels = labels[:1000] writer.add_embedding(torch.FloatTensor(weights), metadata=labels) コード内のvec_pathは、任意の学習済みベクトルのファイルに置き換えてください。
-また、途中で差し込まれているDEBUGの部分では、TensorBoardの読み込みスピード等を考慮して対象単語数を1000に絞っています。本来ならばこのような操作は不要ですが、かといってすべてのベクトルをTensorBoardで読み込んだとしても、デフォルトではランダムに10万件しか表示されません。学習済み分散表現の単語数があまりにも多い場合は、自分の可視化したい単語等に限定するなど少し工夫が必要です。</description>
+import gensim import torch from tensorboardX import SummaryWriter vec_path = &amp;#34;entity_vector.model.bin&amp;#34; writer = SummaryWriter() model = gensim.models.KeyedVectors.load_word2vec_format(vec_path, binary=True) weights = model.vectors labels = model.index2word # DEBUG: visualize vectors up to 1000 weights = weights[:1000] labels = labels[:1000] writer.add_embedding(torch.FloatTensor(weights), metadata=labels) コード内のvec_pathは、任意の学習済みベクトルのファイルに置き換えてください。</description>
     </item>
     
     <item>
