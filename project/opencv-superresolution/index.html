@@ -2,7 +2,6 @@
 <html lang="ja">
 
 <head>
-	<meta name="generator" content="Hugo 0.79.0" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/" />
-<meta property="og:title" content="Out-of-the-box" />
-<meta property="twitter:title" content="Out-of-the-box">
+<meta property="og:url" content="https://yag-ays.github.io/project/opencv-superresolution/" />
+<meta property="og:title" content="OpenCVとPythonで深層学習モデルの超解像を手軽に試す" />
+<meta property="twitter:title" content="OpenCVとPythonで深層学習モデルの超解像を手軽に試す">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:image" content="https://yag-ays.github.io/img/banner.png">
 
-<meta property="og:description" content="yag_ays&#39;s blog">
-<meta property="twitter:description" content="yag_ays&#39;s blog">
+<meta property="og:description" content="">
+<meta property="twitter:description" content="">
 
 <title>
 
 
-    Out-of-the-box
+     OpenCVとPythonで深層学習モデルの超解像を手軽に試す - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/">
+<link rel="canonical" href="https://yag-ays.github.io/project/opencv-superresolution/">
 
 
 <style media="screen">
@@ -984,8 +983,6 @@ margin-left: -4%;
 
 
 
-  <link href="https://yag-ays.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Out-of-the-box" />
-
 
 </head>
 
@@ -993,7 +990,7 @@ margin-left: -4%;
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1026,32 +1023,101 @@ margin-left: -4%;
     </div>
 </div>
 
+
+
 <div class="main column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                <p>yag_aysの資材置き場。out-of-the-boxなデータセット/コーパス/ノウハウを公開していきたい。</p>
-<p>記事一覧はこちら→ <a href="https://yag-ays.github.io/project/">PROJECT</a></p>
-<p>プロフィール→ <a href="https://yag.xyz/">Yuki Okuda</a></p>
+            <div class="page-heading">
 
-                </div>
-            
+    OpenCVとPythonで深層学習モデルの超解像を手軽に試す
+    <div class="container">
+      <div class="date">
+        2020-12-24
+      </div>
+    </div>
 
-            
-                <div class="posts">
+</div>
+
+            <div class="markdown">
                 
-                
-                </div>
-            
+    <p><img src="https://yag-ays.github.io/img/opencv-superresolution_header.png" alt=""></p>
+<h2 id="概要">概要</h2>
+<p>超解像とは、任意の画像を入力として解像度を上げた画像を出力するコンピュータービジョンのタスクです。近年の深層学習の発達により、より高精細で自然な超解像が可能になってきました。一方、そうした研究で提案された最新のモデルを動かすにはPytorchやTensorflow等のディープラーニングのパッケージを利用する必要があり、論文著者らにより公開されているコードを読み込んだり必要に応じて変更していく必要があります。モデル構造を深く理解したり自分のタスクに特化したものを作るにはそうしたコーディング技術が必須ですが、もう少し気軽に深層学習を用いた超解像を試して結果を見てみたい、どれくらい見た目が良くなるのかの感覚を掴みたい、ということがあると思います。</p>
+<p>そこで今回はOpenCVとPythonを用いて、深層学習モデルの超解像を動かしてみようと思います。</p>
+<h2 id="方法">方法</h2>
+<h3 id="1-インストール">1. インストール</h3>
+<p>今回試す超解像は、OpenCVに加えて<code>opencv-contrib-python</code>というOpenCV準拠の拡張パッケージをインストールする必要があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip install opencv-python
+$ pip install opencv-contrib-python
+</code></pre></div><h3 id="2-モデルのダウンロード">2. モデルのダウンロード</h3>
+<p>超解像に利用するモデルはpipではインストールされないため、手動でダウンロードします。利用できる各モデルのリンクは下記URLの<code>README.md</code>に記載されています。2020/12/24現在では、以下のモデルに対応しており、拡大するときの倍率(scale)として2倍,3倍,4倍が用意されています。</p>
+<ul>
+<li><a href="https://github.com/Saafke/EDSR_Tensorflow">EDSR</a></li>
+<li><a href="https://github.com/fannymonori/TF-ESPCN">ESPCN</a></li>
+<li><a href="https://github.com/Saafke/FSRCNN_Tensorflow">FSRCNN</a></li>
+<li><a href="https://github.com/fannymonori/TF-LapSRN">LapSRN</a></li>
+</ul>
+<p><a href="https://github.com/opencv/opencv_contrib/tree/master/modules/dnn_superres">opencv_contrib/modules/dnn_superres at master · opencv/opencv_contrib</a></p>
+<p>これらは2016年から2017年頃にかけて提案されたモデルです。近年のコンピュータービジョンの深層学習の発展を考えると少々古く感じられますが、主要なモデルが揃っている感じです。超解像の発展における各モデルの位置付けは、下記の記事が参考になります。</p>
+<ul>
+<li><a href="https://buildersbox.corp-sansan.com/entry/2019/03/20/110000">【Intern CV Report】超解像の歴史探訪 -2016年編- - Sansan Builders Blog</a></li>
+<li><a href="https://qiita.com/jiny2001/items/e2175b52013bf655d617">トップ学会採択論文にみる、超解像ディープラーニング技術のまとめ - Qiita</a></li>
+</ul>
+<h3 id="3-コードを動かしてみる">3. コードを動かしてみる</h3>
+<p>それでは深層学習モデルを使った超解像を試してみましょう。ここでは<a href="https://github.com/opencv/opencv_contrib/blob/master/modules/dnn_superres/tutorials/upscale_image_single/upscale_image_single.markdown">公式のTutorial</a>の通りに動かします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
+<span style="color:#f92672">from</span> cv2 <span style="color:#f92672">import</span> dnn_superres
 
-            <div class="best-posts">
-            
-            
+<span style="color:#75715e"># Create an SR object - only function that differs from c++ code</span>
+sr <span style="color:#f92672">=</span> dnn_superres<span style="color:#f92672">.</span>DnnSuperResImpl_create()
+
+<span style="color:#75715e"># Read image</span>
+image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;./image.png&#39;</span>)
+
+<span style="color:#75715e"># Read the desired model</span>
+path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;EDSR_x4.pb&#34;</span>
+sr<span style="color:#f92672">.</span>readModel(path)
+
+<span style="color:#75715e"># Set the desired model and scale to get correct pre- and post-processing</span>
+sr<span style="color:#f92672">.</span>setModel(<span style="color:#e6db74">&#34;edsr&#34;</span>, <span style="color:#ae81ff">4</span>)
+
+<span style="color:#75715e"># Upscale the image</span>
+result <span style="color:#f92672">=</span> sr<span style="color:#f92672">.</span>upsample(image)
+
+<span style="color:#75715e"># Save the image</span>
+cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;./upscaled.png&#34;</span>, result)
+</code></pre></div><p>コードとしてはこれだけです。画像の読み込みと書き出しを除けば、超解像の処理自体は実質3行ほどで完結します。</p>
+<p>注意点としては、<code>sr.readModel</code>で読み込むモデルと<code>sr.setModel</code>の引数（モデル名とスケール）を合わせる必要があります。例えばモデルに<code>EDSR_x4.pb</code>を利用するときは<code>(&quot;edsr&quot;, 4)</code>、モデルに<code>FSRCNN_x2.pb</code>を利用するときは<code>(&quot;fsrcnn&quot;, 2)</code>と指定します。</p>
+<h2 id="結果">結果</h2>
+<p>今回は<code>1600x1600</code>の画像を用意し、macOSの<code>Preview.app</code>で<code>400x400</code>に縮小したあと、<code>EDSR_x4</code>で4倍にしてみました。</p>
+<p>正直なところパット見では全然わかりませんねw。拡大して画像同士を近づけてよくよく見てみると、縮小後と比較してEDSRで超解像した画像は、輪郭であったり目の光の入り方、背後の柵などがオリジナルの画像に近づいていることがわかります。超解像を適用した画像は若干色がくすんだように見えますが、一旦は気にしないことにしましょう。</p>
+<p><img src="https://yag-ays.github.io/img/opencv-superresolution.png" alt=""></p>
+<h3 id="まとめ">まとめ</h3>
+<p>今回はOpenCVを用いて深層学習モデルの超解像を適用する方法を紹介しました。OpenCVという枠組みで適用できてかつ学習済みモデルが配布されているので、気軽に実装して試すことができました。提供されている学習済みモデルの手法が少し古かったり、パラメータの変更など込み入ったことをするには機能が不足している感じは否めないですが、気軽に使えるという点ではOpenCVのcontribで提供されている今回の方法はとても良いと思います。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://towardsdatascience.com/deep-learning-based-super-resolution-with-opencv-4fd736678066">Deep Learning based Super Resolution with OpenCV | by Xavier Weber | Towards Data Science</a></li>
+<li><a href="https://www.pyimagesearch.com/2020/11/09/opencv-super-resolution-with-deep-learning/">OpenCV Super Resolution with Deep Learning - PyImageSearch</a></li>
+</ul>
+
+
+<div style="text-align: right">
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/opencv-superresolution/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+      alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+  <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

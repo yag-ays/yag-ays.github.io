@@ -6,7 +6,23 @@
     <description>Recent content in Project on Out-of-the-box</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Mon, 14 Dec 2020 21:16:20 +0900</lastBuildDate><atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Dec 2020 12:20:04 +0900</lastBuildDate><atom:link href="https://yag-ays.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenCVとPythonで深層学習モデルの超解像を手軽に試す</title>
+      <link>https://yag-ays.github.io/project/opencv-superresolution/</link>
+      <pubDate>Thu, 24 Dec 2020 12:20:04 +0900</pubDate>
+      
+      <guid>https://yag-ays.github.io/project/opencv-superresolution/</guid>
+      <description>概要 超解像とは、任意の画像を入力として解像度を上げた画像を出力するコンピュータービジョンのタスクです。近年の深層学習の発達により、より高精細で自然な超解像が可能になってきました。一方、そうした研究で提案された最新のモデルを動かすにはPytorchやTensorflow等のディープラーニングのパッケージを利用する必要があり、論文著者らにより公開されているコードを読み込んだり必要に応じて変更していく必要があります。モデル構造を深く理解したり自分のタスクに特化したものを作るにはそうしたコーディング技術が必須ですが、もう少し気軽に深層学習を用いた超解像を試して結果を見てみたい、どれくらい見た目が良くなるのかの感覚を掴みたい、ということがあると思います。
+そこで今回はOpenCVとPythonを用いて、深層学習モデルの超解像を動かしてみようと思います。
+方法 1. インストール 今回試す超解像は、OpenCVに加えてopencv-contrib-pythonというOpenCV準拠の拡張パッケージをインストールする必要があります。
+$ pip install opencv-python $ pip install opencv-contrib-python 2. モデルのダウンロード 超解像に利用するモデルはpipではインストールされないため、手動でダウンロードします。利用できる各モデルのリンクは下記URLのREADME.mdに記載されています。2020/12/24現在では、以下のモデルに対応しており、拡大するときの倍率(scale)として2倍,3倍,4倍が用意されています。
+ EDSR ESPCN FSRCNN LapSRN  opencv_contrib/modules/dnn_superres at master · opencv/opencv_contrib
+これらは2016年から2017年頃にかけて提案されたモデルです。近年のコンピュータービジョンの深層学習の発展を考えると少々古く感じられますが、主要なモデルが揃っている感じです。超解像の発展における各モデルの位置付けは、下記の記事が参考になります。
+ 【Intern CV Report】超解像の歴史探訪 -2016年編- - Sansan Builders Blog トップ学会採択論文にみる、超解像ディープラーニング技術のまとめ - Qiita  3. コードを動かしてみる それでは深層学習モデルを使った超解像を試してみましょう。ここでは公式のTutorialの通りに動かします。
+import cv2 from cv2 import dnn_superres # Create an SR object - only function that differs from c++ code sr = dnn_superres.DnnSuperResImpl_create() # Read image image = cv2.</description>
+    </item>
+    
     <item>
       <title>つい言い間違えてしまうような薬剤名を(半)自動で探しだす</title>
       <link>https://yag-ays.github.io/project/drug-name-ambiguity/</link>
