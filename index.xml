@@ -9,10 +9,10 @@
     <lastBuildDate>Sun, 24 Jan 2021 14:58:15 +0900</lastBuildDate><atom:link href="https://yag-ays.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>精度向上のために機械学習プロダクト全体をフルスクラッチで書き直した話</title>
-      <link>https://yag-ays.github.io/article/refactoring-them-all/</link>
+      <link>https://yag-ays.github.io/article/refactor-them-all/</link>
       <pubDate>Sun, 24 Jan 2021 14:58:15 +0900</pubDate>
       
-      <guid>https://yag-ays.github.io/article/refactoring-them-all/</guid>
+      <guid>https://yag-ays.github.io/article/refactor-them-all/</guid>
       <description>2020年7月から医療スタートアップのUbieで機械学習エンジニアをしています。ようやく入社から半年くらいが経ちましたので、ここ最近やっていた仕事として、機械学習プロダクトの精度向上のためにシステム全体をフルスクラッチでかつ一人で実装し直した話をしたいと思います。
 機械学習は既に様々な会社でプロダクトに組み込まれ始めていると思いますが、サービスとしてのリリースや長期運用、そして今回お話する継続的な精度向上とリファクタリングについては、公開されている知見はまだまだ少ないと思います。もし同じような境遇の機械学習エンジニアの方への参考になれば幸いです。
 tl;dr  精度向上のために、機械学習プロダクト全体をフルスクラッチで書き直した 開発スピードを上げるためには、既存のコードを流用するより新規で書き直すほうが良いような特殊な状況だった 機械学習タスクの実装は、可視化やテストなどを活用しつつ小さく積み上げていくことが大事   はじまり 私が取り組んでいた機械学習プロダクトは、ドキュメントの画像をOCRしてテキスト中から情報を抽出するというサービスでした。画像処理と自然言語処理の領域が入り混じった、なかなかに複雑なタスクです。サービス全体はWebAPIとして実装されており、クラウド上の画像のURLがリクエストとして来ると、画像を読み込んで前処理、OCRに投げて文字を抽出、文字列とその座標位置からいい感じに情報抽出をして、最後に構造化した情報をレスポンスとして返すという構造でした。
