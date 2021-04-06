@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Out-of-the-box" />
 <meta property="og:locale" content="nn_NO" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://yag-ays.github.io/project/kanjivg-radical/" />
-<meta property="og:title" content="漢字を構成する部首/偏旁のデータセット" />
-<meta property="twitter:title" content="漢字を構成する部首/偏旁のデータセット">
+<meta property="og:url" content="https://yag-ays.github.io/project/manbyo-sudachi/" />
+<meta property="og:title" content="万病辞書を形態素解析器Sudachiで利用する" />
+<meta property="twitter:title" content="万病辞書を形態素解析器Sudachiで利用する">
 
     <meta property="og:image" content="https://yag-ays.github.io/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -29,10 +29,10 @@
 <title>
 
 
-     漢字を構成する部首/偏旁のデータセット - Out-of-the-box 
+     万病辞書を形態素解析器Sudachiで利用する - Out-of-the-box 
 
 </title>
-<link rel="canonical" href="https://yag-ays.github.io/project/kanjivg-radical/">
+<link rel="canonical" href="https://yag-ays.github.io/project/manbyo-sudachi/">
 
 
 <style media="screen">
@@ -1030,10 +1030,10 @@ margin-left: -4%;
         <div class="content">
             <div class="page-heading">
 
-    漢字を構成する部首/偏旁のデータセット
+    万病辞書を形態素解析器Sudachiで利用する
     <div class="container">
       <div class="date">
-        2018-08-06
+        2021-04-05
       </div>
     </div>
 
@@ -1041,176 +1041,84 @@ margin-left: -4%;
 
             <div class="markdown">
                 
-    <p><img src="https://yag-ays.github.io/img/kanji_header.png" alt="kanji_header"></p>
-<p>kanjivg-radicalは、漢字を構成する<a href="https://ja.wikipedia.org/wiki/%E9%83%A8%E9%A6%96">部首</a>や<a href="https://ja.wikipedia.org/wiki/%E5%81%8F%E6%97%81">偏旁</a>を容易に扱えるように対応付けしたデータセットです。</p>
-<p>「脳」という漢字は、「月」「⺍」「凶」のように幾つかのまとまりごとに細分化できます。このように意味ある要素に分解しデータセットにすることで、漢字を文字的に分解して扱ったり、逆に特定の部首/偏旁を持つ漢字を一括して検索することができます。</p>
-<p>このデータセットは、<a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているsvgデータを抽出および加工して作成されています。そのため、本データセットに含まれる部首/偏旁のアノテーションはすべてKanjiVGに準拠します。</p>
-<hr>
-<h2 id="ダウンロード">ダウンロード</h2>
-<p>以下のGitHubレポジトリからjson形式のファイルをダウンロードできます。<code>data/</code>配下にある各種jsonファイルが、データセットの本体です。</p>
-<p><a href="https://github.com/yagays/kanjivg-radical">yagays/kanjivg-radical</a></p>
-<hr>
-<h2 id="データセットの詳細">データセットの詳細</h2>
-<p>kanjivg-radicalには4種類のデータが含まれています。</p>
-<ol>
-<li>漢字と部首/偏旁の変換データ</li>
-<li>漢字と要素の変換データ</li>
-<li>漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</li>
-<li>漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</li>
-</ol>
-<p>以下では、部首/偏旁は<code>radical</code>、要素は<code>element</code>、左右は<code>left_right</code>、上下は<code>top_buttom</code>と表現しています。</p>
-<h3 id="1-漢字と部首偏旁の変換データ">1. 漢字と部首/偏旁の変換データ</h3>
-<p>漢字と部首/偏旁を対応付けしたデータセットです。漢字から部首/偏旁と、部首/偏旁から漢字の2種類のデータがあります。</p>
+    <p><img src="https://yag-ays.github.io/img/manbyo-sudachi_header.png" alt="https://www.pexels.com/ja-jp/photo/6997/"></p>
+<h2 id="概要">概要</h2>
+<p><a href="http://sociocom.jp/~data/2018-manbyo/index.html">万病辞書</a>とは、NAISTソーシャル・コンピューティング研究室から公開されている病名辞書です。様々な病名に対してICD10と呼ばれる疾患の標準規格が対応付いているほか、医療従事者による作業や計算機による自動抽出で得られた病名が列挙されています。また、形態素解析器で利用するための辞書データとして、MeCabに対応したものが配布されています。</p>
+<p>今回は、この万病辞書を形態素解析器<a href="https://github.com/WorksApplications/Sudachi">Sudachi</a>で利用できるようにするために、万病辞書からSudachiのユーザ辞書を作成しました。ダウンロードして利用できるように辞書データも配布します。</p>
+<h2 id="レポジトリと辞書ファイル">レポジトリと辞書ファイル</h2>
+<p>レポジトリ：</p>
 <ul>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical.json"><code>kanji2radical.json</code></a> : 漢字から部首/偏旁への変換</li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji.json"><code>radical2kanji.json</code></a> : 部首/偏旁から漢字への変換</li>
+<li><a href="https://github.com/yagays/manbyo-sudachi">yagays/manbyo-sudachi</a></li>
 </ul>
-<pre><code># kanji2radical.jsonのサンプル
-&quot;脳&quot;: [
-    &quot;月&quot;,
-    &quot;⺍&quot;,
-    &quot;凶&quot;
-]
-</code></pre><pre><code># radical2kanji.jsonのサンプル
-&quot;月&quot;: [
-    &quot;肝&quot;,
-    &quot;育&quot;,
-    &quot;胆&quot;,
-    &quot;朦&quot;,
-    &quot;脱&quot;,
-...
-</code></pre><h3 id="2-漢字と要素の変換データ">2. 漢字と要素の変換データ</h3>
-<p>漢字と要素を対応付けしたデータセットです。漢字から要素と、要素から漢字の2種類のデータがあります。</p>
+<p>ユーザ辞書ファイル：</p>
 <ul>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2element.json"><code>kanji2element.json</code></a> : 漢字から要素への変換</li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/element2kanji.json"><code>element2kanji.json</code></a> : 要素から漢字への変換</li>
+<li><a href="https://github.com/yagays/manbyo-sudachi/blob/master/manbyo20190704_all_dic.txt">manbyo20190704_all_dic.txt</a></li>
+<li><a href="https://github.com/yagays/manbyo-sudachi/blob/master/manbyo20190704_sabc_dic.txt">manbyo20190704_sabc_dic.txt</a></li>
 </ul>
-<p>ここで使用している「要素」いう言葉は、部首/偏旁を構成する更に細かい単位での漢字のことを指しています。言語学的に定義された単語ではなく、KanjiVGで利用されていた<code>element</code>の対訳として用いています。</p>
-<p>このデータでは構成している要素をすべて列挙しているので、結果の中には重複が含まれます。以下の例だと脳には「凶」という要素が含まれていますが、同時に「乂」という要素も含まれているため、どちらもkanji2elementの結果として出力されます。</p>
-<pre><code># kanji2element.jsonのサンプル
-&quot;脳&quot;: [
-    &quot;乂&quot;,
-    &quot;凶&quot;,
-    &quot;丿&quot;,
-    &quot;凵&quot;,
-    &quot;⺍&quot;,
-    &quot;月&quot;
-]
-</code></pre><pre><code># element2kanji.json
-&quot;月&quot;: [
-    &quot;溯&quot;,
-    &quot;齟&quot;,
-    &quot;蔡&quot;,
-    &quot;羂&quot;,
-    &quot;肝&quot;,
-    &quot;育&quot;,
-</code></pre><h3 id="3-漢字と部首偏旁の変換データのうち左右に分割できる漢字">3. 漢字と部首/偏旁の変換データのうち、左右に分割できる漢字</h3>
-<p>1.のデータセットのうち、漢字の構成が左と右の2つに分割できるものだけを集めたデータです。3つ以上に分割される漢字や、左右のどちらかが複数に分割される漢字は含まれていません。</p>
-<ul>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_left_right.json"><code>kanji2radical_left_right.json</code></a></li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_left_right.json"><code>radical2kanji_left_right.json</code></a></li>
-</ul>
-<pre><code># kanji2radical_left_right.jsonのサンプル
-{'乢': ['山', '乙'],
- '嶋': ['山', '鳥'],
- '恥': ['耳', '心'],
- '擦': ['扌', '察'],
-...
-</code></pre><h3 id="4-漢字と部首偏旁の変換データのうち上下に分割できる漢字">4. 漢字と部首/偏旁の変換データのうち、上下に分割できる漢字</h3>
-<p>1.のデータセットのうち、漢字の構成が上と下の2つに分割できるものだけを集めたデータです。3つ以上に分割される漢字や、上下のどちらかが複数に分割される漢字は含まれていません。</p>
-<ul>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/kanji2radical_top_buttom.json"><code>kanji2radical_top_buttom.json</code></a></li>
-<li><a href="https://github.com/yagays/kanjivg-radical/blob/master/data/radical2kanji_top_buttom.json"><code>radical2kanji_top_buttom.json</code></a></li>
-</ul>
-<pre><code># kanji2radical_top_buttom.jsonのサンプル
-{'云': ['二', '厶'],
- '賃': ['任', '貝'],
- '輩': ['非', '車'],
- '雪': ['雨', '⺕'],
- ...
-</code></pre><h2 id="統計">統計</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:left"></th>
-<th style="text-align:right">登録漢字数</th>
-<th style="text-align:right">登録部首/偏旁/要素数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">kanji2radical</td>
-<td style="text-align:right">6,279</td>
-<td style="text-align:right">1,300</td>
-</tr>
-<tr>
-<td style="text-align:left">kanji2element</td>
-<td style="text-align:right">6,279</td>
-<td style="text-align:right">1,306</td>
-</tr>
-<tr>
-<td style="text-align:left">kanji2radical_left_right</td>
-<td style="text-align:right">3,190</td>
-<td style="text-align:right">1,013</td>
-</tr>
-<tr>
-<td style="text-align:left">kanji2radical_top_buttom</td>
-<td style="text-align:right">1,088</td>
-<td style="text-align:right">643</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="使い方">使い方</h2>
-<p>配布しているjsonファイルを、ハッシュ関数や辞書形式など任意のプログラミング言語で読み込んで使用します。</p>
-<p>ここでは、Pythonでの利用方法を例示します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_json</span>(filename):
-    <span style="color:#66d9ef">with</span> open(filename) <span style="color:#66d9ef">as</span> f:
-        d <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>load(f)
-    <span style="color:#66d9ef">return</span> d
-
-kanji2radical <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74">&#34;kanji2radical.json&#34;</span>)
-radical2kanji <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74">&#34;radical2kanji.json&#34;</span>)    
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">kanji2radical[<span style="color:#e6db74">&#34;脳&#34;</span>] <span style="color:#75715e"># kanji to radicals</span>
-
-radical2kanji[<span style="color:#e6db74">&#34;月&#34;</span>] <span style="color:#75715e"># radical to kanjis</span>
-</code></pre></div><p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照ください。</p>
+<p>配布している辞書ファイルのライセンスは元のライセンスを継承してCC-BYです。また、この辞書ファイルにはSudachidictのシステム辞書の情報は含まれていません。</p>
 <h2 id="作成方法">作成方法</h2>
-<p><a href="http://kanjivg.tagaini.net/index.html">KanjiVG</a>で公開されているすべての漢字に対して、svg内に含まれる<code>g</code>タグの<code>kvg:element</code>属性を抽出しています。抽出方法により、データセットに以下の違いがあります。</p>
+<p>ここでは、万病辞書からSudachiのユーザ辞書を作成する方法を解説します。もし上記の作成済みユーザ辞書ファイルを利用する場合は3.以降をお試しください。</p>
+<h3 id="1-万病辞書の準備">1. 万病辞書の準備</h3>
+<p>万病辞書は<code>MANBYO_201907</code>を利用します。各病名には信頼度LEVELというものが設定されており、ICDとの対応やアノテーションの作業度合いによってS,A,B,C,D,E,Fと降順で割り振られています。今回は元となる万病辞書から、信頼度でフィルタして2種類の辞書を作成します。</p>
 <ul>
-<li><code>kanji2radical.json</code>などの漢字と部首/偏旁の変換データは、対象となる漢字の直下に含まれる<code>kvg:element</code>属性のみを抽出</li>
-<li><code>kanji2element.json</code>などの漢字と要素の変換データは、すべての<code>kvg:element</code>属性を再帰的に抽出</li>
+<li>信頼度がS,A,B,Cの、ある程度信頼できる病名 (<code>*_sabc</code>と表記)</li>
+<li>すべての病名 (<code>*_all</code>と表記)</li>
 </ul>
-<p>対象としたバージョンは最新版である2016/04/26リリースであり、variantを含まない<code>kanjivg-20160426-main.zip</code>を利用しています。</p>
-<p>ちなみに、このデータセットには含まれていませんが、KanjiVGには他にも一画ごとのストロークの形状を<code>kvg:type</code>として分類し記録しています。そういったより詳細な漢字の図形的情報が必要な場合は、本家のデータセットを参照ください。</p>
-<p><a href="http://kanjivg.tagaini.net/format.html">Format - KanjiVG</a></p>
-<h2 id="ライセンス">ライセンス</h2>
-<p>このリソースは<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンス</a>の下に提供されています。</p>
-<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<p>なお、登録されている病名や読みがななどは基本的にはそのまま利用しますが、見出し語に全角カンマ<code>，</code>が含まれていると正規化時に<code>,</code>となりcsvを破壊するため、日本語の句読点<code>、</code>に変換しています。</p>
+<h3 id="2-sudachiのユーザ辞書の作成">2. Sudachiのユーザ辞書の作成</h3>
+<p>Sudachiのドキュメントに従って、以下のようにユーザ辞書を作成します。</p>
+<ul>
+<li>見出し語は、万病辞書の「出現形」にSudachiの文字正規化を行った文字列を使用</li>
+<li>左連接ID,右連接ID,品詞1および品詞2は、<code>4786,名詞,固有名詞</code>を利用</li>
+<li>読みは、万病辞書の複合文字列ラベルの<code>しゅつげんけい</code>がある場合に登録し、なければ空白</li>
+<li>正規化表記は、万病辞書に登録されている表記を利用</li>
+</ul>
+<h3 id="3-ユーザ辞書のビルド">3. ユーザ辞書のビルド</h3>
+<p>作成したユーザ辞書をビルドして、バイナリ辞書ファイルを作成します。今回はsudachidictのシステム辞書を利用するため、自身の環境に合わせて<code>system.dic</code>の場所を指定してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">BASE_PATH<span style="color:#f92672">=</span>/path/to/sudachidict/resources/
+
+sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_sabc_dic.txt -o user_manbyo_sabc.dic
+sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_all_dic.txt -o user_manbyo_all.dic
+</code></pre></div><h3 id="4-設定ファイルに記述する">4. 設定ファイルに記述する</h3>
+<p>Sudachiで指定するバイナリ辞書ファイルを利用するには、設定ファイル<code>sudachi.json</code>の<code>userDict</code>に指定する必要があります。インストールしているsudachipyの<code>sudachi.json</code>を直接変更する方法もありますが、今回は自分で<code>sudachi.json</code>を作成してSudachi利用時に指定してみます。</p>
+<p>以下のように、<code>userDict</code>に先ほど作成したバイナリ辞書ファイルを指定します。なお、設定ファイル内には他にも<code>char.def</code>や<code>unk.def</code>のパスも指定されているため、そちらはインストールされているsudachipyの<code>resources/</code>以下のファイルを見に行くように修正します。</p>
+<pre><code>    &quot;userDict&quot;: [&quot;/Users/yag_ays/dev/nlp/manbyo-sudachi/user_manbyo_sabc.dic&quot;],
+</code></pre><h3 id="実行">実行</h3>
+<p>それでは実行してみましょう。まずはコマンドラインから病名をsudachiに渡して実行してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ echo <span style="color:#e6db74">&#34;間質性腎炎所見&#34;</span> | sudachipy -a -r config/sudachi_sabc.json | tr <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#e6db74">&#34;\n&#34;</span> | nl -b a
+     <span style="color:#ae81ff">1</span>  間質性腎炎所見
+     <span style="color:#ae81ff">2</span>  名詞,固有名詞,一般,*,*,*
+     <span style="color:#ae81ff">3</span>  間質性腎炎所見
+     <span style="color:#ae81ff">4</span>  間質性腎炎所見
+     <span style="color:#ae81ff">5</span>  かんしつせいじんえんしょけん
+     <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">1</span>
+     <span style="color:#ae81ff">7</span>  EOS
+</code></pre></div><p>ちゃんと1つの名詞として分かち書きされていますね。品詞や読みもユーザ辞書に登録した通りに表示されています。</p>
+<p>また、sudachipyから実行するには、以下のように<code>config_path</code>に設定ファイルのパスを渡してtokenizerを作成します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sudachipy <span style="color:#f92672">import</span> dictionary, tokenizer
+
+tokenizer_obj <span style="color:#f92672">=</span> dictionary<span style="color:#f92672">.</span>Dictionary(config_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;config/sudachi_all.json&#34;</span>)<span style="color:#f92672">.</span>create()
+tokens <span style="color:#f92672">=</span> tokenizer_obj<span style="color:#f92672">.</span>tokenize(<span style="color:#e6db74">&#34;線維筋痛症になった&#34;</span>,  tokenizer<span style="color:#f92672">.</span>Tokenizer<span style="color:#f92672">.</span>SplitMode<span style="color:#f92672">.</span>B)
+<span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> tokens:
+    <span style="color:#66d9ef">print</span>(token<span style="color:#f92672">.</span>surface(), token<span style="color:#f92672">.</span>part_of_speech())
+
+<span style="color:#75715e"># 線維筋痛症 [&#39;名詞&#39;, &#39;固有名詞&#39;, &#39;一般&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;]</span>
+<span style="color:#75715e"># に [&#39;助詞&#39;, &#39;格助詞&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;]</span>
+<span style="color:#75715e"># なっ [&#39;動詞&#39;, &#39;非自立可能&#39;, &#39;*&#39;, &#39;*&#39;, &#39;五段-ラ行&#39;, &#39;連用形-促音便&#39;]</span>
+<span style="color:#75715e"># た [&#39;助動詞&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;, &#39;助動詞-タ&#39;, &#39;終止形-一般&#39;]</span>
+</code></pre></div><h2 id="まとめと今後">まとめと今後</h2>
+<p>この記事では、万病辞書をSudachiのユーザ辞書に変換して利用する方法を解説しました。これで医療ドメインの形態素解析において万病辞書のリソースを利用することができます。</p>
+<p>今回のSudachi対応の理由としては<a href="https://spacy.io/">spaCy</a>や<a href="https://megagonlabs.github.io/ginza/">GiNZA</a>といったNLPライブラリで利用する目的だったので、それ自体は達成することができました。一方で、Sudachi固有の機能として、複数の分割単位で形態素解析を利用できるという大きな特徴があります。万病辞書に登録されている病名においても、「発熱」といった最小単位のものから「アトピー性皮膚炎」といった分割が可能なものなど粒度が様々で、複数の分割単位に対応することで恩恵が得られそうなものもあります。ユーザが作成する辞書においても複数の分割単位に対応することができるため、そうした情報を辞書から自動で付与することができれば、より活用できそうです。</p>
 <h2 id="参考">参考</h2>
 <ul>
-<li><a href="https://github.com/KanjiVG/kanjivg">KanjiVG/kanjivg: Kanji description and vectorial data in correct stroke order</a>
-<ul>
-<li><a href="https://www.moongift.jp/2017/11/kanjivg-%E6%BC%A2%E5%AD%97%E5%B9%B3%E4%BB%AE%E5%90%8D%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A%E3%82%A2%E3%83%AB%E3%83%95%E3%82%A1%E3%83%99%E3%83%83%E3%83%88%E6%95%B0%E5%AD%97%E3%81%AE%E6%9B%B8/">KanjiVG - 漢字/平仮名/カタカナ/アルファベット/数字の書き順付きSVG集 MOONGIFT</a></li>
-</ul>
-</li>
-</ul>
-<p><a href="http://www.chise.org/ids/">CHISE 漢字構造情報データベース</a>の方が、より網羅性が高いデータセットです。CJK統合文字の拡張を含めてアノテーションが付けられています。</p>
-<ul>
-<li><a href="http://www.chise.org/ids/">CHISE / 漢字構造情報データベース</a>
-<ul>
-<li><a href="http://www.chise.org/ids-find">CHISE IDS Find</a></li>
-<li><a href="http://www.shuiren.org/chuden/toyoshi/syoseki/chise_ids.html">CHISE IDS 漢字検索の使い方―中国史研究のためのデジタルリソース入門</a></li>
-<li><a href="http://www.chise.org/dataset.ja.html">CHISE プロジェクト</a></li>
-</ul>
-</li>
+<li><a href="https://github.com/WorksApplications/Sudachi/blob/develop/docs/user_dict.md">Sudachi/user_dict.md at develop · WorksApplications/Sudachi</a></li>
+<li><a href="https://qiita.com/sorami/items/99604ef105f13d2d472b">Elasticsearchのための新しい形態素解析器 「Sudachi」 - Qiita</a></li>
+<li><a href="https://zenn.dev/sorami/articles/6bdb4bf6c7f207">形態素解析器Sudachiのユーザー辞書には文字正規化が必要</a></li>
 </ul>
 
 
 <div style="text-align: right">
-  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/kanjivg-radical/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
+  <a href="http://b.hatena.ne.jp/entry/https://yag-ays.github.io/project/manbyo-sudachi/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="en" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png"
       alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
   <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>

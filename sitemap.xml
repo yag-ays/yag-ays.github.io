@@ -1,168 +1,105 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://yag-ays.github.io/article/</loc>
-    <lastmod>2021-01-24T14:58:15+09:00</lastmod>
-  </url>
-  
   <url>
     <loc>https://yag-ays.github.io/</loc>
+    <lastmod>2021-04-05T20:45:14+09:00</lastmod>
+  </url><url>
+    <loc>https://yag-ays.github.io/project/</loc>
+    <lastmod>2021-04-05T20:45:14+09:00</lastmod>
+  </url><url>
+    <loc>https://yag-ays.github.io/project/manbyo-sudachi/</loc>
+    <lastmod>2021-04-05T20:45:14+09:00</lastmod>
+  </url><url>
+    <loc>https://yag-ays.github.io/article/</loc>
     <lastmod>2021-01-24T14:58:15+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/article/refactor-them-all/</loc>
     <lastmod>2021-01-24T14:58:15+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/opencv-superresolution/</loc>
     <lastmod>2020-12-24T12:20:04+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yag-ays.github.io/project/</loc>
-    <lastmod>2020-12-24T12:20:04+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/drug-name-ambiguity/</loc>
     <lastmod>2020-12-14T21:16:20+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/emoji-ja-update-13/</loc>
     <lastmod>2020-11-07T21:01:50+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/icd10-embeddings/</loc>
     <lastmod>2020-08-05T20:23:39+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/article/ubie/</loc>
     <lastmod>2020-05-24T23:50:56+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/swem_flair/</loc>
     <lastmod>2019-12-30T14:27:32+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/leakage_pmi/</loc>
     <lastmod>2019-12-11T09:20:57+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/elasticsearch-similarity-search/</loc>
     <lastmod>2019-09-02T15:25:26+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/emoji-ja-update-12/</loc>
     <lastmod>2019-07-26T11:45:37+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/pytorch_bert_japanese/</loc>
     <lastmod>2019-06-05T20:11:43+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/swem/</loc>
     <lastmod>2019-05-29T09:59:24+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/language_identification_in_dl_era/</loc>
     <lastmod>2019-05-05T12:10:06+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/fasttext_language_identification/</loc>
     <lastmod>2019-04-21T03:45:17+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/mecab_pos_regex/</loc>
     <lastmod>2019-04-15T21:44:12+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/out-of-vocab-magnitude/</loc>
     <lastmod>2019-02-27T22:36:40+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/all-but-the-top/</loc>
     <lastmod>2019-02-23T00:49:58+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/minify-w2v/</loc>
     <lastmod>2019-02-19T10:03:37+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/pretrained_doc2vec_wikipedia/</loc>
     <lastmod>2019-01-22T15:55:40+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/wikipedia-pageview/</loc>
     <lastmod>2018-12-16T12:42:50+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/alacarte/</loc>
     <lastmod>2018-12-07T08:56:02+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/wed/</loc>
     <lastmod>2018-11-12T21:54:12+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/embedding-visualization/</loc>
     <lastmod>2018-08-28T21:37:26+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/emoji-ja/</loc>
     <lastmod>2018-08-23T07:41:44+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/kanjivg-radical/</loc>
     <lastmod>2018-08-06T08:43:23+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/cirrus/</loc>
     <lastmod>2018-07-30T21:07:52+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/home/</loc>
     <lastmod>2018-07-26T04:28:29+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/project/char-embedding/</loc>
     <lastmod>2018-07-25T12:30:41+09:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://yag-ays.github.io/tags/</loc>
   </url>
-  
 </urlset>
