@@ -1004,13 +1004,13 @@ margin-left: -4%;
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
                             
                         
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
                     
@@ -1065,7 +1065,7 @@ margin-left: -4%;
 <p>gensimを用いた利用方法を例示します。なお、ここではword2vecのように単語の分散表現として扱っていますが、本リソースで扱う文字の図形的な埋め込み表現には<strong>加法性がありません</strong>。図形としての文字の類似度は計算できますが、部首の足し算引き算といったような操作はできないのでご注意下さい。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
 
-model <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(<span style="color:#e6db74">&#34;data/convolutional_AE_300.bin&#34;</span>, binary<span style="color:#f92672">=</span>True)
+model <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(<span style="color:#e6db74">&#34;data/convolutional_AE_300.bin&#34;</span>, binary<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
 </code></pre></div><p><a href="https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.WordEmbeddingsKeyedVectors.most_similar"><code>most_similar()</code></a>を用いて、図形的な類似文字を検索します。以下の例では一番類似度が高い文字に「а」が来ていますが、これはasciiの「a」ではなく<a href="https://ja.wikipedia.org/wiki/%D0%90">キリル文字の「a」</a>です。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: model<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74">&#34;a&#34;</span>)
 Out[]:
@@ -1094,7 +1094,7 @@ Out[]:
  (<span style="color:#e6db74">&#39;泩&#39;</span>, <span style="color:#ae81ff">0.8275920152664185</span>)]
 </code></pre></div><p>ユニコードには同じような外見で異なるコードポイントが割り当てられているものが存在します。それらを区別する際には、<code>ord()</code>で数値への変換を行うか、<code>unicodedata.name()</code>で文字の名前を表示するのが有効です。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: <span style="color:#66d9ef">for</span> char, score <span style="color:#f92672">in</span> model<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74">&#34;は&#34;</span>, topn<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>):
-    <span style="color:#f92672">...</span>:     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([char, str(score), hex(ord(char)), unicodedata<span style="color:#f92672">.</span>name(char, <span style="color:#e6db74">&#34;UNKNOWN&#34;</span>)]))
+    <span style="color:#f92672">...</span>:     print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([char, str(score), hex(ord(char)), unicodedata<span style="color:#f92672">.</span>name(char, <span style="color:#e6db74">&#34;UNKNOWN&#34;</span>)]))
 
 <span style="color:#e6db74">&#34;け&#34;</span>      <span style="color:#ae81ff">0.8354311585426331</span>      <span style="color:#ae81ff">0x3051</span>  HIRAGANA LETTER KE
 <span style="color:#e6db74">&#34;ほ&#34;</span>      <span style="color:#ae81ff">0.8342610597610474</span>      <span style="color:#ae81ff">0x307b</span>  HIRAGANA LETTER HO

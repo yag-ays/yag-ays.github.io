@@ -1004,13 +1004,13 @@ margin-left: -4%;
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
                             
                         
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
                     
@@ -1089,7 +1089,7 @@ array([ <span style="color:#ae81ff">1.2089624</span> ,  <span style="color:#ae81
 
 model <span style="color:#f92672">=</span> BertModel<span style="color:#f92672">.</span>from_pretrained(<span style="color:#e6db74">&#34;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/&#34;</span>)
 bert_tokenizer <span style="color:#f92672">=</span> BertTokenizer(<span style="color:#e6db74">&#34;/path/to/Japanese_L-12_H-768_A-12_E-30_BPE/vocab.txt&#34;</span>,
-                               do_lower_case<span style="color:#f92672">=</span>False, do_basic_tokenize<span style="color:#f92672">=</span>False)
+                               do_lower_case<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, do_basic_tokenize<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
 </code></pre></div><p>モデルは<a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?BERT%E6%97%A5%E6%9C%AC%E8%AA%9EPretrained%E3%83%A2%E3%83%87%E3%83%AB">黒橋・河原研究室の配布サイト</a>からダウンロードし解凍します。<code>BertModel</code>の<code>from_pretrained()</code>で解凍先のパスを指定することで、モデルをロードすることができます。必要なファイルは<code>pytorch_model.bin</code>と<code>vocab.txt</code>のみです。</p>
 <p>なお、モデル配布ページでは<code>pytorch-pretrained-BERT</code>内の<code>tokenization.py</code>の特定行をコメントアウトするように指示されていますが、<code>BertTokenizer()</code>で引数を<code>do_basic_tokenize=False</code>とすれば対応は不要です。 </p>
 <h3 id="2-テキストを分かち書きして対応するid列に変換する">2. テキストを分かち書きして対応するid列に変換する</h3>

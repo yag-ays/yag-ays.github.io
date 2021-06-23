@@ -1004,13 +1004,13 @@ margin-left: -4%;
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
                             
                         
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
                     
@@ -1084,7 +1084,7 @@ Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>, <span style="color
 <hr>
 <h3 id="例名詞に続く助詞が2回続くパターンを抽出する">例）「名詞に続く助詞が2回続くパターン」を抽出する</h3>
 <p>通常の正規表現と同様の記法を使うことができます。ここでは<code>{2}</code>を指定することで、2回の繰り返しを表現しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In [<span style="color:#ae81ff">42</span>]: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;(名詞助詞){2}&#34;</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In [<span style="color:#ae81ff">42</span>]: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;(名詞助詞)</span><span style="color:#e6db74">{2}</span><span style="color:#e6db74">&#34;</span>)
 Out[<span style="color:#ae81ff">42</span>]: [[<span style="color:#e6db74">&#39;自分&#39;</span>, <span style="color:#e6db74">&#39;の&#39;</span>, <span style="color:#e6db74">&#39;ほう&#39;</span>, <span style="color:#e6db74">&#39;へ&#39;</span>]]
 </code></pre></div><h3 id="例名詞または動詞を抽出する">例）「名詞または動詞」を抽出する</h3>
 <p>ここでは、正規表現に<code>|</code>を使って和集合を表現しています。</p>
@@ -1102,7 +1102,7 @@ Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>, <span style="color
 </code></pre></div><hr>
 <h3 id="mecabの出力をそのまま利用する">MeCabの出力をそのまま利用する</h3>
 <p><code>mpr.findall(raw=True)</code>とすることで、出力を単語ではなくMeCabが出力した形態素解析結果の文字列に変更することができます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞助詞&#34;</span>, raw<span style="color:#f92672">=</span>True)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞助詞&#34;</span>, raw<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
 Out[]:
 [[<span style="color:#e6db74">&#39;現実</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">名詞,一般,*,*,*,*,現実,ゲンジツ,ゲンジツ&#39;</span>, <span style="color:#e6db74">&#39;を</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">助詞,格助詞,一般,*,*,*,を,ヲ,ヲ&#39;</span>],
  [<span style="color:#e6db74">&#39;自分</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">名詞,一般,*,*,*,*,自分,ジブン,ジブン&#39;</span>, <span style="color:#e6db74">&#39;の</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">助詞,連体化,*,*,*,*,の,ノ,ノ&#39;</span>],

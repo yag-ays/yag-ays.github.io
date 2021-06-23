@@ -1004,13 +1004,13 @@ margin-left: -4%;
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
                             
                         
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
                     
@@ -1066,7 +1066,7 @@ margin-left: -4%;
 <span style="color:#f92672">from</span> swem <span style="color:#f92672">import</span> SWEM
 
 w2v_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/path/to/word_embedding.bin&#34;</span>
-w2v <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(w2v_path, binary<span style="color:#f92672">=</span>True)
+w2v <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(w2v_path, binary<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
 tokenizer <span style="color:#f92672">=</span> MeCabTokenizer(<span style="color:#e6db74">&#34;-O wakati&#34;</span>)
 
 swem <span style="color:#f92672">=</span> SWEM(w2v, tokenizer)

@@ -1004,13 +1004,13 @@ margin-left: -4%;
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
                             
                         
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
                     
@@ -1100,7 +1100,7 @@ sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_all_dic.txt -o user_man
 tokenizer_obj <span style="color:#f92672">=</span> dictionary<span style="color:#f92672">.</span>Dictionary(config_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;config/sudachi_all.json&#34;</span>)<span style="color:#f92672">.</span>create()
 tokens <span style="color:#f92672">=</span> tokenizer_obj<span style="color:#f92672">.</span>tokenize(<span style="color:#e6db74">&#34;線維筋痛症になった&#34;</span>,  tokenizer<span style="color:#f92672">.</span>Tokenizer<span style="color:#f92672">.</span>SplitMode<span style="color:#f92672">.</span>B)
 <span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> tokens:
-    <span style="color:#66d9ef">print</span>(token<span style="color:#f92672">.</span>surface(), token<span style="color:#f92672">.</span>part_of_speech())
+    print(token<span style="color:#f92672">.</span>surface(), token<span style="color:#f92672">.</span>part_of_speech())
 
 <span style="color:#75715e"># 線維筋痛症 [&#39;名詞&#39;, &#39;固有名詞&#39;, &#39;一般&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;]</span>
 <span style="color:#75715e"># に [&#39;助詞&#39;, &#39;格助詞&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;, &#39;*&#39;]</span>

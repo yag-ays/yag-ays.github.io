@@ -1004,13 +1004,13 @@ margin-left: -4%;
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/project">project</a></li>
+                            <li><a href="https://yag-ays.github.io/article">article</a></li>
                             
                         
                     
                         
                             
-                            <li><a href="https://yag-ays.github.io/article">article</a></li>
+                            <li><a href="https://yag-ays.github.io/project">project</a></li>
                             
                         
                     
@@ -1067,7 +1067,7 @@ margin-left: -4%;
 vec_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;entity_vector.model.bin&#34;</span>
 
 writer <span style="color:#f92672">=</span> SummaryWriter()
-model <span style="color:#f92672">=</span> gensim<span style="color:#f92672">.</span>models<span style="color:#f92672">.</span>KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(vec_path, binary<span style="color:#f92672">=</span>True)
+model <span style="color:#f92672">=</span> gensim<span style="color:#f92672">.</span>models<span style="color:#f92672">.</span>KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(vec_path, binary<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
 weights <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>vectors
 labels <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>index2word
 
