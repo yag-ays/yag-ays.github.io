@@ -1060,7 +1060,7 @@ margin-left: -4%;
 <ul>
 <li><a href="https://github.com/yagays/swem">https://github.com/yagays/swem</a></li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
 
 <span style="color:#f92672">from</span> swem <span style="color:#f92672">import</span> MeCabTokenizer
 <span style="color:#f92672">from</span> swem <span style="color:#f92672">import</span> SWEM
@@ -1070,7 +1070,7 @@ w2v <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672"
 tokenizer <span style="color:#f92672">=</span> MeCabTokenizer(<span style="color:#e6db74">&#34;-O wakati&#34;</span>)
 
 swem <span style="color:#f92672">=</span> SWEM(w2v, tokenizer)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;吾輩は猫である。名前はまだ無い。&#34;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;吾輩は猫である。名前はまだ無い。&#34;</span>
 
 <span style="color:#75715e"># SWEM-aver</span>
 In []: swem<span style="color:#f92672">.</span>average_pooling(text)

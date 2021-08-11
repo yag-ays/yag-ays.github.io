@@ -1094,7 +1094,7 @@ margin-left: -4%;
 </ol>
 <h3 id="1-画像処理--自然言語処理という難しさ">1. 画像処理 × 自然言語処理という難しさ</h3>
 <p>まず何より今回のシステムが、通常のシステム開発や機械学習タスクと比較して特殊だったということがあります。画像をOCRしてテキストから情報抽出するタスクですが、処理の途中でどういう値を扱うかというと、雰囲気はこんな感じです。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 画像</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 画像</span>
 array([[[<span style="color:#ae81ff">243</span>, <span style="color:#ae81ff">245</span>, <span style="color:#ae81ff">244</span>],
         [<span style="color:#ae81ff">242</span>, <span style="color:#ae81ff">244</span>, <span style="color:#ae81ff">243</span>],
         [<span style="color:#ae81ff">241</span>, <span style="color:#ae81ff">243</span>, <span style="color:#ae81ff">242</span>],
@@ -1103,7 +1103,7 @@ array([[[<span style="color:#ae81ff">243</span>, <span style="color:#ae81ff">245
         [<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>],
         [<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">255</span>]]], dtype<span style="color:#f92672">=</span>uint8)
 
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># テキスト</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># テキスト</span>
 [
     Symbol(
         text<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;y&#34;</span>,

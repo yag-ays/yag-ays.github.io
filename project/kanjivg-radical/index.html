@@ -1164,7 +1164,7 @@ margin-left: -4%;
 <h2 id="使い方">使い方</h2>
 <p>配布しているjsonファイルを、ハッシュ関数や辞書形式など任意のプログラミング言語で読み込んで使用します。</p>
 <p>ここでは、Pythonでの利用方法を例示します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_json</span>(filename):
     <span style="color:#66d9ef">with</span> open(filename) <span style="color:#66d9ef">as</span> f:
@@ -1173,7 +1173,7 @@ margin-left: -4%;
 
 kanji2radical <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74">&#34;kanji2radical.json&#34;</span>)
 radical2kanji <span style="color:#f92672">=</span> load_json(<span style="color:#e6db74">&#34;radical2kanji.json&#34;</span>)    
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">kanji2radical[<span style="color:#e6db74">&#34;脳&#34;</span>] <span style="color:#75715e"># kanji to radicals</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">kanji2radical[<span style="color:#e6db74">&#34;脳&#34;</span>] <span style="color:#75715e"># kanji to radicals</span>
 
 radical2kanji[<span style="color:#e6db74">&#34;月&#34;</span>] <span style="color:#75715e"># radical to kanjis</span>
 </code></pre></div><p>より詳細な利用方法は<a href="https://github.com/yagays/kanjivg-radical/blob/master/example/basic_usage.ipynb"><code>example/basic_usage.ipynb</code></a>を参照ください。</p>

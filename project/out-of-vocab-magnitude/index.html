@@ -1111,7 +1111,7 @@ Out[ ]: ['ube', 'ber', 'erx', 'rxl', 'uber', 'berx', 'erxl', 'uberx', 'berxl']
 <p><code>magnitude</code>のコードを参考に、一部日本語の正規化のロジックも入れて実装しました。</p>
 <p><a href="https://github.com/yagays/oov_magnitude_ja">yagays/oov_magnitude_ja</a></p>
 <p>以下のように利用できます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> oov <span style="color:#f92672">import</span> MagnitudeOOV
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> oov <span style="color:#f92672">import</span> MagnitudeOOV
 
 
 model <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(<span style="color:#e6db74">&#34;/path/to/jawiki.word_vectors.200d.bin&#34;</span>, binary<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)

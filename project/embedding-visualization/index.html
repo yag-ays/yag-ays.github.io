@@ -1057,10 +1057,10 @@ margin-left: -4%;
 <h2 id="方法">方法</h2>
 <h3 id="準備">準備</h3>
 <p>必要な外部パッケージは、<code>gensim</code>/<code>pytorch</code>/<code>tensorboardX</code>/<code>tensorflow</code>の4つです。インストールされていない場合は<code>pip</code>などであらかじめインストールしておきます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip isntall gensim torch tensorboardX tensorflow
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip isntall gensim torch tensorboardX tensorflow
 </code></pre></div><h3 id="分散表現の読み込みからtensorboard形式のログ出力まで">分散表現の読み込みからtensorboard形式のログ出力まで</h3>
 <p>TensorBoardで可視化するまでに必要な本体のコードです。これだけ！</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> gensim
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> gensim
 <span style="color:#f92672">import</span> torch
 <span style="color:#f92672">from</span> tensorboardX <span style="color:#f92672">import</span> SummaryWriter
 
@@ -1100,7 +1100,7 @@ writer<span style="color:#f92672">.</span>add_embedding(torch<span style="color:
 <p>この可視化は単語の分散表現以外にも、ユニークなIDやラベルに対して固定長のベクトルが割り当てられていれば、一般的な特徴量やベクトル表現にも応用できます。</p>
 <p>gensimでロードできるファイルは、オリジナルのword2vecで扱われるファイルフォーマットです。gensimでは<a href="https://radimrehurek.com/gensim/models/word2vec.html"><code>word2vec C format</code></a>と呼ばれています。</p>
 <p>構造的には単純で、1行目にメタデータ、2行目からベクトル情報が列挙されます。1行目の始めにはベクトルの数と次元数（MxN行列のMとN）を記述します。2行目からは、行頭に対応する単語なりIDなどのユニークな名前、以降はスペース区切りで数値が並びます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#ae81ff">40000</span> <span style="color:#ae81ff">300</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#ae81ff">40000</span> <span style="color:#ae81ff">300</span>
 id_1 -0.117995 0.131594 0.478000 ...
 id_2 -0.729706 -0.069133 -0.014612 ...
 id_3 0.033804 0.005422 -0.172256 ...

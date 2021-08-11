@@ -1053,7 +1053,7 @@ margin-left: -4%;
 <li>出力する</li>
 </ol>
 <p><code>load_word2vec</code>と<code>save_word2vec</code>にはそれぞれ<code>binary</code>オプションがあり、入力および出力をバイナリフォーマットかテキストフォーマットか選択できます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">mw2v <span style="color:#f92672">=</span> MinifyW2V()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">mw2v <span style="color:#f92672">=</span> MinifyW2V()
 mw2v<span style="color:#f92672">.</span>load_word2vec(<span style="color:#e6db74">&#34;/path/to/model.txt&#34;</span>)
 mw2v<span style="color:#f92672">.</span>set_target_vocab(target_vocab<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;cat&#34;</span>, <span style="color:#e6db74">&#34;dog&#34;</span>])
 mw2v<span style="color:#f92672">.</span>save_word2vec(<span style="color:#e6db74">&#34;/path/to/output.bin&#34;</span>, binary<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)

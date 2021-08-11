@@ -1058,7 +1058,7 @@ margin-left: -4%;
 <h2 id="方法">方法</h2>
 <h3 id="1-elasticsearchの設定">1. Elasticsearchの設定</h3>
 <p>Dockerを使ってElasticsearchを立ち上げます。Elasticsearchでの高次元ベクトルのフィールドタイプ対応はバージョン7.0、検索機能はバージョン7.3からサポートされているため、<code>docker.elastic.co</code>で提供されているバージョン7.3.1を利用しました。以下のように<code>docker-compose.yaml</code>を定義して<code>docker-compose up</code>で起動します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># docker-compose.yaml</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># docker-compose.yaml</span>
 <span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.3&#39;</span>
 <span style="color:#f92672">services</span>:
   <span style="color:#f92672">elasticsearch</span>:
@@ -1077,7 +1077,7 @@ margin-left: -4%;
 <h3 id="2-wikipediaの本文を文ベクトルに変換してelasticsearchに投入する">2. Wikipediaの本文を文ベクトルに変換してElasticsearchに投入する</h3>
 <p>今回はある程度現実的な状況を再現するため、データセットはWikipediaの日本語のすべてのエントリーを使用しました。Wikipediaのエントリーに含まれるテキストをダンプデータから抽出し、分散表現を計算するとともにElasticsearchにインポートします。文書の分散表現の計算には、SWEMのaverage-poolingを利用します。手法の詳細は<a href="https://yag-ays.github.io/project/swem/">こちらの記事</a>を参考ください。</p>
 <p>まず <code>index.json</code>でインデックスのマッピングタイプを指定します。文書ベクトルには<code>&quot;type&quot;: &quot;dense_vector&quot;</code>、次元数を<code>&quot;dims&quot;: 200</code>で指定します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">index.json</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#960050;background-color:#1e0010">index.json</span>
 <span style="color:#e6db74">&#34;properties&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
   <span style="color:#f92672">&#34;title&#34;</span>: {
     <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;text&#34;</span>
@@ -1093,7 +1093,7 @@ margin-left: -4%;
 </code></pre></div><p>あとはElasticsearchに文書およびその文書の分散表現を登録していくだけです。注意点として、PythonのElasticsearchパッケージを利用する場合は、<code>dense_vector</code>にはnumpyのndarrayではなくPythonのリスト型に変換したものを渡す必要があります。</p>
 <h3 id="3-ベクトルのフィールドを対象に検索">3. ベクトルのフィールドを対象に検索</h3>
 <p>これでやっと準備は整いました。あとは類似文書検索のクエリを投げるだけですが、当然ながらElasticsearchにはクエリから分散表現を作成する機能はありません。そのため検索の際には、クエリを受け付けた後にPython側で文の分散表現に変換し、そのベクトルをElasticsearchに渡す形で実現します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#75715e"># query string to sentence embedding vector</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#75715e"># query string to sentence embedding vector</span>
 query_vector <span style="color:#f92672">=</span> swem<span style="color:#f92672">.</span>average_pooling(query)<span style="color:#f92672">.</span>tolist()
 
 script_query <span style="color:#f92672">=</span> {

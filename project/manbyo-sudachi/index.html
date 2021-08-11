@@ -1075,7 +1075,7 @@ margin-left: -4%;
 </ul>
 <h3 id="3-ユーザ辞書のビルド">3. ユーザ辞書のビルド</h3>
 <p>作成したユーザ辞書をビルドして、バイナリ辞書ファイルを作成します。今回はsudachidictのシステム辞書を利用するため、自身の環境に合わせて<code>system.dic</code>の場所を指定してください。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">BASE_PATH<span style="color:#f92672">=</span>/path/to/sudachidict/resources/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">BASE_PATH<span style="color:#f92672">=</span>/path/to/sudachidict/resources/
 
 sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_sabc_dic.txt -o user_manbyo_sabc.dic
 sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_all_dic.txt -o user_manbyo_all.dic
@@ -1085,7 +1085,7 @@ sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_all_dic.txt -o user_man
 <pre><code>    &quot;userDict&quot;: [&quot;/Users/yag_ays/dev/nlp/manbyo-sudachi/user_manbyo_sabc.dic&quot;],
 </code></pre><h3 id="実行">実行</h3>
 <p>それでは実行してみましょう。まずはコマンドラインから病名をsudachiに渡して実行してみます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ echo <span style="color:#e6db74">&#34;間質性腎炎所見&#34;</span> | sudachipy -a -r config/sudachi_sabc.json | tr <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#e6db74">&#34;\n&#34;</span> | nl -b a
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ echo <span style="color:#e6db74">&#34;間質性腎炎所見&#34;</span> | sudachipy -a -r config/sudachi_sabc.json | tr <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#e6db74">&#34;\n&#34;</span> | nl -b a
      <span style="color:#ae81ff">1</span>  間質性腎炎所見
      <span style="color:#ae81ff">2</span>  名詞,固有名詞,一般,*,*,*
      <span style="color:#ae81ff">3</span>  間質性腎炎所見
@@ -1095,7 +1095,7 @@ sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_all_dic.txt -o user_man
      <span style="color:#ae81ff">7</span>  EOS
 </code></pre></div><p>ちゃんと1つの名詞として分かち書きされていますね。品詞や読みもユーザ辞書に登録した通りに表示されています。</p>
 <p>また、sudachipyから実行するには、以下のように<code>config_path</code>に設定ファイルのパスを渡してtokenizerを作成します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sudachipy <span style="color:#f92672">import</span> dictionary, tokenizer
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sudachipy <span style="color:#f92672">import</span> dictionary, tokenizer
 
 tokenizer_obj <span style="color:#f92672">=</span> dictionary<span style="color:#f92672">.</span>Dictionary(config_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;config/sudachi_all.json&#34;</span>)<span style="color:#f92672">.</span>create()
 tokens <span style="color:#f92672">=</span> tokenizer_obj<span style="color:#f92672">.</span>tokenize(<span style="color:#e6db74">&#34;線維筋痛症になった&#34;</span>,  tokenizer<span style="color:#f92672">.</span>Tokenizer<span style="color:#f92672">.</span>SplitMode<span style="color:#f92672">.</span>B)

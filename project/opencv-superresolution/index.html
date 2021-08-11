@@ -1048,7 +1048,7 @@ margin-left: -4%;
 <h2 id="方法">方法</h2>
 <h3 id="1-インストール">1. インストール</h3>
 <p>今回試す超解像は、OpenCVに加えて<code>opencv-contrib-python</code>というOpenCV準拠の拡張パッケージをインストールする必要があります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip install opencv-python
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip install opencv-python
 $ pip install opencv-contrib-python
 </code></pre></div><h3 id="2-モデルのダウンロード">2. モデルのダウンロード</h3>
 <p>超解像に利用するモデルはpipではインストールされないため、手動でダウンロードします。利用できる各モデルのリンクは下記URLの<code>README.md</code>に記載されています。2020/12/24現在では、以下のモデルに対応しており、拡大するときの倍率(scale)として2倍,3倍,4倍が用意されています。</p>
@@ -1066,7 +1066,7 @@ $ pip install opencv-contrib-python
 </ul>
 <h3 id="3-コードを動かしてみる">3. コードを動かしてみる</h3>
 <p>それでは深層学習モデルを使った超解像を試してみましょう。ここでは<a href="https://github.com/opencv/opencv_contrib/blob/master/modules/dnn_superres/tutorials/upscale_image_single/upscale_image_single.markdown">公式のTutorial</a>の通りに動かします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
 <span style="color:#f92672">from</span> cv2 <span style="color:#f92672">import</span> dnn_superres
 
 <span style="color:#75715e"># Create an SR object - only function that differs from c++ code</span>

@@ -1049,20 +1049,20 @@ margin-left: -4%;
 <h2 id="方法">方法</h2>
 <h3 id="単語ベクトルの読み込み">単語ベクトルの読み込み</h3>
 <p>まずFlairで学習済みの単語埋め込みベクトルを読み込みます。あらかじめ学習済み単語ベクトルのファイルを用意しておく必要はなく、以下のコードを初めて動かす際に自動でウェブからダウンロードされます。日本語の場合は、fastTextが提供している<a href="https://fasttext.cc/docs/en/pretrained-vectors.html"><code>ja-wiki-fasttext-300d-1M</code></a>が選択されます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> WordEmbeddings, DocumentPoolEmbeddings, Sentence
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> WordEmbeddings, DocumentPoolEmbeddings, Sentence
 <span style="color:#f92672">from</span> flair.data <span style="color:#f92672">import</span> build_japanese_tokenizer
 ja_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74">&#34;ja&#34;</span>)
 </code></pre></div><p>ここでダウンロードしたファイルは<code>$HOME/.flair/embeddings/</code>に保存されます。</p>
 <h3 id="文章埋め込みの選択">文章埋め込みの選択</h3>
 <p>次に、文章埋め込みの手法を選択します。SWEMは各単語ベクトルに対して各種Poolingの操作を行うことで文章埋め込みを計算するため、<code>DocumentPoolEmbeddings()</code>を利用します。この引数には、さきほど読み込んだ<code>WordEmbeddings</code>のインスタンスを選択します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding])
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding])
 </code></pre></div><h3 id="文章埋め込みを計算する">文章埋め込みを計算する</h3>
 <p>最後に文章埋め込みを計算します。まず対象となる文章の<code>Sentence</code>オブジェクトを作成し、それを上記で作成した<code>document_embeddings.embed()</code>で埋め込みます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">sentence <span style="color:#f92672">=</span> Sentence(<span style="color:#e6db74">&#34;吾輩は猫である。名前はまだ無い。&#34;</span>,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">sentence <span style="color:#f92672">=</span> Sentence(<span style="color:#e6db74">&#34;吾輩は猫である。名前はまだ無い。&#34;</span>,
                     use_tokenizer<span style="color:#f92672">=</span>build_japanese_tokenizer(<span style="color:#e6db74">&#34;MeCab&#34;</span>))
 document_embeddings<span style="color:#f92672">.</span>embed(sentence)
 </code></pre></div><p>そして、文章埋め込みのベクトルは<code>sentnece.get_embedding()</code>から取得することができます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: sentence<span style="color:#f92672">.</span>get_embedding()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: sentence<span style="color:#f92672">.</span>get_embedding()
 Out[]:
 tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9450e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9782e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0372e+01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.4274e-01</span>,
         <span style="color:#f92672">-</span><span style="color:#ae81ff">1.6262e+00</span>,  <span style="color:#ae81ff">2.3832e+00</span>,  <span style="color:#ae81ff">1.3668e+00</span>,  <span style="color:#ae81ff">4.2834e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.4007e+00</span>,
@@ -1073,14 +1073,14 @@ tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f926
 <h2 id="カスタマイズ">カスタマイズ</h2>
 <h3 id="指定した学習済みの単語ベクトルを使う">指定した学習済みの単語ベクトルを使う</h3>
 <p>Flairがデフォルトで指定している学習済みの単語ベクトルではなく、ローカルにあるファイルを指定することもできます。ファイル形式は<code>gensim</code>のバイナリフォーマットで用意する必要があります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">own_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74">&#34;path/to/own_vector.bin&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">own_embedding <span style="color:#f92672">=</span> WordEmbeddings(<span style="color:#e6db74">&#34;path/to/own_vector.bin&#34;</span>)
 </code></pre></div><p><a href="https://github.com/flairNLP/flair/blob/master/resources/docs/embeddings/CLASSIC_WORD_EMBEDDINGS.md">flair/CLASSIC_WORD_EMBEDDINGS.md at master · flairNLP/flair</a></p>
 <h3 id="poolingの方法を変更する">Poolingの方法を変更する</h3>
 <p>Poolingの方法には、デフォルトのaverage pooling(<code>pooling=&quot;mean&quot;</code>)の他に、max pooling(<code>pooling=&quot;max&quot;</code>)とmin pooling(<code>pooling=&quot;min&quot;</code>)も用意されています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;max&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">document_embeddings <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;max&#34;</span>)
 </code></pre></div><h3 id="poolingの方法を組み合わせる">Poolingの方法を組み合わせる</h3>
 <p>SWEMには、average-poolingとmax poolingを組み合わせた<code>SWEM-concat</code>という手法があります。flairでは<code>StackedEmbeddings()</code>を使うことで、複数のEmbeddingを組み合わせることができます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> StackedEmbeddings
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">from</span> flair.embeddings <span style="color:#f92672">import</span> StackedEmbeddings
 
 average_embedding <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mean&#34;</span>)
 max_embedding <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_embedding], pooling<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;max&#34;</span>)
@@ -1088,7 +1088,7 @@ max_embedding <span style="color:#f92672">=</span> DocumentPoolEmbeddings([ja_em
 document_embeddings <span style="color:#f92672">=</span> StackedEmbeddings([average_embedding,
                                          max_embedding])
 document_embeddings<span style="color:#f92672">.</span>embed(sentence)                                         
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: sentence<span style="color:#f92672">.</span>get_embedding()
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: sentence<span style="color:#f92672">.</span>get_embedding()
 Out[]:
 tensor([ <span style="color:#ae81ff">2.1660e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9450e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.9782e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0372e+01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.4274e-01</span>,
         <span style="color:#f92672">-</span><span style="color:#ae81ff">1.6262e+00</span>,  <span style="color:#ae81ff">2.3832e+00</span>,  <span style="color:#ae81ff">1.3668e+00</span>,  <span style="color:#ae81ff">4.2834e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.4007e+00</span>,

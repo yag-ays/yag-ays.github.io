@@ -1086,7 +1086,7 @@ margin-left: -4%;
 <p>CirrusSearchのダンプデータは、1行が1つのjsonとなっており、2行で1つのエントリーを表しています。</p>
 <h3 id="奇数行">奇数行</h3>
 <p>奇数行にはエントリーに固有のidが記載されています。この<code>_id</code>から該当のエントリーにアクセスするには、<a href="https://ja.wikipedia.org/?curid=3240437"><code>https://ja.wikipedia.org/?curid=3240437</code></a>のように<code>curid</code>のパラーメータを指定します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
   <span style="color:#f92672">&#34;index&#34;</span>: {
     <span style="color:#f92672">&#34;_type&#34;</span>: <span style="color:#e6db74">&#34;page&#34;</span>,
     <span style="color:#f92672">&#34;_id&#34;</span>: <span style="color:#e6db74">&#34;3240437&#34;</span>
@@ -1094,7 +1094,7 @@ margin-left: -4%;
 }
 </code></pre></div><h3 id="偶数行">偶数行</h3>
 <p>偶数行にはエントリーの情報が記載されています。下記の例では、複数の要素が入った配列や長い文字列は<code>...</code>で省略しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
   <span style="color:#f92672">&#34;template&#34;</span>: [
     <span style="color:#e6db74">&#34;Template:各年の文学ヘッダ&#34;</span>,
     <span style="color:#960050;background-color:#1e0010">...</span>
@@ -1149,13 +1149,13 @@ margin-left: -4%;
 <h2 id="cirrussearchのデータを扱う">CirrusSearchのデータを扱う</h2>
 <h3 id="シェルで確認する">シェルで確認する</h3>
 <p>シェルから簡易的にダンプデータの中身を確認するには、以下のように圧縮ファイルの中身を<a href="https://stedolan.github.io/jq/">jq</a>を利用して整形して表示するのが容易です。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># Linuxの場合</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e"># Linuxの場合</span>
 $ zcat jawiki-20171106-cirrussearch-general.json.gz  | jq . | less
 <span style="color:#75715e"># macOSの場合</span>
 $ gzcat jawiki-20171106-cirrussearch-general.json.gz  | jq . | less
 </code></pre></div><h3 id="pythonでパースする">Pythonでパースする</h3>
 <p>Pythonでテキストを利用するには、下記のようなコードを利用します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> json
 <span style="color:#f92672">import</span> gzip
 
 <span style="color:#66d9ef">with</span> gzip<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;jawiki-20180611-cirrussearch-content.json.gz&#34;</span>) <span style="color:#66d9ef">as</span> f:

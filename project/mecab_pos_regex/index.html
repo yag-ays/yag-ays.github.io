@@ -1054,10 +1054,10 @@ margin-left: -4%;
 <h2 id="使い方">使い方</h2>
 <h3 id="インストール">インストール</h3>
 <p><a href="https://pypi.org/project/mecabpr/"><code>mecabpr</code></a>はpipを使ってインストールできます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip install mecabpr
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ pip install mecabpr
 </code></pre></div><h3 id="準備">準備</h3>
 <p><code>mecabpr</code>を読み込みます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> mecabpr
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#f92672">import</span> mecabpr
 mpr <span style="color:#f92672">=</span> mecabpr<span style="color:#f92672">.</span>MeCabPosRegex()
 sentence <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;あらゆる現実をすべて自分のほうへねじ曲げたのだ。&#34;</span>
 </code></pre></div><ul>
@@ -1075,34 +1075,34 @@ sentence <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;�
 <p>あとは、以下のように品詞のパターンを指定すると、目的の品詞列を取得できます。</p>
 <hr>
 <h3 id="例名詞を抽出する">例）「名詞」を抽出する</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞&#34;</span>)
 Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>], [<span style="color:#e6db74">&#39;すべて&#39;</span>], [<span style="color:#e6db74">&#39;自分&#39;</span>], [<span style="color:#e6db74">&#39;ほう&#39;</span>], [<span style="color:#e6db74">&#39;の&#39;</span>]]
 </code></pre></div><h3 id="例名詞に続く助詞を抽出する">例）「名詞に続く助詞」を抽出する</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞助詞&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞助詞&#34;</span>)
 Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>, <span style="color:#e6db74">&#39;を&#39;</span>], [<span style="color:#e6db74">&#39;自分&#39;</span>, <span style="color:#e6db74">&#39;の&#39;</span>], [<span style="color:#e6db74">&#39;ほう&#39;</span>, <span style="color:#e6db74">&#39;へ&#39;</span>]]
 </code></pre></div><p>ちなみに、<code>&quot;名詞助詞&quot;</code>のように一続きに表現しても問題ないですが、可読性のために<code>&quot;(名詞)(助詞)&quot;</code>のように品詞を括弧で括っても同様の結果が得られます。</p>
 <hr>
 <h3 id="例名詞に続く助詞が2回続くパターンを抽出する">例）「名詞に続く助詞が2回続くパターン」を抽出する</h3>
 <p>通常の正規表現と同様の記法を使うことができます。ここでは<code>{2}</code>を指定することで、2回の繰り返しを表現しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In [<span style="color:#ae81ff">42</span>]: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;(名詞助詞)</span><span style="color:#e6db74">{2}</span><span style="color:#e6db74">&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In [<span style="color:#ae81ff">42</span>]: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;(名詞助詞)</span><span style="color:#e6db74">{2}</span><span style="color:#e6db74">&#34;</span>)
 Out[<span style="color:#ae81ff">42</span>]: [[<span style="color:#e6db74">&#39;自分&#39;</span>, <span style="color:#e6db74">&#39;の&#39;</span>, <span style="color:#e6db74">&#39;ほう&#39;</span>, <span style="color:#e6db74">&#39;へ&#39;</span>]]
 </code></pre></div><h3 id="例名詞または動詞を抽出する">例）「名詞または動詞」を抽出する</h3>
 <p>ここでは、正規表現に<code>|</code>を使って和集合を表現しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;(名詞|動詞)&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;(名詞|動詞)&#34;</span>)
 Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>], [<span style="color:#e6db74">&#39;すべて&#39;</span>], [<span style="color:#e6db74">&#39;自分&#39;</span>], [<span style="color:#e6db74">&#39;ほう&#39;</span>], [<span style="color:#e6db74">&#39;ねじ曲げ&#39;</span>], [<span style="color:#e6db74">&#39;の&#39;</span>]]
 </code></pre></div><hr>
 <h3 id="例名詞-一般を抽出する">例）「名詞-一般」を抽出する</h3>
 <p>正規表現で表した品詞列には、階層を表す分類も用いることができます。以下の例では、<code>名詞</code>の中でも<code>一般</code>であるものに限定して列挙しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞-一般&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞-一般&#34;</span>)
 Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>], [<span style="color:#e6db74">&#39;自分&#39;</span>]]
 </code></pre></div><h3 id="例名詞-一般に続く助詞を抽出する">例）「名詞-一般に続く助詞」を抽出する</h3>
 <p>パターンを指定するときの品詞には、階層を表す分類を複数組み合わせることも可能です。その際に品詞の階層を合わせる必要はありません。以下の例では<code>名詞-一般</code>と<code>助詞</code>を組み合わせて正規表現を構成しています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞-一般助詞&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞-一般助詞&#34;</span>)
 Out[]: [[<span style="color:#e6db74">&#39;現実&#39;</span>, <span style="color:#e6db74">&#39;を&#39;</span>], [<span style="color:#e6db74">&#39;自分&#39;</span>, <span style="color:#e6db74">&#39;の&#39;</span>]]
 </code></pre></div><hr>
 <h3 id="mecabの出力をそのまま利用する">MeCabの出力をそのまま利用する</h3>
 <p><code>mpr.findall(raw=True)</code>とすることで、出力を単語ではなくMeCabが出力した形態素解析結果の文字列に変更することができます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞助詞&#34;</span>, raw<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">In []: mpr<span style="color:#f92672">.</span>findall(sentence, <span style="color:#e6db74">&#34;名詞助詞&#34;</span>, raw<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
 Out[]:
 [[<span style="color:#e6db74">&#39;現実</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">名詞,一般,*,*,*,*,現実,ゲンジツ,ゲンジツ&#39;</span>, <span style="color:#e6db74">&#39;を</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">助詞,格助詞,一般,*,*,*,を,ヲ,ヲ&#39;</span>],
  [<span style="color:#e6db74">&#39;自分</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">名詞,一般,*,*,*,*,自分,ジブン,ジブン&#39;</span>, <span style="color:#e6db74">&#39;の</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">助詞,連体化,*,*,*,*,の,ノ,ノ&#39;</span>],
