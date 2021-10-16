@@ -1221,7 +1221,7 @@ response <span style="color:#f92672">=</span> client<span style="color:#f92672">
 <hr>
 <h2 id="実験-2-条件を指定して類似文書検索">実験 2: 条件を指定して類似文書検索</h2>
 <p>Elasticsearchは豊富な検索機能があり、それを使うことで分散表現による検索以上の絞り込みが可能になります。この実験では試しに、「〜川」というWikipediaタイトルのエントリーに限定して、その類似文書を検索してみます。</p>
-<pre><code>&quot;script_score&quot;: {
+<pre tabindex="0"><code>&quot;script_score&quot;: {
     &quot;query&quot;: {&quot;wildcard&quot;: {
         &quot;title&quot;: {
             &quot;value&quot;: &quot;*川&quot;

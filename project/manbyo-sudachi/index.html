@@ -1082,7 +1082,7 @@ sudachipy ubuild -s $BASE_PATH/system.dic manbyo20190704_all_dic.txt -o user_man
 </code></pre></div><h3 id="4-設定ファイルに記述する">4. 設定ファイルに記述する</h3>
 <p>Sudachiで指定するバイナリ辞書ファイルを利用するには、設定ファイル<code>sudachi.json</code>の<code>userDict</code>に指定する必要があります。インストールしているsudachipyの<code>sudachi.json</code>を直接変更する方法もありますが、今回は自分で<code>sudachi.json</code>を作成してSudachi利用時に指定してみます。</p>
 <p>以下のように、<code>userDict</code>に先ほど作成したバイナリ辞書ファイルを指定します。なお、設定ファイル内には他にも<code>char.def</code>や<code>unk.def</code>のパスも指定されているため、そちらはインストールされているsudachipyの<code>resources/</code>以下のファイルを見に行くように修正します。</p>
-<pre><code>    &quot;userDict&quot;: [&quot;/Users/yag_ays/dev/nlp/manbyo-sudachi/user_manbyo_sabc.dic&quot;],
+<pre tabindex="0"><code>    &quot;userDict&quot;: [&quot;/Users/yag_ays/dev/nlp/manbyo-sudachi/user_manbyo_sabc.dic&quot;],
 </code></pre><h3 id="実行">実行</h3>
 <p>それでは実行してみましょう。まずはコマンドラインから病名をsudachiに渡して実行してみます。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ echo <span style="color:#e6db74">&#34;間質性腎炎所見&#34;</span> | sudachipy -a -r config/sudachi_sabc.json | tr <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#e6db74">&#34;\n&#34;</span> | nl -b a

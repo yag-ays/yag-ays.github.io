@@ -1091,7 +1091,7 @@ print(r<span style="color:#f92672">.</span>json())
 <p>最後はWikimediaが配布しているデータを直に見に行く方法です。こちらではすべてのwikipediaのページにおける2015年からの毎時間ごとのページビューのデータがgz圧縮されたファイルで公開されています。2018/12現在で毎時40~60MBほどのデータが吐き出されているので扱うのが少し大変ですが、全記事に対するページビューを計算したいという場合にはこの方法しかありません。</p>
 <p><a href="https://dumps.wikimedia.org/other/pageviews/readme.html">Analytics: Pageviews</a></p>
 <p>ファイル名は<code>pageviews-YYYYMMDD-hhnnss.gz</code>という命名規則になっており、スペース区切りで<code>domain_code page_title count_views total_response_size</code>という内容で保存されています。肝心のページビューは<code>count_views</code>です。</p>
-<pre><code>aa Special:Statistics 1 0
+<pre tabindex="0"><code>aa Special:Statistics 1 0
 aa Wikipedia 2 0
 aa Wikipedia:Community_Portal 2 0
 [...]

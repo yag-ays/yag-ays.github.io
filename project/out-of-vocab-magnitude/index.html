@@ -1089,7 +1089,7 @@ margin-left: -4%;
 <p>という構造になっています。</p>
 <p><img src="https://yag-ays.github.io/img/out-of-vocab-magnitude_02.png" alt="https://arxiv.org/pdf/1810.11190.pdf"></p>
 <p>なぜこのような回りくどい方法を取るかと言うと、1つ目の目的であった「文字列的に似ているOOVの単語同士には、なるべく似たベクトル表現を付与したい」に関連します。1.のngramの生成は、Pythonでの実装は以下のようになります（<code>ngram()</code>の実装は省いています）。</p>
-<pre><code>In [ ]: def character_ngram(word, n_begin=3, n_end=5):
+<pre tabindex="0"><code>In [ ]: def character_ngram(word, n_begin=3, n_end=5):
    ...:     output = []
    ...:     n = n_begin
    ...:     while n &lt;= n_end:
@@ -1129,9 +1129,9 @@ model<span style="color:#f92672">.</span>similar_by_vector(moov<span style="colo
 <h3 id="例1">例1</h3>
 <p>まず、文字列が似ている単語同士が近い距離になるかを確かます。「前前前世」という語彙中に存在する単語に対して、「前前前前世」と「前前前前前世」というOOVのランダムベクトルを作成しました。</p>
 <p>その結果コサイン距離は0.98となり、それぞれ独立したOOVながらも、それらの距離が近くなるような初期化ができました。</p>
-<pre><code>cosine similarity between 前前前前世 and 前前前前前世: 0.9823038957021559
+<pre tabindex="0"><code>cosine similarity between 前前前前世 and 前前前前前世: 0.9823038957021559
 </code></pre><p>また、語彙中で類似する単語トップ10をそれぞれ列挙したのが以下になります。ランダムベクトルなので、全然関係ない単語が列挙されていてランダムなベクトルでありながらも、「前前前世」という単語もその中に含まれていることがわかります。</p>
-<pre><code>0: やあやあ やあやあ
+<pre tabindex="0"><code>0: やあやあ やあやあ
 1: メェ 高鳴っ
 2: 高鳴っ 前前前世
 3: 前前前世 メェ
@@ -1143,7 +1143,7 @@ model<span style="color:#f92672">.</span>similar_by_vector(moov<span style="colo
 9: ヤジキタ ダンシングディーヴァ
 </code></pre><h3 id="例2">例2</h3>
 <p>ngramに幾つもの単語が含まれる場合も試してみます。「見える化傾向」というOOVを入れると、「見え」「見える」「見える化」など、その意味を表すようなベクトルに近いものが得られていることが分かります。</p>
-<pre><code>model.similar_by_vector(moov.query(&quot;見える化傾向&quot;))
+<pre tabindex="0"><code>model.similar_by_vector(moov.query(&quot;見える化傾向&quot;))
 Out[10]:
 [('見え', 0.7801039814949036),
 ('見える', 0.7650930881500244),

@@ -1112,7 +1112,7 @@ bert_tokens <span style="color:#f92672">=</span> bert_tokenizer<span style="colo
 ids <span style="color:#f92672">=</span> bert_tokenizer<span style="color:#f92672">.</span>convert_tokens_to_ids([<span style="color:#e6db74">&#34;[CLS]&#34;</span>] <span style="color:#f92672">+</span> bert_tokens[:<span style="color:#ae81ff">126</span>] <span style="color:#f92672">+</span> [<span style="color:#e6db74">&#34;[SEP]&#34;</span>])
 tokens_tensor <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(ids)<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
 </code></pre></div><p>例えば「<code>我輩は猫である。</code>」という文章は、以下のようにトークン化されid列に変換されます。ちなみに<code>我輩</code>という単語は辞書中に存在せずかつサブワードとしても分割できないことから、未知語として<code>id:1</code>(<code>[UNK]</code>)に変換されています。</p>
-<pre><code># text
+<pre tabindex="0"><code># text
   吾輩は猫である。
 # tokens
   ['[CLS]', '吾輩', 'は', '猫', 'である', '。', '[SEP]']
